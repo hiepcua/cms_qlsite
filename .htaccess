@@ -1,0 +1,69 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+RewriteRule ^/?$ 						index.php [QSA]
+#RewriteRule ^api/v1/(.*)$ 				api/v1/api.php?request=$1 [QSA, NC, L]
+RewriteRule ^contact/?$ 				index.php?com=contact [QSA]
+
+RewriteRule ^live/?$ 					index.php?com=live [QSA]
+RewriteRule ^live/view?$ 				index.php?com=live&viewtype=view [QSA]
+RewriteRule ^live/add?$ 				index.php?com=live&viewtype=add [QSA]
+RewriteRule ^live/schedule?$ 			index.php?com=live&viewtype=schedule [QSA]
+
+RewriteRule ^content/?$ 					index.php?com=content [QSA]
+RewriteRule ^content/view?$ 				index.php?com=content&viewtype=view [QSA]
+RewriteRule ^content/add?$ 					index.php?com=content&viewtype=add [QSA]
+RewriteRule ^content/edit/([0-9]+)?$ 		index.php?com=content&viewtype=edit&id=$1 [QSA]
+RewriteRule ^content/write/?$ 				index.php?com=content&viewtype=write [QSA]
+RewriteRule ^content/pending/?$ 			index.php?com=content&viewtype=pending [QSA]
+RewriteRule ^content/waiting_public/?$ 		index.php?com=content&viewtype=waiting_public [QSA]
+RewriteRule ^content/public/?$ 				index.php?com=content&viewtype=public [QSA]
+RewriteRule ^content/deleted/?$ 			index.php?com=content&viewtype=deleted [QSA]
+RewriteRule ^content/takedown/?$ 			index.php?com=content&viewtype=takedown [QSA]
+RewriteRule ^content/return/?$ 				index.php?com=content&viewtype=return [QSA]
+
+RewriteRule ^member/?$ 					index.php?com=member [QSA]
+
+RewriteRule ^user/?$ 							index.php?com=user [QSA]
+RewriteRule ^profile/?$ 						index.php?com=user&viewtype=profile
+RewriteRule ^changepass/?$ 						index.php?com=user&viewtype=changepass
+RewriteRule ^user/getlist_user/([0-9]+)?$ 		index.php?com=user&viewtype=getlist_user&id=$1 [QSA]
+
+RewriteRule ^groupuser/?$ 				index.php?com=groupuser [QSA]
+RewriteRule ^groupuser/add/?$ 			index.php?com=groupuser&viewtype=add [QSA]
+RewriteRule ^groupuser/edit/([0-9]+)?$ 	index.php?com=groupuser&viewtype=edit&id=$1 [QSA]
+
+RewriteRule ^categories/?$ 					index.php?com=categories [QSA]
+RewriteRule ^categories/add/?$ 				index.php?com=categories&viewtype=add [QSA]
+RewriteRule ^categories/edit/([0-9]+)?$ 	index.php?com=categories&viewtype=edit&id=$1 [QSA]
+RewriteRule ^categories/active/([0-9]+)?$ 	index.php?com=categories&viewtype=active&id=$1 [QSA]
+
+RewriteRule ^member/?$ 					index.php?com=member [QSA]
+RewriteRule ^member/add/?$ 				index.php?com=member&viewtype=add [QSA]
+RewriteRule ^member/edit/([0-9]+)?$ 	index.php?com=member&viewtype=edit&id=$1 [QSA]
+RewriteRule ^member/active/([0-9]+)?$ 	index.php?com=member&viewtype=active&id=$1 [QSA]
+RewriteRule ^member/changepass/([0-9]+)?$ 	index.php?com=member&viewtype=changepass&id=$1 [QSA]
+
+RewriteRule ^channel/?$ 					index.php?com=channel [QSA]
+RewriteRule ^channel/add/?$ 				index.php?com=channel&viewtype=add [QSA]
+RewriteRule ^channel/edit/([0-9]+)?$ 		index.php?com=channel&viewtype=edit&id=$1 [QSA]
+RewriteRule ^channel/active/([0-9]+)?$ 		index.php?com=channel&viewtype=active&id=$1 [QSA]
+
+
+
+RewriteRule ^setting/?$ 				index.php?com=setting [QSA]
+RewriteRule ^forgot-password/?$ 		forgot-password.php
+
+php_flag display_errors  on
+php_value upload_max_filesize 1024M
+php_value post_max_size 1024M
+php_value max_input_time 300
+php_value max_execution_time 300
+
+#Bảo vệ file
+<files .htaccess>
+order allow,deny
+deny from all
+</files>

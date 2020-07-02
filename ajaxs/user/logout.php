@@ -1,0 +1,14 @@
+<?php
+session_start();
+define('incl_path','../../global/libs/');
+define('libs_path','../../libs/');
+require_once(incl_path.'gfconfig.php');
+require_once(incl_path.'gfinit.php');
+require_once(incl_path.'gffunc.php');
+require_once(incl_path.'gffunc_user.php');
+require_once(libs_path.'cls.mysql.php');
+$user=getInfo('username');
+LogOut($user);
+unset($user);
+die();
+?>
