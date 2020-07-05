@@ -2,15 +2,23 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-
 RewriteRule ^/?$ 						index.php [QSA]
-#RewriteRule ^api/v1/(.*)$ 				api/v1/api.php?request=$1 [QSA, NC, L]
 RewriteRule ^contact/?$ 				index.php?com=contact [QSA]
+RewriteRule ^setting/?$ 				index.php?com=setting [QSA]
+RewriteRule ^forgot-password/?$ 		forgot-password.php
 
-RewriteRule ^live/?$ 					index.php?com=live [QSA]
-RewriteRule ^live/view?$ 				index.php?com=live&viewtype=view [QSA]
-RewriteRule ^live/add?$ 				index.php?com=live&viewtype=add [QSA]
-RewriteRule ^live/schedule?$ 			index.php?com=live&viewtype=schedule [QSA]
+RewriteRule ^site/?$ 					index.php?com=site [QSA]
+RewriteRule ^site/view?$ 				index.php?com=site&viewtype=view [QSA]
+RewriteRule ^site/add?$ 					index.php?com=site&viewtype=add [QSA]
+RewriteRule ^site/view/([0-9]+)?$ 		index.php?com=site&viewtype=edit&id=$1 [QSA]
+RewriteRule ^site/new/?$ 				index.php?com=site&viewtype=new [QSA]
+
+RewriteRule ^site/pending/?$ 			index.php?com=site&viewtype=pending [QSA]
+RewriteRule ^site/waiting_public/?$ 		index.php?com=site&viewtype=waiting_public [QSA]
+RewriteRule ^site/public/?$ 				index.php?com=site&viewtype=public [QSA]
+RewriteRule ^site/deleted/?$ 			index.php?com=site&viewtype=deleted [QSA]
+RewriteRule ^site/takedown/?$ 			index.php?com=site&viewtype=takedown [QSA]
+RewriteRule ^site/return/?$ 				index.php?com=site&viewtype=return [QSA]
 
 RewriteRule ^content/?$ 					index.php?com=content [QSA]
 RewriteRule ^content/view?$ 				index.php?com=content&viewtype=view [QSA]
@@ -23,8 +31,6 @@ RewriteRule ^content/public/?$ 				index.php?com=content&viewtype=public [QSA]
 RewriteRule ^content/deleted/?$ 			index.php?com=content&viewtype=deleted [QSA]
 RewriteRule ^content/takedown/?$ 			index.php?com=content&viewtype=takedown [QSA]
 RewriteRule ^content/return/?$ 				index.php?com=content&viewtype=return [QSA]
-
-RewriteRule ^member/?$ 					index.php?com=member [QSA]
 
 RewriteRule ^user/?$ 							index.php?com=user [QSA]
 RewriteRule ^profile/?$ 						index.php?com=user&viewtype=profile
@@ -40,21 +46,7 @@ RewriteRule ^categories/add/?$ 				index.php?com=categories&viewtype=add [QSA]
 RewriteRule ^categories/edit/([0-9]+)?$ 	index.php?com=categories&viewtype=edit&id=$1 [QSA]
 RewriteRule ^categories/active/([0-9]+)?$ 	index.php?com=categories&viewtype=active&id=$1 [QSA]
 
-RewriteRule ^member/?$ 					index.php?com=member [QSA]
-RewriteRule ^member/add/?$ 				index.php?com=member&viewtype=add [QSA]
-RewriteRule ^member/edit/([0-9]+)?$ 	index.php?com=member&viewtype=edit&id=$1 [QSA]
-RewriteRule ^member/active/([0-9]+)?$ 	index.php?com=member&viewtype=active&id=$1 [QSA]
-RewriteRule ^member/changepass/([0-9]+)?$ 	index.php?com=member&viewtype=changepass&id=$1 [QSA]
 
-RewriteRule ^channel/?$ 					index.php?com=channel [QSA]
-RewriteRule ^channel/add/?$ 				index.php?com=channel&viewtype=add [QSA]
-RewriteRule ^channel/edit/([0-9]+)?$ 		index.php?com=channel&viewtype=edit&id=$1 [QSA]
-RewriteRule ^channel/active/([0-9]+)?$ 		index.php?com=channel&viewtype=active&id=$1 [QSA]
-
-
-
-RewriteRule ^setting/?$ 				index.php?com=setting [QSA]
-RewriteRule ^forgot-password/?$ 		forgot-password.php
 
 php_flag display_errors  on
 php_value upload_max_filesize 1024M
