@@ -1,19 +1,19 @@
 <?php
-define('OBJ_PAGE','VOD_TAKEDOWN');
+define('OBJ_PAGE','SITE_TIMEOUT');
 // Init variables
 $user=getInfo('username');
 $isAdmin=getInfo('isadmin');
 if($isAdmin==1){
-	$strWhere=" AND status=5 ";
+	$strWhere=" AND status=2 ";
 	$get_q = isset($_GET['q']) ? antiData($_GET['q']) : '';
-	$get_cate = isset($_GET['cate']) ? (int)antiData($_GET['cate']) : 0;
+	$get_par = isset($_GET['par']) ? antiData($_GET['par']) : '';
 
 	/*Gán strWhere*/
 	if($get_q!=''){
 		$strWhere.=" AND title LIKE '%".$get_q."%'";
 	}
-	if($get_cate!=0){
-		$strWhere.=" AND cat_id=".$get_cate;
+	if($get_par!=''){
+		$strWhere.=" AND path LIKE '".$get_par."%'";
 	}
 
 	/*Begin pagging*/
@@ -24,7 +24,7 @@ if($isAdmin==1){
 		$_SESSION['CUR_PAGE_'.OBJ_PAGE] = (int)$_POST['txtCurnpage'];
 	}
 
-	$total_rows=SysCount('tbl_content',$strWhere);
+	$total_rows=SysCount('tbl_sites',$strWhere);
 	$max_rows = 20;
 
 	if($_SESSION['CUR_PAGE_'.OBJ_PAGE] > ceil($total_rows/$max_rows)){
@@ -38,13 +38,13 @@ if($isAdmin==1){
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Bị gỡ xuống</h1>
+					<h1 class="m-0 text-dark">Hết hạn</h1>
 				</div><!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="<?php echo ROOTHOST;?>">Bảng điều khiển</a></li>
-						<li class="breadcrumb-item"><a href="<?php echo ROOTHOST.COMS;?>">Danh sách bài viết</a></li>
-						<li class="breadcrumb-item active">Bị gỡ xuống</li>
+						<li class="breadcrumb-item"><a href="<?php echo ROOTHOST.COMS;?>">Danh sách trang</a></li>
+						<li class="breadcrumb-item active">Hết hạn</li>
 					</ol>
 				</div><!-- /.col -->
 			</div><!-- /.row -->
@@ -65,13 +65,13 @@ if($isAdmin==1){
 						</div>
 						<div class='col-sm-3'>
 							<div class='form-group'>
-								<select class="form-control" name="cate" id="cbo_cate">
-									<option  value="">-- Chọn nhóm --</option>
-									<?php getListComboboxCategories(0,0); ?>
+								<select class="form-control" name="par" id="cbo_par">
+									<option value="">-- Chọn nhóm --</option>
+									<?php getListComboboxSites(0,0); ?>
 								</select>
 								<script type="text/javascript">
 									$(document).ready(function(){
-										cbo_Selected('cbo_cate', <?php echo $get_cate; ?>);
+										cbo_Selected('cbo_par', <?php echo $get_par; ?>);
 									});
 								</script>
 							</div>
@@ -86,13 +86,14 @@ if($isAdmin==1){
 						<thead>                  
 							<tr>
 								<th style="width: 10px">#</th>
+								<th style="width: 10px">Trash</th>
 								<th>Tiêu đề</th>
-								<th>Nhóm</th>
-								<th>Album</th>
-								<th>Kênh</th>
-								<th>Type</th>
+								<th>Tên miền</th>
+								<th>Phone</th>
+								<th>Email</th>
 								<th>Ngày tạo</th>
-								<th class="text-center">Chi tiết</th>
+								<th>Status</th>
+								<th>Chi tiết</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -100,42 +101,21 @@ if($isAdmin==1){
 							if($total_rows>0){
 								$star = ($cur_page - 1) * $max_rows;
 								$strWhere.=" ORDER BY cdate DESC LIMIT $star,".$max_rows;
-								$obj=SysGetList('tbl_content',array(), $strWhere, false);
+								$obj=SysGetList('tbl_sites',array(), $strWhere, false);
 								$stt=0;
 								while($r=$obj->Fetch_Assoc()){
 									$stt++;
-									$cates = SysGetList('tbl_categories', array('title'), ' AND id='.$r['cat_id']);
-									$cate = count($cates)>0 ? $cates[0] : [];
-									$cate_title = isset($cate['title']) ? $cate['title'] : '<i>N/A</i>';
-
-									$channels = SysGetList('tbl_channels', array('title'), ' AND id='.$r['chanel_id']);
-									$chanel = count($channels)>0 ? $channels[0] : [];
-									$chanel_title = isset($chanel['title']) ? $chanel['title'] : '<i>N/A</i>';
-
-									switch ($r['type']) {
-										case 1:
-										$type = 'Video';
-										break;
-										case 2:
-										$type = 'Audio';
-										break;
-										case 3:
-										$type = 'Text';
-										break;
-										default:
-										$type = 'Text';
-										break;
-									}
 									?>
 									<tr>
 										<td><?php echo $stt;?></td>
+										<td align="center"><a href="<?php echo ROOTHOST.COMS.'/trash/'.$r['id'];?>" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fa fa-trash cred"></i></a></td>
 										<td><?php echo $r['title'];?></td>
-										<td><?php echo $cate_title;?></td>
-										<td><?php echo $r['album_id'];?></td>
-										<td><?php echo $chanel_title;?></td>
-										<td><?php echo $type;?></td>
+										<td><?php echo $r['domain'];?></td>
+										<td><?php echo $r['phone'];?></td>
+										<td><?php echo $r['email'];?></td>
 										<td><?php echo date('d-m-Y H:i A', $r['cdate']);?></td>
-										<td class="text-center"><a href="<?php echo ROOTHOST.COMS.'/edit/'.$r['id'];?>?status=5"><i class="fas fa-edit cblue"></i></a></td>
+										<td><?php echo $r['status'];?></td>
+										<td align="center"><a href="<?php echo ROOTHOST.COMS.'/view/'.$r['id'];?>"><i class="fas fa-edit cblue"></i></a></td>
 									</tr>
 								<?php }
 							}else{

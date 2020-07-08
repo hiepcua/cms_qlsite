@@ -8,17 +8,13 @@ RewriteRule ^setting/?$ 				index.php?com=setting [QSA]
 RewriteRule ^forgot-password/?$ 		forgot-password.php
 
 RewriteRule ^site/?$ 					index.php?com=site [QSA]
-RewriteRule ^site/view?$ 				index.php?com=site&viewtype=view [QSA]
 RewriteRule ^site/add?$ 				index.php?com=site&viewtype=add [QSA]
 RewriteRule ^site/view/([0-9]+)?$ 		index.php?com=site&viewtype=edit&id=$1 [QSA]
 RewriteRule ^site/new/?$ 				index.php?com=site&viewtype=new [QSA]
-
-RewriteRule ^site/pending/?$ 			index.php?com=site&viewtype=pending [QSA]
-RewriteRule ^site/waiting_public/?$ 	index.php?com=site&viewtype=waiting_public [QSA]
 RewriteRule ^site/public/?$ 			index.php?com=site&viewtype=public [QSA]
+RewriteRule ^site/timeout/?$ 			index.php?com=site&viewtype=timeout [QSA]
+RewriteRule ^site/trash/([0-9]+)?$ 		index.php?com=site&viewtype=trash&id=$1 [QSA]
 RewriteRule ^site/deleted/?$ 			index.php?com=site&viewtype=deleted [QSA]
-RewriteRule ^site/takedown/?$ 			index.php?com=site&viewtype=takedown [QSA]
-RewriteRule ^site/return/?$ 			index.php?com=site&viewtype=return [QSA]
 
 RewriteRule ^content/?$ 					index.php?com=content [QSA]
 RewriteRule ^content/view?$ 				index.php?com=content&viewtype=view [QSA]
