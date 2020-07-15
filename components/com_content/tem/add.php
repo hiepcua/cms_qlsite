@@ -284,41 +284,51 @@ $__action = $_per_tbt;
 		$('#body').addClass('sidebar-collapse');
 		$('#frm_action').submit(function(){
 			return validForm();
-		})
-
-		$('#txt_sapo').summernote({
-			placeholder: 'Mô tả ...',
-			height: 100,
-			toolbar: [
-			['style', ['style']],
-			['font', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
-			['fontname', ['fontname']],
-			['fontsize', ['fontsize']],
-			['color', ['color']],
-			['para', ['ul', 'ol', 'paragraph']],
-			['height', ['height']],
-			['table', ['table']],
-			['insert', ['link', 'picture', 'video', 'hr']],
-			['view', ['fullscreen', 'codeview', 'help']],
-			],
 		});
 
-		$('#txt_fulltext').summernote({
-			placeholder: 'Mô tả ...',
+		tinymce.init({
+			selector:'#txt_fulltext',
 			height: 500,
-			toolbar: [
-			['style', ['style']],
-			['font', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
-			['fontname', ['fontname']],
-			['fontsize', ['fontsize']],
-			['color', ['color']],
-			['para', ['ul', 'ol', 'paragraph']],
-			['height', ['height']],
-			['table', ['table']],
-			['insert', ['link', 'picture', 'video', 'hr']],
-			['view', ['fullscreen', 'codeview', 'help']],
-			],
+			plugins: [
+    'link image imagetools table spellchecker lists'
+  ],
+  contextmenu: "link image imagetools table spellchecker lists",
+  content_css: '//www.tiny.cloud/css/codepen.min.css'
 		});
+
+		// $('#txt_sapo').summernote({
+		// 	placeholder: 'Mô tả ...',
+		// 	height: 100,
+		// 	toolbar: [
+		// 	['style', ['style']],
+		// 	['font', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
+		// 	['fontname', ['fontname']],
+		// 	['fontsize', ['fontsize']],
+		// 	['color', ['color']],
+		// 	['para', ['ul', 'ol', 'paragraph']],
+		// 	['height', ['height']],
+		// 	['table', ['table']],
+		// 	['insert', ['link', 'picture', 'video', 'hr']],
+		// 	['view', ['fullscreen', 'codeview', 'help']],
+		// 	],
+		// });
+
+		// $('#txt_fulltext').summernote({
+		// 	placeholder: 'Mô tả ...',
+		// 	height: 500,
+		// 	toolbar: [
+		// 	['style', ['style']],
+		// 	['font', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
+		// 	['fontname', ['fontname']],
+		// 	['fontsize', ['fontsize']],
+		// 	['color', ['color']],
+		// 	['para', ['ul', 'ol', 'paragraph']],
+		// 	['height', ['height']],
+		// 	['table', ['table']],
+		// 	['insert', ['link', 'picture', 'video', 'hr']],
+		// 	['view', ['fullscreen', 'codeview', 'help']],
+		// 	],
+		// });
 
 		$('.widget_control .btn_status').click(function(){
 			var key = $(this).attr('data-key');
