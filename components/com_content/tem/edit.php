@@ -9,7 +9,6 @@ $GetID = isset($_GET['id']) ? (int)$_GET["id"] : 0;
 if(isset($_POST['txt_name']) && $_POST['txt_name']!=='') {
 	$Title 			= isset($_POST['txt_name']) ? addslashes($_POST['txt_name']) : '';
 	$Sapo 			= isset($_POST['txt_sapo']) ? addslashes($_POST['txt_sapo']) : '';
-	$Note 			= isset($_POST['txt_note']) ? addslashes($_POST['txt_note']) : '';
 	$Cate 			= isset($_POST['cbo_cate']) ? (int)$_POST['cbo_cate'] : 0;
 	$Album 			= isset($_POST['cbo_album']) ? (int)$_POST['cbo_album'] : 0;
 	$Chanel 		= isset($_POST['cbo_chanel']) ? (int)$_POST['cbo_chanel'] : 0;
@@ -38,7 +37,6 @@ if(isset($_POST['txt_name']) && $_POST['txt_name']!=='') {
 	$arr['alias'] = un_unicode($Title);
 	$arr['sapo'] = $Sapo;
 	$arr['fulltext'] = $Fulltext;
-	$arr['note'] = $Note;
 	$arr['cat_id'] = $Cate;
 	$arr['album_id'] = $Album;
 	$arr['chanel_id'] = $Chanel;
@@ -331,11 +329,6 @@ if(count($audio_sourses) > 0){
 							<div class="form-group">
 								<label>Sapo</label>
 								<textarea class="form-control" id="txt_sapo" name="txt_sapo" placeholder="Sapo..." rows="3"><?php echo $row['sapo']; ?></textarea>
-							</div>
-
-							<div class="form-group">
-								<label>Note</label>
-								<textarea class="form-control" id="txt_note" name="txt_note" placeholder="Note..." rows="3"><?php echo $row['note']; ?></textarea>
 							</div>
 							
 							<div class="form-group" id="type_text" style="<?php if($_type==3) echo 'display: block;';?>">
