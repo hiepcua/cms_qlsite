@@ -39,7 +39,7 @@ $isAdmin=getInfo('isadmin');
 						<div class="icon">
 							<i class="ion ion-bag"></i>
 						</div>
-						<a href="<?php echo ROOTHOST;?>class" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+						<a href="<?php echo ROOTHOST;?>site" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 				<!-- ./col -->
@@ -53,7 +53,7 @@ $isAdmin=getInfo('isadmin');
 						<div class="icon">
 							<i class="ion ion-pie-graph"></i>
 						</div>
-						<a href="<?php echo ROOTHOST;?>schedule" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+						<a href="<?php echo ROOTHOST;?>content" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 				<!-- ./col -->
@@ -68,7 +68,7 @@ $isAdmin=getInfo('isadmin');
 						<div class="icon">
 							<i class="ion ion-stats-bars"></i>
 						</div>
-						<a href="<?php echo ROOTHOST;?>member" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+						<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 				<!-- ./col -->
@@ -82,7 +82,7 @@ $isAdmin=getInfo('isadmin');
 						<div class="icon">
 							<i class="ion ion-person-add"></i>
 						</div>
-						<a href="<?php echo ROOTHOST;?>member" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+						<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 			</div>

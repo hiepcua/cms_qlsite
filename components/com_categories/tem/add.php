@@ -7,6 +7,7 @@ $file='';
 
 if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	$Title 			= isset($_POST['txt_name']) ? addslashes($_POST['txt_name']) : '';
+	$Intro 			= isset($_POST['txt_intro']) ? addslashes($_POST['txt_intro']) : '';
 	$Meta_title 	= isset($_POST['meta_title']) ? addslashes($_POST['meta_title']) : '';
 	$Meta_desc 		= isset($_POST['meta_desc']) ? addslashes($_POST['meta_desc']) : '';
 	$Par_id 		= isset($_POST['cbo_par']) ? (int)$_POST['cbo_par'] : 0;
@@ -21,6 +22,7 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	$arr['title'] = $Title;
 	$arr['par_id'] = $Par_id;
 	$arr['alias'] = un_unicode($Title);
+	$arr['intro'] = $Intro;
 	$arr['meta_title'] = $Meta_title;
 	$arr['meta_desc'] = $Meta_desc;
 	$arr['image'] = $file;
@@ -47,13 +49,13 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1 class="m-0 text-dark">Thêm mới danh mục VOD</h1>
+				<h1 class="m-0 text-dark">Thêm mới chuyên mục</h1>
 			</div><!-- /.col -->
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST;?>">Bảng điều khiển</a></li>
-					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST.COMS;?>">Danh sách danh mục VOD</a></li>
-					<li class="breadcrumb-item active">Thêm mới danh mục VOD</li>
+					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST.COMS;?>">Danh sách chuyên mục</a></li>
+					<li class="breadcrumb-item active">Thêm mới chuyên mục</li>
 				</ol>
 			</div><!-- /.col -->
 		</div><!-- /.row -->
@@ -100,6 +102,11 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 						<div id="response_img">
 							<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
 						</div>
+					</div>
+
+					<div class="form-group">
+						<label>Mô tả</label>
+						<textarea class="form-control" name="txt_intro" placeholder="Mô tả về chuyên mục..." rows="2"></textarea>
 					</div>
 
 					<div class="form-group">

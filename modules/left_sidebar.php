@@ -129,7 +129,7 @@ $isAdmin=getInfo('isadmin');
 		<li class="nav-item has-treeview">
 			<a href="javascript:void(0);" class="nav-link logout">
 				<i class="nav-icon fas fa-sign-out-alt"></i>
-				<p>Logout </p>
+				<p>Đăng xuất </p>
 			</a>
 		</li>
 	</ul>

@@ -9,7 +9,7 @@ RewriteRule ^forgot-password/?$ 		forgot-password.php
 
 RewriteRule ^site/?$ 					index.php?com=site [QSA]
 RewriteRule ^site/add?$ 				index.php?com=site&viewtype=add [QSA]
-RewriteRule ^site/view/([0-9]+)?$ 		index.php?com=site&viewtype=edit&id=$1 [QSA]
+RewriteRule ^site/view/([0-9]+)?$ 		index.php?com=site&viewtype=view&id=$1 [QSA]
 RewriteRule ^site/new/?$ 				index.php?com=site&viewtype=new [QSA]
 RewriteRule ^site/public/?$ 			index.php?com=site&viewtype=public [QSA]
 RewriteRule ^site/timeout/?$ 			index.php?com=site&viewtype=timeout [QSA]

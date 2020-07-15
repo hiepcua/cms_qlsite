@@ -215,7 +215,7 @@ if(count($audio_sourses) > 0){
 		<div id='action'>
 			<div class="card">
 				<form name="frm_action" id="frm_action" action="" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="txtid" value="<?php echo $row['GetID'];?>">
+					<input type="hidden" name="txtid" value="<?php echo $GetID;?>">
 					<input type="hidden" id="txt_status" name="txt_status" value="">
 					<div class="row">
 						<div class="col-md-9">
