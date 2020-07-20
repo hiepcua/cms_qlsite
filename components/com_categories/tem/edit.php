@@ -59,6 +59,9 @@ if(count($res_children) >0){
 		$arr_childs[] = $value['id'];
 	}
 }
+
+$sites = SysGetList('tbl_sites', array('title'), "AND id=".$row['site_id']);
+$site = $sites[0];
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -100,21 +103,29 @@ if(count($res_children) >0){
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title'];?>" placeholder="Tiêu đề VOD">
+								<label>Trang</label><font color="red">*</font>
+								<input type="text" name="txt_site" value="<?php echo $site['title'];?>" readonly class="form-control">
 							</div>
 						</div>
 						<div class="col-md-6">
-							<label>Nhóm cha</label>
-							<select class="form-control" name="cbo_par" id="cbo_par">
-								<option value="0">-- Chọn một --</option>
-								<?php getListComboboxCategories(0,0, $arr_childs);?>
-							</select>
-							<script type="text/javascript">
-								$(document).ready(function(){
-									cbo_Selected('cbo_par', <?php echo $row['par_id']; ?>);
-								});
-							</script>
+							<div class="form-group">
+								<label>Nhóm cha</label>
+								<select class="form-control" name="cbo_par" id="cbo_par">
+									<option value="0">-- Chọn một --</option>
+									<?php getListComboboxCategories(0,0, $arr_childs, $row['site_id']);?>
+								</select>
+								<script type="text/javascript">
+									$(document).ready(function(){
+										cbo_Selected('cbo_par', <?php echo $row['par_id']; ?>);
+									});
+								</script>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
+								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title'];?>" placeholder="Tiêu đề chuyên mục">
+							</div>
 						</div>
 					</div>
 

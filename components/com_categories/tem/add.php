@@ -11,6 +11,7 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	$Meta_title 	= isset($_POST['meta_title']) ? addslashes($_POST['meta_title']) : '';
 	$Meta_desc 		= isset($_POST['meta_desc']) ? addslashes($_POST['meta_desc']) : '';
 	$Par_id 		= isset($_POST['cbo_par']) ? (int)$_POST['cbo_par'] : 0;
+	$Site_id 		= isset($_POST['cbo_site']) ? (int)$_POST['cbo_site'] : 0;
 
 	if(isset($_FILES['txt_thumb']) && $_FILES['txt_thumb']['size'] > 0){
 		$save_path 	= "medias/categories/";
@@ -21,6 +22,7 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	$arr=array();
 	$arr['title'] = $Title;
 	$arr['par_id'] = $Par_id;
+	$arr['site_id'] = $Site_id;
 	$arr['alias'] = un_unicode($Title);
 	$arr['intro'] = $Intro;
 	$arr['meta_title'] = $Meta_title;
@@ -83,24 +85,34 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 					<div class="mess"></div>
 					<div class="row">
 						<div class="col-md-6">
+							<label>Trang</label><font color="red">*</font>
+							<select class="form-control" name="cbo_site" id="cbo_site" onchange="changeSite(this)">
+								<option value="0">-- Chọn một --</option>
+								<?php getListComboboxSites(0,0);?>
+							</select>
+						</div>
+						<div class="col-md-6">
 							<div class="form-group">
-								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tiêu đề VOD">
+								<label>Nhóm cha</label>
+								<select class="form-control" name="cbo_par" id="cbo_par">
+									<option value="0">-- Chọn một --</option>
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<label>Nhóm cha</label>
-							<select class="form-control" name="cbo_par" id="cbo_par">
-								<option value="0">-- Chọn một --</option>
-								<?php getListComboboxCategories(0,0);?>
-							</select>
+							<div class="form-group">
+								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
+								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tiêu đề chuyên mục">
+							</div>
 						</div>
-					</div>
-
-					<div class='form-group'>
-						<label>Ảnh</label><small> (Dung lượng < 10MB)</small>
-						<div id="response_img">
-							<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
+					
+						<div class="col-md-6">
+							<div class='form-group'>
+								<label>Ảnh</label><small> (Dung lượng < 10MB)</small>
+								<div id="response_img">
+									<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
+								</div>
+							</div>
 						</div>
 					</div>
 
@@ -133,8 +145,39 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	$(document).ready(function(){
 		$('#frm_action').submit(function(){
 			return validForm();
-		})
+		});
 	});
+
+	function changeSite(){
+		var site_id = $('#cbo_site').val();
+		$.post('<?php echo ROOTHOST;?>ajaxs/categories/getCategoriesBySiteId.php', {'id': site_id}, function(req){
+			if(req !== '0'){
+				var html="<option value='0'>-- Root --</option>";
+				var res = JSON.parse(req);
+				for (const property in res) {
+					var item = res[property];
+					html+= "<option value='"+item['id']+"'>"+item['title']+"</option>";
+
+					if(item['childs'].length >0){
+						for (const pr in item['childs']) {
+							var char = "";
+							var childs = item['childs'][pr];
+
+							var lv = childs['path'].split('_');
+							if (lv.length>0) {
+								for(var i_lv=0; i_lv < lv.length; i_lv++)
+									char+="|-----";
+							}
+							html+= "<option value='"+childs['id']+"'>"+char+childs['title']+"</option>";
+						}
+					}
+				}
+				$('#cbo_par').html(html);
+			}else{
+				console.log('err');
+			}
+		});
+	}
 
 	function validForm(){
 		var flag = true;
