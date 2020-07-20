@@ -152,7 +152,7 @@ switch ($_status) {
 		array("id" => 3, "name" => "Chờ xuất bản", "class" => "blue"),
 		array("id" => 4, "name" => "Xuất bản", "class" => "blue")
 	);
-	$__page_title = "Sửa VOD";
+	$__page_title = "Sửa bài viết";
 	break;
 }
 
@@ -228,7 +228,7 @@ if(count($audio_sourses) > 0){
 							</div><hr>
 							<div  class="form-group">
 								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title']; ?>" placeholder="Tiêu đề VOD">
+								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title']; ?>" placeholder="Tiêu đề bài viết">
 							</div>
 
 							<div class='form-group'>
