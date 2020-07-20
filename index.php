@@ -50,6 +50,9 @@ $bodyClass=isLogin()?'sidebar-mini layout-fixed':'login-page'
     <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/plugins/summernote/summernote-bs4.css">
     <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <script src="<?php echo ROOTHOST;?>global/plugins/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    
     <script src="<?php echo ROOTHOST;?>global/plugins/jquery/jquery.min.js"></script>
     <script src="<?php echo ROOTHOST;?>global/plugins/jquery-ui/jquery-ui.min.js"></script>
 </head>
