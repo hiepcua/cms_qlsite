@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2020-07-08 17:53:38
+Date: 2020-07-20 16:48:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,23 +22,27 @@ DROP TABLE IF EXISTS `tbl_categories`;
 CREATE TABLE `tbl_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `par_id` int(11) DEFAULT NULL,
+  `site_id` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `alias` varchar(255) DEFAULT NULL,
+  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `meta_title` varchar(255) DEFAULT NULL,
   `meta_desc` text DEFAULT NULL,
   `isactive` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_categories
 -- ----------------------------
-INSERT INTO `tbl_categories` VALUES ('1', '0', 'Nhóm 1', 'nhom-1', '1', null, null, null, '1');
-INSERT INTO `tbl_categories` VALUES ('2', '0', 'Nhóm 2', 'nhom-2', '2', null, null, null, '1');
-INSERT INTO `tbl_categories` VALUES ('3', '2', 'Nhóm 3', 'nhom-3', '2_3', '', '', '', '1');
-INSERT INTO `tbl_categories` VALUES ('4', '3', 'Nhóm 4', 'nhom-4', '2_3_4', '', 'Hehe', 'Haha', '1');
+INSERT INTO `tbl_categories` VALUES ('1', '0', '1', 'Nhóm 1', 'nhom-1', null, '1', null, null, null, '1');
+INSERT INTO `tbl_categories` VALUES ('2', '0', '1', 'Nhóm 2', 'nhom-2', null, '2', null, null, null, '1');
+INSERT INTO `tbl_categories` VALUES ('3', '2', '1', 'Nhóm 3', 'nhom-3', null, '2_3', '', '', '', '1');
+INSERT INTO `tbl_categories` VALUES ('4', '3', '1', 'Nhóm 4', 'nhom-4', null, '2_3_4', '', 'Hehe', 'Haha', '1');
+INSERT INTO `tbl_categories` VALUES ('5', '0', '3', 'Nhóm 5', 'nhom-5', null, '5', null, null, null, '1');
+INSERT INTO `tbl_categories` VALUES ('6', '5', '3', 'Chào buổi sáng', 'chao-buoi-sang', 'Chào buổi sáng', '5_6', '', 'Chào buổi sáng', 'Chào buổi sáng', '1');
 
 -- ----------------------------
 -- Table structure for tbl_content
@@ -150,7 +154,7 @@ CREATE TABLE `tbl_sites` (
 -- ----------------------------
 INSERT INTO `tbl_sites` VALUES ('1', '0', '1', '940af854a71cb49739a9353bd412086c', 'Ecohub1', 'ecohub.asia', '0912334486', 'quoctrungbk@gmail.com', 'medias/sites/ctv_guide_web_banner.jpg', null, 'Ecohub - Phần mềm họp trực tuyến', 'Ecohub - Phần mềm họp trực tuyến', '', '&lt;h3 style=\'font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 700; font-size: 15px; text-transform: uppercase; text-align: center; color: rgb(44, 83, 158) !important;\'&gt;L&Yacute; DO RA ĐỜI V&Agrave; MỤC TI&Ecirc;U HƯỚNG TỚI CỦA CLASSHUB L&Agrave; G&Igrave;?&lt;/h3&gt;\n&lt;div class=&quot;desc&quot; style=\'color: rgb(33, 37, 41); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 16px;\'&gt;Cho d&ugrave; bạn đang sở hữu Doanh nghiệp gi&aacute;o dục ở bất cứ m&ocirc; h&igrave;nh n&agrave;o, CLASSHUB sẽ lu&ocirc;n l&agrave;m bạn h&agrave;i l&ograve;ng với những t&iacute;nh năng Ưu việt, vượt trội, xứng đ&aacute;ng l&agrave; Phần mềm số 1 tại Việt Nam!&lt;/div&gt;', '', '', '', '', '1594183683', null, '0', '0', '1');
 INSERT INTO `tbl_sites` VALUES ('2', '0', '2', '940af854a71cb49739a9353bd412086c', 'Ecohub2', 'ecohub.asia', '0912334486', 'quoctrungbk@gmail.com', 'medias/sites/ctv_guide_web_banner_inx.jpg', null, 'Ecohub - Phần mềm họp trực tuyến', 'Ecohub - Phần mềm họp trực tuyến', '', '&lt;h3 style=\'font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 700; font-size: 15px; text-transform: uppercase; text-align: center; color: rgb(44, 83, 158) !important;\'&gt;L&Yacute; DO RA ĐỜI V&Agrave; MỤC TI&Ecirc;U HƯỚNG TỚI CỦA CLASSHUB L&Agrave; G&Igrave;?&lt;/h3&gt;\n&lt;div class=&quot;desc&quot; style=\'color: rgb(33, 37, 41); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 16px;\'&gt;Cho d&ugrave; bạn đang sở hữu Doanh nghiệp gi&aacute;o dục ở bất cứ m&ocirc; h&igrave;nh n&agrave;o, CLASSHUB sẽ lu&ocirc;n l&agrave;m bạn h&agrave;i l&ograve;ng với những t&iacute;nh năng Ưu việt, vượt trội, xứng đ&aacute;ng l&agrave; Phần mềm số 1 tại Việt Nam!&lt;/div&gt;', '', '', '', '', '1594183710', null, '0', '1', '1');
-INSERT INTO `tbl_sites` VALUES ('3', '0', '3', '940af854a71cb49739a9353bd412086c', 'Ecohub3', 'ecohub.asia', '0912334486', 'quoctrungbk@gmail.com', 'medias/sites/ctv_guide_web_banner_icj.jpg', null, 'Ecohub - Phần mềm họp trực tuyến', 'Ecohub - Phần mềm họp trực tuyến', '', '&lt;h3 style=\'font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 700; font-size: 15px; text-transform: uppercase; text-align: center; color: rgb(44, 83, 158) !important;\'&gt;L&Yacute; DO RA ĐỜI V&Agrave; MỤC TI&Ecirc;U HƯỚNG TỚI CỦA CLASSHUB L&Agrave; G&Igrave;?&lt;/h3&gt;\n&lt;div class=&quot;desc&quot; style=\'color: rgb(33, 37, 41); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 16px;\'&gt;Cho d&ugrave; bạn đang sở hữu Doanh nghiệp gi&aacute;o dục ở bất cứ m&ocirc; h&igrave;nh n&agrave;o, CLASSHUB sẽ lu&ocirc;n l&agrave;m bạn h&agrave;i l&ograve;ng với những t&iacute;nh năng Ưu việt, vượt trội, xứng đ&aacute;ng l&agrave; Phần mềm số 1 tại Việt Nam!&lt;/div&gt;', '', '', '', '', '1594183731', null, '1', '0', '1');
+INSERT INTO `tbl_sites` VALUES ('3', '1', '3', '940af854a71cb49739a9353bd412086c', 'Ecohub3', 'ecohub.asia', '0912334486', 'quoctrungbk@gmail.com', 'medias/sites/ctv_guide_web_banner_icj.jpg', null, 'Ecohub - Phần mềm họp trực tuyến', 'Ecohub - Phần mềm họp trực tuyến', '', '&lt;h3 style=\'font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 700; font-size: 15px; text-transform: uppercase; text-align: center; color: rgb(44, 83, 158) !important;\'&gt;L&Yacute; DO RA ĐỜI V&Agrave; MỤC TI&Ecirc;U HƯỚNG TỚI CỦA CLASSHUB L&Agrave; G&Igrave;?&lt;/h3&gt;\n&lt;div class=&quot;desc&quot; style=\'color: rgb(33, 37, 41); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 16px;\'&gt;Cho d&ugrave; bạn đang sở hữu Doanh nghiệp gi&aacute;o dục ở bất cứ m&ocirc; h&igrave;nh n&agrave;o, CLASSHUB sẽ lu&ocirc;n l&agrave;m bạn h&agrave;i l&ograve;ng với những t&iacute;nh năng Ưu việt, vượt trội, xứng đ&aacute;ng l&agrave; Phần mềm số 1 tại Việt Nam!&lt;/div&gt;', '', '', '', '', '1594183731', null, '1', '0', '1');
 
 -- ----------------------------
 -- Table structure for tbl_users
@@ -212,7 +216,7 @@ CREATE TABLE `tbl_user_login` (
   `isactive` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `idx` (`isactive`,`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of tbl_user_login
@@ -223,4 +227,12 @@ INSERT INTO `tbl_user_login` VALUES ('3', 'tranviethiepdz@gmail.com', '159354232
 INSERT INTO `tbl_user_login` VALUES ('4', 'tranviethiepdz@gmail.com', '1593699816', '1593699816', '0');
 INSERT INTO `tbl_user_login` VALUES ('5', 'tranviethiepdz@gmail.com', '1594054321', '1594054321', '0');
 INSERT INTO `tbl_user_login` VALUES ('6', 'tranviethiepdz@gmail.com', '1594178951', '1594178951', '0');
-INSERT INTO `tbl_user_login` VALUES ('7', 'tranviethiepdz@gmail.com', '1594200572', '1594200572', '1');
+INSERT INTO `tbl_user_login` VALUES ('7', 'tranviethiepdz@gmail.com', '1594200572', '1594200572', '0');
+INSERT INTO `tbl_user_login` VALUES ('8', 'tranviethiepdz@gmail.com', '1594266255', '1594266255', '0');
+INSERT INTO `tbl_user_login` VALUES ('9', 'tranviethiepdz@gmail.com', '1594266289', '1594266289', '0');
+INSERT INTO `tbl_user_login` VALUES ('10', 'tranviethiepdz@gmail.com', '1594784545', '1594784545', '0');
+INSERT INTO `tbl_user_login` VALUES ('11', 'tranviethiepdz@gmail.com', '1594788998', '1594788998', '0');
+INSERT INTO `tbl_user_login` VALUES ('12', 'tranviethiepdz@gmail.com', '1594956260', '1594956260', '0');
+INSERT INTO `tbl_user_login` VALUES ('13', 'tranviethiepdz@gmail.com', '1595215716', '1595215716', '0');
+INSERT INTO `tbl_user_login` VALUES ('14', 'tranviethiepdz@gmail.com', '1595218758', '1595218758', '0');
+INSERT INTO `tbl_user_login` VALUES ('15', 'tranviethiepdz@gmail.com', '1595228654', '1595228654', '1');
