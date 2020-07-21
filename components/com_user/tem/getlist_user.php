@@ -37,7 +37,7 @@ function printChilds($array, $id){
 		<div class="widget-tree">
 			<header class="header">
 				<span class="widget-icon"> <i class="fa fa-tree"></i> </span>
-				<h2>Nhóm người dùng</h2>
+				<h2><a href="<?php echo ROOTHOST.COMS;?>" style="color:#fff;">Nhóm người dùng</a></h2>
 			</header>
 			<div id="widget_tree" class="tree smart-form">
 				<ul role="group">

@@ -219,7 +219,7 @@ $__action = $_per_tbt;
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
-								<label>Nhóm<font color="red"><font color="red">*</font></font></label>
+								<label>Chuyên mục<font color="red"><font color="red">*</font></font></label>
 								<select class="form-control" name="cbo_cate" id="cbo_cate">
 									<option value="0">-- Chọn một --</option>
 									<?php getListComboboxCategories(0, 0); ?>
@@ -238,7 +238,7 @@ $__action = $_per_tbt;
 							</div>
 
 							<div class="form-group">
-								<label>Chanel</label>
+								<label>Event</label>
 								<select class="form-control" name="cbo_chanel" id="cbo_chanel">
 									<option value="0">-- Chọn một --</option>
 									<?php

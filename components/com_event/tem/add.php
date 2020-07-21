@@ -10,63 +10,28 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	$Intro 			= isset($_POST['txt_intro']) ? addslashes($_POST['txt_intro']) : '';
 	$Meta_title 	= isset($_POST['meta_title']) ? addslashes($_POST['meta_title']) : '';
 	$Meta_desc 		= isset($_POST['meta_desc']) ? addslashes($_POST['meta_desc']) : '';
-	$Par_id 		= isset($_POST['cbo_par']) ? (int)$_POST['cbo_par'] : 0;
-	$Site_id 		= isset($_POST['cbo_site']) ? (int)$_POST['cbo_site'] : 0;
+	$Cate_id 		= isset($_POST['cbo_cate']) ? (int)$_POST['cbo_cate'] : 0;
 
 	if(isset($_FILES['txt_thumb']) && $_FILES['txt_thumb']['size'] > 0){
-		$save_path 	= "medias/categories/";
+		$save_path 	= "medias/events/";
 		$obj_upload->setPath($save_path);
 		$file = $save_path.$obj_upload->UploadFile("txt_thumb", $save_path);
 	}
 
 	$arr=array();
 	$arr['title'] = $Title;
-	$arr['par_id'] = $Par_id;
-	$arr['site_id'] = $Site_id;
-	$arr['alias'] = un_unicode($Title);
+	$arr['cate_id'] = $Cate_id;
+	$arr['code'] = un_unicode($Title);
 	$arr['intro'] = $Intro;
 	$arr['meta_title'] = $Meta_title;
 	$arr['meta_desc'] = $Meta_desc;
 	$arr['image'] = $file;
 
-	$result = SysAdd('tbl_categories', $arr);
+	$result = SysAdd('tbl_events', $arr);
 	if($result){
-		$rs_parent = SysGetList('tbl_categories', array("path"), " AND id=".$Par_id);
-		if(count($rs_parent)>0){
-			$rs_parent = $rs_parent[0];
-			$path = $rs_parent['path'].'_'.$result;
-		}else{
-			$path = $result;
-		}
-
-		SysEdit('tbl_categories', array('path' => $path), " id=".$result);
 		$_SESSION['flash'.'com_'.COMS] = 1;
 	}else{
 		$_SESSION['flash'.'com_'.COMS] = 0;
-	}
-}
-
-function getListComboboxSites($parid=0, $level=0, $childs=array()){
-	$sql="SELECT * FROM tbl_sites WHERE `par_id`='$parid' AND `isactive`='1' ";
-	$objdata=new CLS_MYSQL();
-	$objdata->Query($sql);
-	$char="";
-	if($level!=0){
-		for($i=0;$i<$level;$i++)
-			$char.="|-----";
-	}
-	if($objdata->Num_rows()<=0) return;
-	while($rows=$objdata->Fetch_Assoc()){
-		$id=$rows['id'];
-		$parid=$rows['par_id'];
-		$title=$rows['title'];
-		if(in_array($id, $childs)){
-			echo "<option value='$id' disabled='true' class='disabled'>$char $title</option>";
-		}else{
-			echo "<option value='$id'>$char $title</option>";
-		}
-		$nextlevel=$level+1;
-		getListComboboxSites($id,$nextlevel, $childs);
 	}
 }
 ?>
@@ -80,8 +45,8 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST;?>">Bảng điều khiển</a></li>
-					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST.COMS;?>">Danh sách chuyên mục</a></li>
-					<li class="breadcrumb-item active">Thêm mới chuyên mục</li>
+					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST.COMS;?>">Danh sách sự kiện</a></li>
+					<li class="breadcrumb-item active">Thêm mới sự kiện</li>
 				</ol>
 			</div><!-- /.col -->
 		</div><!-- /.row -->
@@ -109,27 +74,20 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 					<div class="mess"></div>
 					<div class="row">
 						<div class="col-md-6">
-							<label>Trang</label><font color="red">*</font>
-							<select class="form-control" name="cbo_site" id="cbo_site" onchange="changeSite(this)">
+							<div class="form-group">
+								<label>Tiêu đề<font color="red">*</font></label>
+								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tiêu đề sự kiện">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<label>Chuyên mục</label>
+							<select class="form-control" name="cbo_cate" id="cbo_cate" onchange="changeSite(this)">
 								<option value="0">-- Chọn một --</option>
-								<?php getListComboboxSites(0,0);?>
+								<?php getListComboboxCategories(0,0);?>
 							</select>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Nhóm cha</label>
-								<select class="form-control" name="cbo_par" id="cbo_par">
-									<option value="0">-- Chọn một --</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tiêu đề chuyên mục">
-							</div>
-						</div>
-					
+						
 						<div class="col-md-6">
 							<div class='form-group'>
 								<label>Ảnh</label><small> (Dung lượng < 10MB)</small>
@@ -142,7 +100,7 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 
 					<div class="form-group">
 						<label>Mô tả</label>
-						<textarea class="form-control" name="txt_intro" placeholder="Mô tả về chuyên mục..." rows="2"></textarea>
+						<textarea class="form-control" name="txt_intro" placeholder="Mô tả về sự kiện..." rows="2"></textarea>
 					</div>
 
 					<div class="form-group">
@@ -171,37 +129,6 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 			return validForm();
 		});
 	});
-
-	function changeSite(){
-		var site_id = $('#cbo_site').val();
-		$.post('<?php echo ROOTHOST;?>ajaxs/categories/getCategoriesBySiteId.php', {'id': site_id}, function(req){
-			if(req !== '0'){
-				var html="<option value='0'>-- Root --</option>";
-				var res = JSON.parse(req);
-				for (const property in res) {
-					var item = res[property];
-					html+= "<option value='"+item['id']+"'>"+item['title']+"</option>";
-
-					if(item['childs'].length >0){
-						for (const pr in item['childs']) {
-							var char = "";
-							var childs = item['childs'][pr];
-
-							var lv = childs['path'].split('_');
-							if (lv.length>0) {
-								for(var i_lv=0; i_lv < lv.length; i_lv++)
-									char+="|-----";
-							}
-							html+= "<option value='"+childs['id']+"'>"+char+childs['title']+"</option>";
-						}
-					}
-				}
-				$('#cbo_par').html(html);
-			}else{
-				console.log('err');
-			}
-		});
-	}
 
 	function validForm(){
 		var flag = true;

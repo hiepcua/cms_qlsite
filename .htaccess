@@ -32,15 +32,37 @@ RewriteRule ^user/?$ 							index.php?com=user [QSA]
 RewriteRule ^profile/?$ 						index.php?com=user&viewtype=profile
 RewriteRule ^changepass/?$ 						index.php?com=user&viewtype=changepass
 RewriteRule ^user/getlist_user/([0-9]+)?$ 		index.php?com=user&viewtype=getlist_user&id=$1 [QSA]
+RewriteRule ^user/add/?$ 						index.php?com=user&viewtype=add
 
 RewriteRule ^groupuser/?$ 				index.php?com=groupuser [QSA]
-RewriteRule ^groupuser/add/?$ 			index.php?com=groupuser&viewtype=add [QSA]
+RewriteRule ^groupuser/add/?$ 			index.php?com=groupuser&viewtype=add 
 RewriteRule ^groupuser/edit/([0-9]+)?$ 	index.php?com=groupuser&viewtype=edit&id=$1 [QSA]
 
 RewriteRule ^categories/?$ 					index.php?com=categories [QSA]
-RewriteRule ^categories/add/?$ 				index.php?com=categories&viewtype=add [QSA]
+RewriteRule ^categories/add/?$ 				index.php?com=categories&viewtype=add 
 RewriteRule ^categories/edit/([0-9]+)?$ 	index.php?com=categories&viewtype=edit&id=$1 [QSA]
 RewriteRule ^categories/active/([0-9]+)?$ 	index.php?com=categories&viewtype=active&id=$1 [QSA]
+
+RewriteRule ^event/?$ 					index.php?com=event [QSA]
+RewriteRule ^event/add/?$ 				index.php?com=event&viewtype=add 
+RewriteRule ^event/edit/([0-9]+)?$ 		index.php?com=event&viewtype=edit&id=$1 [QSA]
+RewriteRule ^event/active/([0-9]+)?$ 	index.php?com=event&viewtype=active&id=$1 [QSA]
+RewriteRule ^event/ishot/([0-9]+)?$ 	index.php?com=event&viewtype=ishot&id=$1 [QSA]
+RewriteRule ^event/delete/([0-9]+)?$ 	index.php?com=event&viewtype=delete&id=$1 [QSA]
+
+RewriteRule ^content_type/?$ 					index.php?com=content_type [QSA]
+RewriteRule ^content_type/add/?$ 				index.php?com=content_type&viewtype=add
+RewriteRule ^content_type/edit/([0-9]+)?$ 		index.php?com=content_type&viewtype=edit&id=$1 [QSA]
+RewriteRule ^content_type/active/([0-9]+)?$ 	index.php?com=content_type&viewtype=active&id=$1 [QSA]
+RewriteRule ^content_type/ishot/([0-9]+)?$ 		index.php?com=content_type&viewtype=ishot&id=$1 [QSA]
+RewriteRule ^content_type/delete/([0-9]+)?$ 	index.php?com=content_type&viewtype=delete&id=$1 [QSA]
+
+RewriteRule ^album/?$ 						index.php?com=album [QSA]
+RewriteRule ^album/add/?$ 					index.php?com=album&viewtype=add
+RewriteRule ^album/edit/([0-9]+)?$ 			index.php?com=album&viewtype=edit&id=$1 [QSA]
+RewriteRule ^album/active/([0-9]+)?$ 		index.php?com=album&viewtype=active&id=$1 [QSA]
+RewriteRule ^album/ishot/([0-9]+)?$ 		index.php?com=album&viewtype=ishot&id=$1 [QSA]
+RewriteRule ^album/delete/([0-9]+)?$ 		index.php?com=album&viewtype=delete&id=$1 [QSA]
 
 
 
