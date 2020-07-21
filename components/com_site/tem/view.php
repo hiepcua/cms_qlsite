@@ -168,7 +168,7 @@ switch ($_status) {
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6">
-							<label>Nhóm</label>
+							<label>Trang cha</label>
 							<select class="form-control" name="cbo_par" id="cbo_par">
 								<option value="0">-- Chọn một --</option>
 								<?php getListComboboxSites(0,0);?>

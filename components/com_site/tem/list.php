@@ -9,33 +9,7 @@ if($isAdmin==1){
 	$get_q = isset($_GET['q']) ? antiData($_GET['q']) : '';
 	$get_par = isset($_GET['par']) ? antiData($_GET['par']) : '';
 
-	/*Gán strWhere*/
-	if($get_s!=''){
-		$strWhere.=" AND status =".$get_s;
-	}
-	if($get_q!=''){
-		$strWhere.=" AND title LIKE '%".$get_q."%'";
-	}
-	if($get_par!=''){
-		$strWhere.=" AND path LIKE '".$get_par."%'";
-	}
-
-	/*Begin pagging*/
-	if(!isset($_SESSION['CUR_PAGE_'.OBJ_PAGE])){
-		$_SESSION['CUR_PAGE_'.OBJ_PAGE] = 1;
-	}
-	if(isset($_POST['txtCurnpage'])){
-		$_SESSION['CUR_PAGE_'.OBJ_PAGE] = (int)$_POST['txtCurnpage'];
-	}
-
 	$total_rows=SysCount('tbl_sites',$strWhere);
-	$max_rows = 20;
-
-	if($_SESSION['CUR_PAGE_'.OBJ_PAGE] > ceil($total_rows/$max_rows)){
-		$_SESSION['CUR_PAGE_'.OBJ_PAGE] = ceil($total_rows/$max_rows);
-	}
-	$cur_page=(int)$_SESSION['CUR_PAGE_'.OBJ_PAGE]>0 ? $_SESSION['CUR_PAGE_'.OBJ_PAGE] : 1;
-	/*End pagging*/
 	?>
 	<!-- Content Header (Page header) -->
 	<div class="content-header">
@@ -63,13 +37,13 @@ if($isAdmin==1){
 					<div class='row'>
 						<div class='col-sm-3'>
 							<div class='form-group'>
-								<input type='text' id='txt_title' name='q' value="<?php echo $get_q;?>" class='form-control' placeholder="Tiêu đề..." />
+								<input type='text' id='txt_title' name='q' value="<?php echo $get_q;?>" class='form-control' placeholder="Tên trang ..." />
 							</div>
 						</div>
 						<div class='col-sm-3'>
 							<div class='form-group'>
 								<select class="form-control" name="par" id="cbo_par">
-									<option value="">-- Chọn nhóm --</option>
+									<option value="">-- Chọn trang cha --</option>
 									<?php getListComboboxSites(0,0); ?>
 								</select>
 								<script type="text/javascript">
@@ -107,13 +81,12 @@ if($isAdmin==1){
 					<table class="table">
 						<thead>                  
 							<tr>
-								<th style="width: 10px">#</th>
 								<th style="width: 10px">Trash</th>
-								<th>Tiêu đề</th>
+								<th>Tên trang</th>
+								<th>Trang cha</th>
 								<th>Tên miền</th>
 								<th>Phone</th>
 								<th>Email</th>
-								<th>Ngày tạo</th>
 								<th>Status</th>
 								<th>Chi tiết</th>
 							</tr>
@@ -121,12 +94,20 @@ if($isAdmin==1){
 						<tbody>
 							<?php
 							if($total_rows>0){
-								$star = ($cur_page - 1) * $max_rows;
-								$strWhere.=" ORDER BY cdate DESC LIMIT $star,".$max_rows;
-								$obj=SysGetList('tbl_sites',array(), $strWhere, false);
-								$stt=0;
-								while($r=$obj->Fetch_Assoc()){
-									$stt++;
+								$__array = array();
+								$strWhere.=" ORDER BY cdate DESC";
+								$obj=SysGetList('tbl_sites',array('id'), $strWhere, true);
+								$num = count($obj);
+
+								for ($i=0; $i < $num; $i++) { 
+									$res_childs = SysGetList('tbl_sites', array('id'), "AND path LIKE '".$obj[$i]['id']."_%' ORDER BY path ASC", true);
+									$obj[$i]['childs'] = $res_childs;
+								}
+								$__array = $obj;
+
+								var_dump($__array);die();
+
+								foreach ($__array as $key => $r) {
 									if($r['status']==1){
 										$ic_status='<button class="btn btn-default bd-0 font-12">Chưa kích hoạt</button>';
 									}else if($r['status']==2){
@@ -134,19 +115,28 @@ if($isAdmin==1){
 									}else if($r['status']==3){
 										$ic_status='<button class="btn btn-disable cred bd-0 font-12">Hết hạn</button>';
 									}
+
+									$par_name = SysGetList('tbl_sites', array('title'), "AND id=".$r['par_id']);
+									$par_name = isset($par_name[0]['title']) ? $par_name[0]['title'] : '';
 									?>
 									<tr>
-										<td><?php echo $stt;?></td>
 										<td align="center"><a href="<?php echo ROOTHOST.COMS.'/trash/'.$r['id'];?>" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fa fa-trash cred"></i></a></td>
 										<td><?php echo $r['title'];?></td>
+										<td><?php echo $par_name;?></td>
 										<td><?php echo $r['domain'];?></td>
 										<td><?php echo $r['phone'];?></td>
 										<td><?php echo $r['email'];?></td>
-										<td><?php echo date('d-m-Y H:i A', $r['cdate']);?></td>
 										<td><?php echo $ic_status;?></td>
 										<td align="center"><a href="<?php echo ROOTHOST.COMS.'/view/'.$r['id'];?>"><i class="fas fa-edit cblue"></i></a></td>
 									</tr>
-								<?php }
+									<?php
+								}
+								// $stt=0;
+								// while($r=$obj->Fetch_Assoc()){
+								
+								?>
+
+								<?php //}
 							}else{
 								?>
 								<tr>
@@ -157,11 +147,6 @@ if($isAdmin==1){
 					</table>
 				</div>
 			</div>
-			<nav class="d-flex justify-content-center">
-				<?php 
-				paging($total_rows,$max_rows,$cur_page);
-				?>
-			</nav>
 		</div>
 	</section>
 <?php }else{
