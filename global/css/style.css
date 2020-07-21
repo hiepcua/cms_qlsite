@@ -9,6 +9,8 @@ img {vertical-align: middle;}
 option.disabled {
     background: #dedede;
 }
+.bd-0{border: 0px;}
+.font-12{font-size: 12px;}
 #action .card{
     padding: 10px 15px;
 }

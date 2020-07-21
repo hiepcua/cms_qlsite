@@ -123,6 +123,13 @@ if($isAdmin==1){
 								$stt=0;
 								while($r=$obj->Fetch_Assoc()){
 									$stt++;
+									if($r['status']==0){
+										$ic_status='<button class="btn btn-default bd-0 font-12">Chưa kích hoạt</button>';
+									}else if($r['status']==1){
+										$ic_status='<button class="btn btn-success bd-0 font-12">Đã kích hoạt</button>';
+									}else if($r['status']==2){
+										$ic_status='<button class="btn btn-disable cred bd-0 font-12">Hết hạn</button>';
+									}
 									?>
 									<tr>
 										<td><?php echo $stt;?></td>
@@ -132,7 +139,7 @@ if($isAdmin==1){
 										<td><?php echo $r['phone'];?></td>
 										<td><?php echo $r['email'];?></td>
 										<td><?php echo date('d-m-Y H:i A', $r['cdate']);?></td>
-										<td><?php echo $r['status'];?></td>
+										<td><?php echo $ic_status;?></td>
 										<td align="center"><a href="<?php echo ROOTHOST.COMS.'/view/'.$r['id'];?>"><i class="fas fa-edit cblue"></i></a></td>
 									</tr>
 								<?php }
