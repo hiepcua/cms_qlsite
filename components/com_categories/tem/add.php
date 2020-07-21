@@ -117,7 +117,7 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Nhóm cha</label>
+								<label>Chuyên mục cha</label>
 								<select class="form-control" name="cbo_par" id="cbo_par">
 									<option value="0">-- Chọn một --</option>
 								</select>

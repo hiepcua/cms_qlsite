@@ -109,7 +109,7 @@ $site = $sites[0];
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Nhóm cha</label>
+								<label>Chuyên mục cha</label>
 								<select class="form-control" name="cbo_par" id="cbo_par">
 									<option value="0">-- Chọn một --</option>
 									<?php getListComboboxCategories(0,0, $arr_childs, $row['site_id']);?>
