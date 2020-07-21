@@ -87,25 +87,23 @@ if($isAdmin==1){
 								<th>Tên miền</th>
 								<th>Phone</th>
 								<th>Email</th>
-								<th>Status</th>
-								<th>Chi tiết</th>
+								<th width="150px">Status</th>
+								<th width="80px">Chi tiết</th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php
 							if($total_rows>0){
 								$__array = array();
-								$strWhere.=" ORDER BY cdate DESC";
-								$obj=SysGetList('tbl_sites',array('id'), $strWhere, true);
+								$strWhere.=" AND par_id=0 ORDER BY cdate DESC";
+								$obj = SysGetList('tbl_sites',array(), $strWhere, true);
 								$num = count($obj);
 
 								for ($i=0; $i < $num; $i++) { 
-									$res_childs = SysGetList('tbl_sites', array('id'), "AND path LIKE '".$obj[$i]['id']."_%' ORDER BY path ASC", true);
+									$res_childs = SysGetList('tbl_sites', array(), "AND path LIKE '".$obj[$i]['id']."_%' ORDER BY path ASC", true);
 									$obj[$i]['childs'] = $res_childs;
 								}
 								$__array = $obj;
-
-								var_dump($__array);die();
 
 								foreach ($__array as $key => $r) {
 									if($r['status']==1){
@@ -130,13 +128,42 @@ if($isAdmin==1){
 										<td align="center"><a href="<?php echo ROOTHOST.COMS.'/view/'.$r['id'];?>"><i class="fas fa-edit cblue"></i></a></td>
 									</tr>
 									<?php
-								}
-								// $stt=0;
-								// while($r=$obj->Fetch_Assoc()){
-								
-								?>
+									if(count($r['childs'])>0){
+										foreach ($r['childs'] as $k => $v) {
+											if($v['status']==1){
+												$ic_status2='<button class="btn btn-default bd-0 font-12">Chưa kích hoạt</button>';
+											}else if($v['status']==2){
+												$ic_status2='<button class="btn btn-success bd-0 font-12">Đã kích hoạt</button>';
+											}else if($v['status']==3){
+												$ic_status2='<button class="btn btn-disable cred bd-0 font-12">Hết hạn</button>';
+											}
 
-								<?php //}
+											$par_name2 = SysGetList('tbl_sites', array('title'), "AND id=".$v['par_id']);
+											$par_name2 = isset($par_name2[0]['title']) ? $par_name2[0]['title'] : '';
+
+											$char="";
+											$level = explode('_', $v['path']);
+											$n_level = count($level);
+											if($n_level > 0){
+												for($i = 1; $i < $n_level; $i++) {
+													$char.="|----- ";
+												}
+											}
+											?>
+											<tr>
+												<td align="center"><a href="<?php echo ROOTHOST.COMS.'/trash/'.$v['id'];?>" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fa fa-trash cred"></i></a></td>
+												<td><?php echo $char.$v['title'];?></td>
+												<td><?php echo $par_name2;?></td>
+												<td><?php echo $v['domain'];?></td>
+												<td><?php echo $v['phone'];?></td>
+												<td><?php echo $v['email'];?></td>
+												<td><?php echo $ic_status2;?></td>
+												<td align="center"><a href="<?php echo ROOTHOST.COMS.'/view/'.$v['id'];?>"><i class="fas fa-edit cblue"></i></a></td>
+											</tr>
+											<?php
+										}
+									}
+								}
 							}else{
 								?>
 								<tr>

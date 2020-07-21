@@ -37,6 +37,14 @@ if(isset($_POST['txt_name']) && $_POST['txt_name']!=='') {
 		$arr['active_date'] = time();
 	}
 
+	$rs_parent = SysGetList('tbl_sites', array("path"), " AND id=".$arr['par_id']);
+	if(count($rs_parent)>0){
+		$rs_parent = $rs_parent[0];
+		$arr['path'] = $rs_parent['path'].'_'.$GetID;
+	}else{
+		$arr['path'] = $GetID;
+	}
+
 	$result = SysEdit('tbl_sites', $arr, " id=".$GetID);
 	if($result) $_SESSION['flash'.'com_'.COMS] = 1;
 	else $_SESSION['flash'.'com_'.COMS] = 0;
@@ -48,6 +56,15 @@ if(count($res_Vods) <= 0){
 	return;
 }
 $row = $res_Vods[0];
+
+$arr_childs = array();
+$res_children = SysGetList('tbl_sites', array('id'), " AND `path` LIKE '".$row['path']."%'");
+if(count($res_children) >0){
+	foreach ($res_children as $key => $value) {
+		$arr_childs[] = $value['id'];
+	}
+}
+
 $_status = $row['status'];
 /*
 0 : Lưu nháp,
@@ -171,7 +188,7 @@ switch ($_status) {
 							<label>Trang cha</label>
 							<select class="form-control" name="cbo_par" id="cbo_par">
 								<option value="0">-- Chọn một --</option>
-								<?php getListComboboxSites(0,0);?>
+								<?php getListComboboxSites(0,0, $arr_childs, $row['id']);?>
 							</select>
 							<script type="text/javascript">
 								$(document).ready(function(){

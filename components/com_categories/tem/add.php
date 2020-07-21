@@ -184,15 +184,8 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 
 					if(item['childs'].length >0){
 						for (const pr in item['childs']) {
-							var char = "";
 							var childs = item['childs'][pr];
-
-							var lv = childs['path'].split('_');
-							if (lv.length>0) {
-								for(var i_lv=0; i_lv < lv.length; i_lv++)
-									char+="|-----";
-							}
-							html+= "<option value='"+childs['id']+"'>"+char+childs['title']+"</option>";
+							html+= "<option value='"+childs['id']+"'>"+childs['title']+"</option>";
 						}
 					}
 				}
