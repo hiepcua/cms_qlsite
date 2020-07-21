@@ -1,5 +1,12 @@
 <?php
 $isAdmin=getInfo('isadmin');
+$n_content0 = SysCount('tbl_content', 'AND status=0');
+$n_content1 = SysCount('tbl_content', 'AND status=1');
+$n_content2 = SysCount('tbl_content', 'AND status=2');
+$n_content3 = SysCount('tbl_content', 'AND status=3');
+$n_content4 = SysCount('tbl_content', 'AND status=4');
+$n_content5 = SysCount('tbl_content', 'AND status=5');
+
 ?>
 <style type="text/css">
 	.nav-sidebar>.nav-item .nav-icon.fa, .nav-sidebar>.nav-item .nav-icon.fab, .nav-sidebar>.nav-item .nav-icon.far, .nav-sidebar>.nav-item .nav-icon.fas, .nav-sidebar>.nav-item .nav-icon.glyphicon, .nav-sidebar>.nav-item .nav-icon.ion{font-size: 1rem;}
@@ -21,37 +28,37 @@ $isAdmin=getInfo('isadmin');
 				<li class="nav-item">
 					<a href="<?php echo ROOTHOST;?>content/write?status=0" class="nav-link <?php activeMenu('write','viewtype'); activeVodMenuByStatus(0);?>">
 						<i class="far fa-circle nav-icon"></i>
-						<p>Đang biên tập <span class="badge badge-info right">6</span></p>
+						<p>Đang biên tập <span class="badge badge-info right"><?php echo $n_content0;?></span></p>
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="<?php echo ROOTHOST;?>content/pending?status=1" class="nav-link <?php activeMenu('pending','viewtype'); activeVodMenuByStatus(1);?>">
 						<i class="far fa-circle nav-icon"></i>
-						<p>Chờ duyệt <span class="badge badge-info right">6</span></p>
+						<p>Chờ duyệt <span class="badge badge-info right"><?php echo $n_content1;?></span></p>
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="<?php echo ROOTHOST;?>content/waiting_public?status=3" class="nav-link <?php activeMenu('waiting_public','viewtype'); activeVodMenuByStatus(3);?>">
 						<i class="far fa-circle nav-icon"></i>
-						<p>Chờ xuất bản <span class="badge badge-info right">6</span></p>
+						<p>Chờ xuất bản <span class="badge badge-info right"><?php echo $n_content3;?></span></p>
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="<?php echo ROOTHOST;?>content/public?status=4" class="nav-link <?php activeMenu('public','viewtype'); activeVodMenuByStatus(4);?>">
 						<i class="far fa-circle nav-icon"></i>
-						<p>Đã xuất bản <span class="badge badge-info right">6</span></p>
+						<p>Đã xuất bản <span class="badge badge-info right"><?php echo $n_content4;?></span></p>
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="<?php echo ROOTHOST;?>content/return?status=2" class="nav-link <?php activeMenu('return','viewtype'); activeVodMenuByStatus(2);?>">
 						<i class="far fa-circle nav-icon"></i>
-						<p>Trả về</p>
+						<p>Trả về<span class="badge badge-info right"><?php echo $n_content2;?></span></p>
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="<?php echo ROOTHOST;?>content/takedown?status=5" class="nav-link <?php activeMenu('takedown','viewtype'); activeVodMenuByStatus(5);?>">
 						<i class="far fa-circle nav-icon"></i>
-						<p>Bị gỡ xuống</p>
+						<p>Bị gỡ xuống<span class="badge badge-info right"><?php echo $n_content5;?></span></p>
 					</a>
 				</li>
 				<li class="nav-item">
