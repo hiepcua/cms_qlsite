@@ -13,14 +13,10 @@ function listTable($strwhere="",$parid=0,$level=0,$rowcount, $search=0){
 	$objdata->Query($sql);
 	$str_space="";
 	if($level!=0){  
-		$str_space.="|";
 		for($i=0;$i<$level;$i++)
-			$str_space.="--- "; 
+			$str_space.="|----- ";
 	}
 	while($rows=$objdata->Fetch_Assoc()){
-		if($level == 0) $rowcount++; 
-		else $rowcount = '';
-
 		$ids=$rows['id'];
 		$title=Substring(stripslashes($rows['title']),0,10);
 
@@ -28,12 +24,15 @@ function listTable($strwhere="",$parid=0,$level=0,$rowcount, $search=0){
 			$icon_active    = "<i class='fas fa-toggle-on cgreen'></i>";
 		else $icon_active   = '<i class="fa fa-toggle-off cgray" aria-hidden="true"></i>';
 
+		$par_name = SysGetList('tbl_categories', array('title'), "AND id=".$rows['par_id']);
+		$par_name = isset($par_name[0]['title']) ? $par_name[0]['title'] : '';
+
 		echo "<tr name='trow'>";
-		echo "<td width='30' align='center'>".$rowcount."</td>";
 		
 		echo "<td align='center' width='10'><a href='".ROOTHOST.COMS."/delete/".$ids."' onclick='return confirm('Bạn có chắc muốn xóa ?')'><i class='fa fa-trash cred' aria-hidden='true'></i></a></td>";
 
 		echo "<td>".$str_space.$title."</td>";
+		echo "<td>".$par_name."</td>";
 		echo "<td>".$rows['meta_title']."</td>";
 		echo "<td>".$rows['meta_desc']."</td>";
 
@@ -117,9 +116,9 @@ if($isAdmin==1){
 					<table class="table">
 						<thead>                  
 							<tr>
-								<th style="width: 10px">#</th>
 								<th>Xóa</th>
 								<th>Tiêu đề</th>
+								<th>Chuyên mục cha</th>
 								<th>Meta title</th>
 								<th>Meta description</th>
 								<th style="text-align: center;">Hiển thị</th>
