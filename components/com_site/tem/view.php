@@ -7,23 +7,22 @@ $file='';
 $GetID = isset($_GET['id']) ? (int)$_GET["id"] : 0;
 
 if(isset($_POST['txt_name']) && $_POST['txt_name']!=='') {
-	$Title 			= isset($_POST['txt_name']) ? addslashes($_POST['txt_name']) : '';
-	$Sapo 			= isset($_POST['txt_sapo']) ? addslashes($_POST['txt_sapo']) : '';
-	$Note 			= isset($_POST['txt_note']) ? addslashes($_POST['txt_note']) : '';
-	$Cate 			= isset($_POST['cbo_cate']) ? (int)$_POST['cbo_cate'] : 0;
-	$Album 			= isset($_POST['cbo_album']) ? (int)$_POST['cbo_album'] : 0;
-	$Chanel 		= isset($_POST['cbo_chanel']) ? (int)$_POST['cbo_chanel'] : 0;
-	$Type 			= isset($_POST['cbo_type']) ? (int)$_POST['cbo_type'] : 0;
-	$Images 		= isset($_POST['txt_thumb2']) ? addslashes($_POST['txt_thumb2']) : '';
-	$Status 		= isset($_POST['txt_status']) ? (int)$_POST['txt_status'] : 0;
-
-	if($Type == 1){
-		$Fulltext = isset($_POST['txt_video_links']) ? json_encode($_POST['txt_video_links']) : '[]';
-	}else if($Type == 2){
-		$Fulltext = isset($_POST['txt_audio_links']) ? json_encode($_POST['txt_audio_links']) : '[]';
-	}else if($Type == 3){
-		$Fulltext = htmlentities($_POST['txt_fulltext']);
-	}
+	$arr=array();
+	$arr['title'] 		= isset($_POST['txt_name']) ? addslashes($_POST['txt_name']) : '';
+	$arr['domain'] 		= isset($_POST['txt_domain']) ? addslashes($_POST['txt_domain']) : '';
+	$arr['key'] 		= md5($arr['domain']);
+	$arr['par_id'] 		= isset($_POST['cbo_par']) ? (int)$_POST['cbo_par'] : 0;
+	$arr['phone'] 		= isset($_POST['txt_phone']) ? addslashes($_POST['txt_phone']) : '';
+	$arr['email'] 		= isset($_POST['txt_email']) ? addslashes($_POST['txt_email']) : '';
+	$arr['address'] 	= isset($_POST['txt_address']) ? addslashes($_POST['txt_address']) : '';
+	$arr['contact'] 	= isset($_POST['txt_contact']) ? antiData($_POST['txt_contact'], 'html', true) : '';
+	$arr['facebook'] 	= isset($_POST['txt_facebook']) ? addslashes($_POST['txt_facebook']) : '';
+	$arr['youtube'] 	= isset($_POST['txt_youtube']) ? addslashes($_POST['txt_youtube']) : '';
+	$arr['skype'] 		= isset($_POST['txt_skype']) ? addslashes($_POST['txt_skype']) : '';
+	$arr['meta_title'] 	= isset($_POST['meta_title']) ? addslashes($_POST['meta_title']) : '';
+	$arr['meta_descript'] = isset($_POST['meta_desc']) ? addslashes($_POST['meta_desc']) : '';
+	$arr['status'] 		= isset($_POST['txt_status']) ? (int)$_POST['txt_status'] : 0;
+	$Images 			= isset($_POST['txt_thumb2']) ? addslashes($_POST['txt_thumb2']) : '';
 
 	if(isset($_FILES['txt_thumb']) && $_FILES['txt_thumb']['size'] > 0){
 		$save_path 	= "medias/vods/videos/";
@@ -32,35 +31,24 @@ if(isset($_POST['txt_name']) && $_POST['txt_name']!=='') {
 	}else{
 		$file = $Images;
 	}
+	$arr['image'] = $file;
 
-	$arr=array();
-	$arr['title'] = $Title;
-	$arr['alias'] = un_unicode($Title);
-	$arr['sapo'] = $Sapo;
-	$arr['fulltext'] = $Fulltext;
-	$arr['note'] = $Note;
-	$arr['cat_id'] = $Cate;
-	$arr['album_id'] = $Album;
-	$arr['chanel_id'] = $Chanel;
-	$arr['type'] = $Type;
-	$arr['images'] = $file;
-	$arr['mdate'] = time();
-	$arr['status'] = $Status;
+	if($arr['status'] == 2){
+		$arr['active_date'] = time();
+	}
 
-	$result = SysEdit('tbl_content', $arr, " id=".$GetID);
-
+	$result = SysEdit('tbl_sites', $arr, " id=".$GetID);
 	if($result) $_SESSION['flash'.'com_'.COMS] = 1;
 	else $_SESSION['flash'.'com_'.COMS] = 0;
 }
 
-$res_Vods = SysGetList('tbl_content', array(), ' AND id='. $GetID);
+$res_Vods = SysGetList('tbl_sites', array(), ' AND id='. $GetID);
 if(count($res_Vods) <= 0){
 	echo 'Không có dữ liệu.'; 
 	return;
 }
 $row = $res_Vods[0];
 $_status = $row['status'];
-$_type = $row['type'];
 /*
 0 : Lưu nháp,
 1 : Gửi biên tập,
@@ -77,101 +65,46 @@ $__permissions = $__permis_3;
 $__action = array();
 $__page_title = ''; 
 $fulltext = ''; 
-$video_sourses = $audio_sourses = array();
-switch ($_type) {
-	case 1:
-		$video_sourses = json_decode($row['fulltext']);
-		break;
-	case 2:
-		$audio_sourses = json_decode($row['fulltext']);
-		break;
-	case 3:
-		$fulltext = html_entity_decode($row['fulltext']);
-		break;
-	default:
-		$video_sourses = json_decode($row['fulltext']);
-		break;
-}
+
 switch ($_status) {
-	case 0:
-	$__action = array(
-		array("id" => 0, "name" => "Lưu nháp", "class" => "red"),
-		array("id" => 1, "name" => "Gửi biên tập", "class" => "blue"),
-		array("id" => 3, "name" => "Chờ xuất bản", "class" => "blue"),
-		array("id" => 4, "name" => "Xuất bản", "class" => "blue")
-	);
-	$__page_title = "Bài đang biên tập";
-	break;
-	
 	case 1:
 	$__action = array(
-		array("id" => 1, "name" => "Cập nhật", "class" => "red"),
-		array("id" => 3, "name" => "Duyệt tin", "class" => "blue"),
-		array("id" => 4, "name" => "Xuất bản", "class" => "blue"),
-		array("id" => 2, "name" => "Trả lại cho phóng viên", "class" => "blue")
+		array("id" => 1, "name" => "Lưu nháp", "class" => "red"),
+		array("id" => 2, "name" => "Kích hoạt", "class" => "blue")
 	);
-	$__page_title = "Bài chờ duyệt";
+	$__page_title = "Trang chưa kích hoạt";
 	break;
 	
 	case 2:
 	$__action = array(
 		array("id" => 2, "name" => "Cập nhật", "class" => "red"),
-		array("id" => 3, "name" => "Nhận lại tin này", "class" => "blue"),
+		array("id" => 4, "name" => "Gỡ xuống", "class" => "blue")
 	);
-	$__page_title = "Bài chờ xuất bản";
+	$__page_title = "Trang đã kích hoạt";
 	break;
 	
 	case 3:
 	$__action = array(
 		array("id" => 3, "name" => "Cập nhật", "class" => "red"),
-		array("id" => 4, "name" => "Xuất bản", "class" => "blue"),
-		array("id" => 2, "name" => "Trả lại cho phóng viên", "class" => "blue"),
-		array("id" => 1, "name" => "Trả lại cho BTV", "class" => "blue")
+		array("id" => 2, "name" => "Kích hoạt lại", "class" => "blue"),
 	);
+	$__page_title = "Trang đã hết hạn";
 	break;
 	
 	case 4:
 	$__action = array(
 		array("id" => 4, "name" => "Cập nhật", "class" => "red"),
-		array("id" => 5, "name" => "Gỡ tin", "class" => "blue")
+		array("id" => 2, "name" => "Kích hoạt lại", "class" => "blue"),
 	);
-	$__page_title = "Bài đã xuất bản";
-	break;
-
-	case 5:
-	$__action = array(
-		array("id" => 5, "name" => "Cập nhật", "class" => "red"),
-		array("id" => 4, "name" => "Xuất bản lại", "class" => "blue"),
-		array("id" => 2, "name" => "Trả lại cho phóng viên", "class" => "blue")
-	);
-	$__page_title = "Bài bị trả về";
 	break;
 	
 	default:
 	$__action = array(
-		array("id" => 0, "name" => "Lưu nháp", "class" => "red"),
-		array("id" => 1, "name" => "Gửi biên tập", "class" => "blue"),
-		array("id" => 3, "name" => "Chờ xuất bản", "class" => "blue"),
-		array("id" => 4, "name" => "Xuất bản", "class" => "blue")
+		array("id" => 1, "name" => "Lưu nháp", "class" => "red"),
+		array("id" => 2, "name" => "Kích hoạt", "class" => "blue")
 	);
-	$__page_title = "Sửa VOD";
+	$__page_title = "Cập nhật thông tin trang";
 	break;
-}
-
-$audio_sourses_1 = $audio_sourses_2 = '';
-$video_sourses_1 = $video_sourses_2 = $video_sourses_3 = $video_sourses_4 = $video_sourses_5 = $video_sourses_6 = $video_sourses_7 = '';
-if(count($video_sourses) > 0){
-	$video_sourses_1 = isset($video_sourses[0]) ? $video_sourses[0] : '';
-	$video_sourses_2 = isset($video_sourses[1]) ? $video_sourses[1] : '';
-	$video_sourses_3 = isset($video_sourses[2]) ? $video_sourses[2] : '';
-	$video_sourses_4 = isset($video_sourses[3]) ? $video_sourses[3] : '';
-	$video_sourses_5 = isset($video_sourses[4]) ? $video_sourses[4] : '';
-	$video_sourses_6 = isset($video_sourses[5]) ? $video_sourses[5] : '';
-	$video_sourses_7 = isset($video_sourses[6]) ? $video_sourses[6] : '';
-}
-if(count($audio_sourses) > 0){
-	$audio_sourses_1 = isset($audio_sourses[0]) ? $audio_sourses[0] : '';
-	$audio_sourses_2 = isset($audio_sourses[1]) ? $audio_sourses[1] : '';
 }
 ?>
 <style type="text/css">
@@ -189,7 +122,7 @@ if(count($audio_sourses) > 0){
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST;?>">Bảng điều khiển</a></li>
-					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST;?>vod">Danh sách bài viết</a></li>
+					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST.COMS;?>">Danh sách trang</a></li>
 					<li class="breadcrumb-item active"><?php echo $__page_title; ?></li>
 				</ol>
 			</div><!-- /.col -->
@@ -217,196 +150,104 @@ if(count($audio_sourses) > 0){
 				<form name="frm_action" id="frm_action" action="" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="txtid" value="<?php echo $GetID;?>">
 					<input type="hidden" id="txt_status" name="txt_status" value="">
+					<div class="widget_control form-group">
+						<?php
+						foreach ($__action as $k => $v) {
+							if(in_array($v['id'], $__permissions)){
+								echo '<button type="button" class="btn_status btn '.$v['class'].'" data-key="'.$v['id'].'">'.$v['name'].'</button>';
+							}
+						}
+						?>
+					</div>
+
 					<div class="row">
-						<div class="col-md-9">
-							<div class="widget_control">
-								<?php
-								foreach ($__action as $k => $v) {
-									if(in_array($v['id'], $__permissions)){
-										echo '<button type="button" class="btn_status btn '.$v['class'].'" data-key="'.$v['id'].'">'.$v['name'].'</button>';
-									}
-								}
-								?>
-							</div><hr>
+						<div class="col-md-6 col-sm-6">
 							<div  class="form-group">
-								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title']; ?>" placeholder="Tiêu đề VOD">
-							</div>
-
-							<div class='form-group'>
-								<label>Ảnh đại diện </label><small> (Dung lượng < 10MB)</small>
-								<div class="widget_thumb80">
-									<?php if($row['images'] != ''){ ?>
-										<div class="wrap_thumb80">
-											<img src="<?php echo ROOTHOST.$row['images'];?>" class="thumb80">
-										</div>
-									<?php } ?>
-									<div id="response_img">
-										<input type="hidden" name="txt_thumb2" value="<?php echo $row['images'];?>">
-										<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
-									</div>
-								</div>
-							</div>
-
-							<div class="row mb-3" id="type_video" style="<?php if($_type==1) echo 'display: flex;';?>">
-								<div class="col-md-12"><label>Video sources </label><small> (Allow type: video/mp4)</small></div>
-								<div class="col-md-6">
-									<div class="input-group">
-										<input type="text" class="form-control" name="txt_video_links[]" placeholder="Source 1080p, video/mp4..." value="<?php echo $video_sourses_1;?>">
-										<div class="input-group-append">
-											<span class="input-group-text">1080p</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="input-group">
-										<input type="text" class="form-control" name="txt_video_links[]" placeholder="Source 720p, video/mp4..." value="<?php echo $video_sourses_2;?>">
-										<div class="input-group-append">
-											<span class="input-group-text">720p</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6 mt-3">
-									<div class="input-group">
-										<input type="text" class="form-control" name="txt_video_links[]" placeholder="Source 576p, video/mp4..." value="<?php echo $video_sourses_3;?>">
-										<div class="input-group-append">
-											<span class="input-group-text">576p</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6 mt-3">
-									<div class="input-group">
-										<input type="text" class="form-control" name="txt_video_links[]" placeholder="Source 480p, video/mp4..." value="<?php echo $video_sourses_4;;?>">
-										<div class="input-group-append">
-											<span class="input-group-text">480p</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6 mt-3">
-									<div class="input-group">
-										<input type="text" class="form-control" name="txt_video_links[]" placeholder="Source 360p, video/mp4..." value="<?php echo $video_sourses_5;?>">
-										<div class="input-group-append">
-											<span class="input-group-text">360p</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6 mt-3">
-									<div class="input-group">
-										<input type="text" class="form-control" name="txt_video_links[]" placeholder="Source 240p, video/mp4..." value="<?php echo $video_sourses_6;?>">
-										<div class="input-group-append">
-											<span class="input-group-text">240p</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6 mt-3">
-									<div class="input-group">
-										<input type="text" class="form-control" name="txt_video_links[]" placeholder="Source 144p, video/mp4..." value="<?php echo $video_sourses_7;?>">
-										<div class="input-group-append">
-											<span class="input-group-text">144p</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="row mb-3" id="type_audio" style="<?php if($_type==2) echo 'display: flex;';?>">
-								<div class="col-md-12"><label>Audio sources </label><small> (Allow type: audio/mp3, audio/ogg)</small></div>
-								<div class="col-md-6">
-									<div class="input-group">
-										<input type="text" class="form-control" name="txt_audio_links[]" value="<?php echo $audio_sourses_1;?>">
-										<div class="input-group-append">
-											<span class="input-group-text">audio/mp3</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="input-group">
-										<input type="text" class="form-control" name="txt_audio_links[]" value="<?php echo $audio_sourses_2;?>">
-										<div class="input-group-append">
-											<span class="input-group-text">audio/ogg</span>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label>Sapo</label>
-								<textarea class="form-control" id="txt_sapo" name="txt_sapo" placeholder="Sapo..." rows="3"><?php echo $row['sapo']; ?></textarea>
-							</div>
-
-							<div class="form-group">
-								<label>Note</label>
-								<textarea class="form-control" id="txt_note" name="txt_note" placeholder="Note..." rows="3"><?php echo $row['note']; ?></textarea>
-							</div>
-							
-							<div class="form-group" id="type_text" style="<?php if($_type==3) echo 'display: block;';?>">
-								<label>Nội dung</label>
-								<textarea class="form-control" id="txt_fulltext" name="txt_fulltext" placeholder="Nội dung chính..." rows="5"><?php echo $fulltext; ?></textarea>
-							</div>
-
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Nhóm<font color="red"><font color="red">*</font></font></label>
-								<select class="form-control" name="cbo_cate" id="cbo_cate">
-									<option value="0">-- Chọn một --</option>
-									<?php getListComboboxCategories(0, 0); ?>
-								</select>
-								<script type="text/javascript">
-									$(document).ready(function(){
-										cbo_Selected('cbo_cate', <?php echo $row['cat_id']; ?>);
-									});
-								</script>
-							</div>
-
-							<div class="form-group">
-								<label>Album<font color="red"><font color="red">*</font></font></label>
-								<select class="form-control" name="cbo_album" id="cbo_album">
-									<option value="0">-- Chọn một --</option>
-									<option value="1">Album 1</option>
-									<option value="2">Album 2</option>
-									<option value="3">Album 3</option>
-									<option value="4">Album 4</option>
-								</select>
-								<script type="text/javascript">
-									$(document).ready(function(){
-										cbo_Selected('cbo_album', <?php echo $row['album_id']; ?>);
-									});
-								</script>
-							</div>
-
-							<div class="form-group">
-								<label>Chanel<font color="red"><font color="red">*</font></font></label>
-								<select class="form-control" name="cbo_chanel" id="cbo_chanel">
-									<option value="0">-- Chọn một --</option>
-									<?php
-									$rschanels = SysGetList('tbl_channels', array(), ' AND isactive=1');
-									$n_chanel = count($rschanels);
-									for ($i=0; $i < $n_chanel; $i++) { 
-										echo '<option value="'.$rschanels[$i]['id'].'">'.$rschanels[$i]['title'].'</option>';
-									}
-									?>
-								</select>
-								<script type="text/javascript">
-									$(document).ready(function(){
-										cbo_Selected('cbo_chanel', <?php echo $row['chanel_id']; ?>);
-									});
-								</script>
-							</div>
-
-							<div class="form-group">
-								<label>Type</label>
-								<select class="form-control" name="cbo_type" id="cbo_type" onchange="selectVodType()">
-									<option value="1">Video</option>
-									<option value="2">Audio</option>
-									<option value="3">Text</option>
-								</select>
-								<script type="text/javascript">
-									$(document).ready(function(){
-										cbo_Selected('cbo_type', <?php echo $row['type']; ?>);
-									});
-								</script>
+								<label>Tên trang<font color="red"><font color="red">*</font></font></label>
+								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title'];?>" placeholder="Tên trang">
 							</div>
 						</div>
+						<div class="col-md-6 col-sm-6">
+							<label>Nhóm</label>
+							<select class="form-control" name="cbo_par" id="cbo_par">
+								<option value="0">-- Chọn một --</option>
+								<?php getListComboboxSites(0,0);?>
+							</select>
+							<script type="text/javascript">
+								$(document).ready(function(){
+									cbo_Selected('cbo_par', <?php echo $row['par_id']; ?>);
+								});
+							</script>
+						</div>
+
+						<div class="col-md-6 col-sm-6">
+							<div  class="form-group">
+								<label>Tên miền</label>
+								<input type="text" id="txt_domain" name="txt_domain" class="form-control" value="<?php echo $row['domain'];?>" placeholder="Tên miền website">
+							</div>
+						</div>
+
+						<div class="col-md-6 col-sm-6">
+							<div  class="form-group">
+								<label>Email</label>
+								<input type="text" id="txt_email" name="txt_email" class="form-control" value="<?php echo $row['email'];?>">
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6">
+							<div  class="form-group">
+								<label>Số điện thoại</label>
+								<input type="text" id="txt_phone" name="txt_phone" class="form-control" value="<?php echo $row['phone'];?>">
+							</div>
+						</div>
+						<div class="col-md-12 col-sm-12">
+							<div class="form-group">
+								<label>Địa chỉ</label>
+								<textarea class="form-control" id="txt_address" name="txt_address" placeholder="Địa chỉ..." rows="2"><?php echo $row['address'];?></textarea>
+							</div>
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label>Ảnh đại diện </label><small> (Dung lượng < 10MB)</small>
+						<div id="response_img">
+							<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 col-sm-6">
+							<div  class="form-group">
+								<label>Facebook</label>
+								<input type="text" id="txt_facebook" name="txt_facebook" class="form-control" value="<?php echo $row['facebook'];?>">
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6">
+							<div  class="form-group">
+								<label>Youtube</label>
+								<input type="text" id="txt_youtube" name="txt_youtube" class="form-control" value="<?php echo $row['youtube'];?>">
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6">
+							<div  class="form-group">
+								<label>Skype</label>
+								<input type="text" id="txt_skype" name="txt_skype" class="form-control" value="<?php echo $row['skype'];?>">
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label>Meta title</label>
+						<textarea class="form-control" id="meta_title" name="meta_title" placeholder="Meta title..." rows="1"><?php echo $row['meta_title'];?></textarea>
+					</div>
+
+					<div class="form-group">
+						<label>Meta desciption</label>
+						<textarea class="form-control" id="meta_desc" name="meta_desc" placeholder="Meta desciption..." rows="2"><?php echo $row['meta_descript'];?></textarea>
+					</div>
+
+					<div class="form-group">
+						<label>Contact</label>
+						<textarea class="form-control" id="txt_contact" name="txt_contact" placeholder="Thông tin liên hệ ở chân website..." rows="5"><?php echo $row['contact'];?></textarea>
 					</div>
 					
 					<div class="toolbar">
@@ -429,13 +270,11 @@ if(count($audio_sourses) > 0){
 <!-- /.content-header -->
 <script type="text/javascript">
 	$(document).ready(function(){
-		// Hidden left sidebar
-		$('#body').addClass('sidebar-collapse');
 		$('#frm_action').submit(function(){
 			return validForm();
 		})
 
-		$('#txt_sapo').summernote({
+		$('#txt_contact').summernote({
 			placeholder: 'Mô tả ...',
 			height: 100,
 			toolbar: [
@@ -475,24 +314,6 @@ if(count($audio_sourses) > 0){
 			$('#frm_action').submit();
 		});
 	});
-
-	function selectVodType(){
-		var e = document.getElementById("cbo_type");
-		var type_id = parseInt(e.options[e.selectedIndex].value);
-		if(type_id == 1){
-			document.getElementById("type_video").style.display = "flex";
-			document.getElementById("type_audio").style.display = "none";
-			document.getElementById("type_text").style.display = "none";
-		}else if(type_id == 2){
-			document.getElementById("type_video").style.display = "none";
-			document.getElementById("type_audio").style.display = "flex";
-			document.getElementById("type_text").style.display = "none";
-		}else if(type_id == 3){
-			document.getElementById("type_video").style.display = "none";
-			document.getElementById("type_audio").style.display = "none";
-			document.getElementById("type_text").style.display = "block";
-		}
-	}
 
 	function validForm(){
 		var flag = true;

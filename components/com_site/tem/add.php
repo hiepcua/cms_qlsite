@@ -27,7 +27,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 	$arr['meta_title'] 	= isset($_POST['meta_title']) ? addslashes($_POST['meta_title']) : '';
 	$arr['meta_descript'] = isset($_POST['meta_desc']) ? addslashes($_POST['meta_desc']) : '';
 	$arr['image'] 		= $file;
-	$arr['status'] 		= 0;
+	$arr['status'] 		= 1;
 	$arr['cdate'] 		= time();
 
 	$result = SysAdd('tbl_sites', $arr);
@@ -47,11 +47,6 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 	}
 }
 ?>
-<style type="text/css">
-	#type_video, #type_audio{
-		display: none;
-	}
-</style>
 <!-- Content Header (Page header) -->
 <div class="content-header">
 	<div class="container-fluid">
@@ -193,8 +188,6 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 <!-- /.content-header -->
 <script type="text/javascript">
 	$(document).ready(function(){
-		// Hidden left sidebar
-		$('#body').addClass('sidebar-collapse');
 		$('#frm_action').submit(function(){
 			return validForm();
 		})

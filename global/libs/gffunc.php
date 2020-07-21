@@ -1,34 +1,34 @@
 <?php
 function paging($total_rows,$max_rows,$cur_page){
-    $max_pages=ceil($total_rows/$max_rows);
-    $start=$cur_page-5; if($start<1)$start=1;
-    $end=$cur_page+5;   if($end>$max_pages)$end=$max_pages;
-    $paging='
-    <form action="" method="post" name="frmpaging" id="frmpaging">
-    <input type="hidden" name="txtCurnpage" id="txtCurnpage" value="1" />
-    <ul class="pagination">
-    ';
+	$max_pages=ceil($total_rows/$max_rows);
+	$start=$cur_page-5; if($start<1)$start=1;
+	$end=$cur_page+5;   if($end>$max_pages)$end=$max_pages;
+	$paging='
+	<form action="" method="post" name="frmpaging" id="frmpaging">
+	<input type="hidden" name="txtCurnpage" id="txtCurnpage" value="1" />
+	<ul class="pagination">
+	';
 
-    $paging.='<p align="center" class="paging">';
-    $paging.="<strong>Total:</strong> $total_rows <strong>on</strong> $max_pages <strong>page</strong><br>";
+	$paging.='<p align="center" class="paging">';
+	$paging.="<strong>Total:</strong> $total_rows <strong>on</strong> $max_pages <strong>page</strong><br>";
 
-    if($cur_page >1){
-        $paging.='<li class="page-item"><a class="page-link" href="javascript:gotopage('.($cur_page-1).')"> << </a></li>';
-    }
-    if($max_pages>1){
-        for($i=$start;$i<=$end;$i++)
-        {
-            if($i!=$cur_page)
-                $paging.="<li class='page-item'><a class=\"page-link\" href=\"javascript:gotopage($i)\"> $i </a></li>";
-            else
-                $paging.="<li class='page-item active'><a class=\"page-link\" href=\"#\" class=\"cur_page\"> $i </a></li>";
-        }
-    }
-    if($cur_page <$max_pages)
-        $paging.='<li class="page-item"><a class="page-link" href="javascript:gotopage('.($cur_page+1).')"> » </a></li>';
+	if($cur_page >1){
+		$paging.='<li class="page-item"><a class="page-link" href="javascript:gotopage('.($cur_page-1).')"> << </a></li>';
+	}
+	if($max_pages>1){
+		for($i=$start;$i<=$end;$i++)
+		{
+			if($i!=$cur_page)
+				$paging.="<li class='page-item'><a class=\"page-link\" href=\"javascript:gotopage($i)\"> $i </a></li>";
+			else
+				$paging.="<li class='page-item active'><a class=\"page-link\" href=\"#\" class=\"cur_page\"> $i </a></li>";
+		}
+	}
+	if($cur_page <$max_pages)
+		$paging.='<li class="page-item"><a class="page-link" href="javascript:gotopage('.($cur_page+1).')"> » </a></li>';
 
-    $paging.='</ul></p></form>';
-    echo $paging;
+	$paging.='</ul></p></form>';
+	echo $paging;
 }
 function activeMenu($val,$type='com'){
 	$com=isset($_GET['com'])?antiData($_GET['com']):'home';
@@ -116,13 +116,13 @@ function optimizeHTML($Html) {
   $encoding = mb_detect_encoding($Html);
   $doc = new DOMDocument('', $encoding);
   @$doc->loadHTML('<html><head>'
-    . '<meta http-equiv="content-type" content="text/html; charset='
-    . $encoding . '"></head><body>'. trim($Html) . '</body></html>');
+	. '<meta http-equiv="content-type" content="text/html; charset='
+	. $encoding . '"></head><body>'. trim($Html) . '</body></html>');
   $nodes = $doc->getElementsByTagName('body')->item(0)->childNodes;
   $html = '';
   $len = $nodes->length;
   for ($i = 0; $i < $len; $i++) {
-    $html .= $doc->saveHTML($nodes->item($i));
+	$html .= $doc->saveHTML($nodes->item($i));
   }
   return $html;
 }
@@ -153,24 +153,24 @@ function antiData($data,$type='plaintext',$tag=false){
 	return $data;
 }
 function randomPassword() {
-    $alphabet = "abcdefghijklmnopqrstuwxyz012345678901234567890123456789ABCDEFGHIJKLMNOPQRSTUWXYZ012345678901234567890123456789";
-    $pass = array(); //remember to declare $pass as an array
-    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-    for ($i = 0; $i < 8; $i++) {
-        $n = rand(0, $alphaLength);
-        $pass[] = $alphabet[$n];
-    }
-    return implode($pass); //turn the array into a string
+	$alphabet = "abcdefghijklmnopqrstuwxyz012345678901234567890123456789ABCDEFGHIJKLMNOPQRSTUWXYZ012345678901234567890123456789";
+	$pass = array(); //remember to declare $pass as an array
+	$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+	for ($i = 0; $i < 8; $i++) {
+		$n = rand(0, $alphaLength);
+		$pass[] = $alphabet[$n];
+	}
+	return implode($pass); //turn the array into a string
 }
 function randomNumber() {
-    $alphabet = "012345678901234567890123456789";
-    $pass = array(); //remember to declare $pass as an array
-    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-    for ($i = 0; $i < 8; $i++) {
-        $n = rand(0, $alphaLength);
-        $pass[] = $alphabet[$n];
-    }
-    return implode($pass); //turn the array into a string
+	$alphabet = "012345678901234567890123456789";
+	$pass = array(); //remember to declare $pass as an array
+	$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+	for ($i = 0; $i < 8; $i++) {
+		$n = rand(0, $alphaLength);
+		$pass[] = $alphabet[$n];
+	}
+	return implode($pass); //turn the array into a string
 }
 //-----------------------CSDL------------------------------
 function SysCount($table,$where){
@@ -242,24 +242,24 @@ function SysDel($table,$where){
 }
 function Curl_Post($url,$jsonBody){
 	$curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonBody);                                                                  
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);                                                                      
-    curl_setopt($curl, CURLOPT_HTTPHEADER, array(                                                                          
-        'Content-Type: application/json',                                                                                
-        'Content-Length: ' . strlen($jsonBody))                                                                       
-    );                                                                                                                   
-    $resp = curl_exec($curl);//var_dump($resp);
-    curl_close($curl);
-    return json_decode($resp,true);
+	curl_setopt($curl, CURLOPT_URL, $url);
+	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonBody);                                                                  
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);                                                                      
+	curl_setopt($curl, CURLOPT_HTTPHEADER, array(                                                                          
+		'Content-Type: application/json',                                                                                
+		'Content-Length: ' . strlen($jsonBody))                                                                       
+	);                                                                                                                   
+	$resp = curl_exec($curl);//var_dump($resp);
+	curl_close($curl);
+	return json_decode($resp,true);
 }
 function Curl_Get($url){
 	$curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    $resp = curl_exec($curl);//var_dump($resp);
-    curl_close($curl);
-    return json_decode($resp,true);
+	curl_setopt($curl, CURLOPT_URL, $url);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$resp = curl_exec($curl);//var_dump($resp);
+	curl_close($curl);
+	return json_decode($resp,true);
 }
 ?>

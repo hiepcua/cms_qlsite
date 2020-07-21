@@ -83,9 +83,10 @@ if($isAdmin==1){
 							<div class='form-group'>
 								<select class="form-control" name="s" id="cbo_status">
 									<option value="">-- Status --</option>
-									<option value="0">Chưa kích hoạt</option>
-									<option value="1">Đã kích hoạt</option>
-									<option value="2">Hết hạn</option>
+									<option value="1">Chưa kích hoạt</option>
+									<option value="2">Đã kích hoạt</option>
+									<option value="3">Hết hạn</option>
+									<option value="4">Bị gỡ xuống</option>
 								</select>
 								<script type="text/javascript">
 									$(document).ready(function(){
@@ -95,6 +96,9 @@ if($isAdmin==1){
 							</div>
 						</div>
 						<div class="col-sm-1"><input type="submit" name="" class="btn btn-primary" value="Tìm kiếm"></div>
+						<div class="col-sm-2">
+							<a href="<?php echo ROOTHOST.COMS;?>/add" class="btn btn-primary float-sm-right">Thêm mới</a>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -123,11 +127,11 @@ if($isAdmin==1){
 								$stt=0;
 								while($r=$obj->Fetch_Assoc()){
 									$stt++;
-									if($r['status']==0){
+									if($r['status']==1){
 										$ic_status='<button class="btn btn-default bd-0 font-12">Chưa kích hoạt</button>';
-									}else if($r['status']==1){
-										$ic_status='<button class="btn btn-success bd-0 font-12">Đã kích hoạt</button>';
 									}else if($r['status']==2){
+										$ic_status='<button class="btn btn-success bd-0 font-12">Đã kích hoạt</button>';
+									}else if($r['status']==3){
 										$ic_status='<button class="btn btn-disable cred bd-0 font-12">Hết hạn</button>';
 									}
 									?>
