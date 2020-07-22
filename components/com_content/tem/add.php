@@ -10,7 +10,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 	$Sapo 			= isset($_POST['txt_sapo']) ? addslashes($_POST['txt_sapo']) : '';
 	$Cate 			= isset($_POST['cbo_cate']) ? (int)$_POST['cbo_cate'] : 0;
 	$Album 			= isset($_POST['cbo_album']) ? (int)$_POST['cbo_album'] : 0;
-	$Chanel 		= isset($_POST['cbo_chanel']) ? (int)$_POST['cbo_chanel'] : 0;
+	$Event 		= isset($_POST['cbo_events']) ? (int)$_POST['cbo_events'] : 0;
 	$Type 			= isset($_POST['cbo_type']) ? (int)$_POST['cbo_type'] : 0;
 	$Status 		= isset($_POST['txt_status']) ? (int)$_POST['txt_status'] : 0;
 
@@ -35,7 +35,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 	$arr['fulltext'] = $Fulltext;
 	$arr['cat_id'] = $Cate;
 	$arr['album_id'] = $Album;
-	$arr['chanel_id'] = $Chanel;
+	$arr['chanel_id'] = $Event;
 	$arr['type'] = $Type;
 	$arr['images'] = $file;
 	$arr['status'] = $Status;
@@ -239,7 +239,7 @@ $__action = $_per_tbt;
 
 							<div class="form-group">
 								<label>Event</label>
-								<select class="form-control" name="cbo_chanel" id="cbo_chanel">
+								<select class="form-control" name="cbo_events" id="cbo_events">
 									<option value="0">-- Chọn một --</option>
 									<?php
 									$rschanels = SysGetList('tbl_channels', array(), ' AND isactive=1');
@@ -360,9 +360,9 @@ $__action = $_per_tbt;
 		var title = $('#txt_name').val();
 		var cate = parseInt($('#cbo_cate').val());
 		// var album = parseInt($('#cbo_album').val());
-		// var chanel = parseInt($('#cbo_chanel').val());
+		// var chanel = parseInt($('#cbo_events').val());
 
-		if(title=='' || cate==0 || album==0 || chanel==0){
+		if(title=='' || cate==0){
 			alert('Các mục đánh dấu * không được để trống');
 			flag = false;
 		}

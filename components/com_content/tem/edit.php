@@ -11,7 +11,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name']!=='') {
 	$Sapo 			= isset($_POST['txt_sapo']) ? addslashes($_POST['txt_sapo']) : '';
 	$Cate 			= isset($_POST['cbo_cate']) ? (int)$_POST['cbo_cate'] : 0;
 	$Album 			= isset($_POST['cbo_album']) ? (int)$_POST['cbo_album'] : 0;
-	$Chanel 		= isset($_POST['cbo_chanel']) ? (int)$_POST['cbo_chanel'] : 0;
+	$Event 			= isset($_POST['cbo_events']) ? (int)$_POST['cbo_events'] : 0;
 	$Type 			= isset($_POST['cbo_type']) ? (int)$_POST['cbo_type'] : 0;
 	$Images 		= isset($_POST['txt_thumb2']) ? addslashes($_POST['txt_thumb2']) : '';
 	$Status 		= isset($_POST['txt_status']) ? (int)$_POST['txt_status'] : 0;
@@ -39,7 +39,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name']!=='') {
 	$arr['fulltext'] = $Fulltext;
 	$arr['cat_id'] = $Cate;
 	$arr['album_id'] = $Album;
-	$arr['chanel_id'] = $Chanel;
+	$arr['event_id'] = $Event;
 	$arr['type'] = $Type;
 	$arr['images'] = $file;
 	$arr['mdate'] = time();
@@ -116,7 +116,7 @@ switch ($_status) {
 		array("id" => 2, "name" => "Cập nhật", "class" => "red"),
 		array("id" => 3, "name" => "Nhận lại tin này", "class" => "blue"),
 	);
-	$__page_title = "Bài chờ xuất bản";
+	$__page_title = "Bài viết bị trả về";
 	break;
 	
 	case 3:
@@ -126,6 +126,7 @@ switch ($_status) {
 		array("id" => 2, "name" => "Trả lại cho phóng viên", "class" => "blue"),
 		array("id" => 1, "name" => "Trả lại cho BTV", "class" => "blue")
 	);
+	$__page_title = "Bài chờ xuất bản";
 	break;
 	
 	case 4:
@@ -339,7 +340,7 @@ if(count($audio_sourses) > 0){
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
-								<label>Nhóm<font color="red"><font color="red">*</font></font></label>
+								<label>Chuyên mục<font color="red"><font color="red">*</font></font></label>
 								<select class="form-control" name="cbo_cate" id="cbo_cate">
 									<option value="0">-- Chọn một --</option>
 									<?php getListComboboxCategories(0, 0); ?>
@@ -352,13 +353,17 @@ if(count($audio_sourses) > 0){
 							</div>
 
 							<div class="form-group">
-								<label>Album<font color="red"><font color="red">*</font></font></label>
+								<label>Album</label>
 								<select class="form-control" name="cbo_album" id="cbo_album">
 									<option value="0">-- Chọn một --</option>
-									<option value="1">Album 1</option>
-									<option value="2">Album 2</option>
-									<option value="3">Album 3</option>
-									<option value="4">Album 4</option>
+									<?php
+									$res_albums = SysGetList('tbl_album', array('id', 'title'), "AND isactive=1 ORDER BY `title` ASC");
+									if(count($res_albums)>0){
+										foreach ($res_albums as $k => $v) {
+											echo '<option value="'.$v['id'].'">'.$v['title'].'</option>';
+										}
+									}
+									?>
 								</select>
 								<script type="text/javascript">
 									$(document).ready(function(){
@@ -368,26 +373,27 @@ if(count($audio_sourses) > 0){
 							</div>
 
 							<div class="form-group">
-								<label>Chanel<font color="red"><font color="red">*</font></font></label>
-								<select class="form-control" name="cbo_chanel" id="cbo_chanel">
+								<label>Event</label>
+								<select class="form-control" name="cbo_events" id="cbo_events">
 									<option value="0">-- Chọn một --</option>
 									<?php
-									$rschanels = SysGetList('tbl_channels', array(), ' AND isactive=1');
-									$n_chanel = count($rschanels);
-									for ($i=0; $i < $n_chanel; $i++) { 
-										echo '<option value="'.$rschanels[$i]['id'].'">'.$rschanels[$i]['title'].'</option>';
+									$rs_events = SysGetList('tbl_events', array(), ' AND isactive=1');
+									if(count($rs_events)>0){
+										foreach ($rs_events as $k => $v) {
+											echo '<option value="'.$v['id'].'">'.$v['title'].'</option>';
+										}
 									}
 									?>
 								</select>
 								<script type="text/javascript">
 									$(document).ready(function(){
-										cbo_Selected('cbo_chanel', <?php echo $row['chanel_id']; ?>);
+										cbo_Selected('cbo_events', <?php echo $row['event_id']; ?>);
 									});
 								</script>
 							</div>
 
 							<div class="form-group">
-								<label>Type</label>
+								<label>Loại bài</label>
 								<select class="form-control" name="cbo_type" id="cbo_type" onchange="selectVodType()">
 									<option value="1">Video</option>
 									<option value="2">Audio</option>
@@ -491,10 +497,10 @@ if(count($audio_sourses) > 0){
 		var flag = true;
 		var title = $('#txt_name').val();
 		var cate = parseInt($('#cbo_cate').val());
-		var album = parseInt($('#cbo_album').val());
-		var chanel = parseInt($('#cbo_chanel').val());
+		// var album = parseInt($('#cbo_album').val());
+		// var chanel = parseInt($('#cbo_events').val());
 
-		if(title=='' || cate==0 || album==0 || chanel==0){
+		if(title=='' || cate==0){
 			alert('Các mục đánh dấu * không được để trống');
 			flag = false;
 		}
