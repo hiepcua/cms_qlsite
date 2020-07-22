@@ -131,9 +131,9 @@ if($isAdmin==1){
 									$cate = count($cates)>0 ? $cates[0] : [];
 									$cate_title = isset($cate['title']) ? $cate['title'] : '<i>N/A</i>';
 
-									$channels = SysGetList('tbl_channels', array('title'), ' AND id='.$r['chanel_id']);
-									$chanel = count($channels)>0 ? $channels[0] : [];
-									$chanel_title = isset($chanel['title']) ? $chanel['title'] : '<i>N/A</i>';
+									$events = SysGetList('tbl_channels', array('title'), ' AND id='.$r['event_id']);
+									$event = count($events)>0 ? $events[0] : [];
+									$event_title = isset($event['title']) ? $event['title'] : '<i>N/A</i>';
 
 									switch ($r['type']) {
 										case 1:
@@ -155,7 +155,7 @@ if($isAdmin==1){
 										<td><?php echo $r['title'];?></td>
 										<td><?php echo $cate_title;?></td>
 										<td><?php echo $r['album_id'];?></td>
-										<td><?php echo $chanel_title;?></td>
+										<td><?php echo $event_title;?></td>
 										<td><?php echo $type;?></td>
 										<td><?php echo date('d-m-Y H:i A', $r['cdate']);?></td>
 										<td class="text-center"><a href="<?php echo ROOTHOST.COMS.'/edit/'.$r['id'];?>"><i class="fas fa-edit cblue"></i></a></td>

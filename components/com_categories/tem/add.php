@@ -108,51 +108,64 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 				<form name="frm_action" id="frm_action" action="" method="post" enctype="multipart/form-data">
 					<div class="mess"></div>
 					<div class="row">
-						<div class="col-md-6">
-							<label>Trang</label><font color="red">*</font>
-							<select class="form-control" name="cbo_site" id="cbo_site" onchange="changeSite(this)">
-								<option value="0">-- Chọn một --</option>
-								<?php getListComboboxSites(0,0);?>
-							</select>
+						<div class="col-md-8">
+							<div class="form-group">
+								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
+								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tiêu đề chuyên mục">
+							</div>
+
+							<div class="form-group">
+								<label>Mô tả</label>
+								<textarea class="form-control" name="txt_intro" placeholder="Mô tả về chuyên mục..." rows="2"></textarea>
+							</div>
+
+							<div class="form-group">
+								<label>Meta title</label>
+								<textarea class="form-control" name="meta_title" placeholder="Meta title..." rows="2"></textarea>
+							</div>
+
+							<div class="form-group">
+								<label>Meta description</label>
+								<textarea class="form-control" name="meta_desc" placeholder="Meta description..." rows="3"></textarea>
+							</div>
 						</div>
-						<div class="col-md-6">
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Trang</label><font color="red">*</font>
+								<select class="form-control" name="cbo_site" id="cbo_site" onchange="changeSite(this)">
+									<option value="0">-- Chọn một --</option>
+									<?php getListComboboxSites(0,0);?>
+								</select>
+							</div>
+
 							<div class="form-group">
 								<label>Chuyên mục cha</label>
 								<select class="form-control" name="cbo_par" id="cbo_par">
 									<option value="0">-- Chọn một --</option>
 								</select>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tiêu đề chuyên mục">
-							</div>
-						</div>
-					
-						<div class="col-md-6">
+
 							<div class='form-group'>
-								<label>Ảnh</label><small> (Dung lượng < 10MB)</small>
-								<div id="response_img">
-									<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
+								<div class="widget-fileupload fileupload fileupload-new" data-provides="fileupload">
+									<label>Ảnh đại diện</label><small> (Dung lượng < 10MB)</small>
+									<div class="widget-avatar mb-2">
+										<div class="fileupload-new thumbnail">
+											<img src="<?php echo ROOTHOST;?>global/img/no-photo.jpg" id="img_image_preview">
+										</div>
+										<div class="fileupload-preview fileupload-exists thumbnail" style="line-height: 20px;"></div>
+									</div>
+									<div class="control">
+										<span class="btn btn-file">
+											<span class="fileupload-new">Tải lên</span>
+											<span class="fileupload-exists">Thay đổi</span>
+											<input type="file" id="file_image" name="txt_thumb" accept="image/jpg, image/jpeg">
+										</span>
+										<a href="javascript:void(0)" class="btn fileupload-exists" data-dismiss="fileupload" onclick="cancel_fileupload()">Hủy</a>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-
-					<div class="form-group">
-						<label>Mô tả</label>
-						<textarea class="form-control" name="txt_intro" placeholder="Mô tả về chuyên mục..." rows="2"></textarea>
-					</div>
-
-					<div class="form-group">
-						<label>Meta title</label>
-						<textarea class="form-control" name="meta_title" placeholder="Meta title..." rows="2"></textarea>
-					</div>
-
-					<div class="form-group">
-						<label>Meta description</label>
-						<textarea class="form-control" name="meta_desc" placeholder="Meta description..." rows="3"></textarea>
 					</div>
 					
 					<div class="text-center toolbar">
@@ -171,6 +184,35 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 			return validForm();
 		});
 	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				var img = document.createElement("img");
+				img.src = e.target.result;
+				// Hidden fileupload new
+				$('.fileupload').removeClass('fileupload-new');
+				$('.fileupload').addClass('fileupload-exists');
+				$('.fileupload-preview').html(img);
+			}
+
+			reader.readAsDataURL(input.files[0]); // convert to base64 string
+		}
+	}
+
+	$("#file_image").on('change', function(){
+		readURL(this);
+	});
+
+	function cancel_fileupload(){
+		$('.fileupload').removeClass('fileupload-exists');
+		$('.fileupload').addClass('fileupload-new');
+		$('.fileupload-preview').empty();
+		$("#file_image").val('');
+	}
+
 
 	function changeSite(){
 		var site_id = $('#cbo_site').val();

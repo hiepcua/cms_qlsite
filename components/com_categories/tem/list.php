@@ -27,14 +27,17 @@ function listTable($strwhere="",$parid=0,$level=0,$rowcount, $search=0){
 		$par_name = SysGetList('tbl_categories', array('title'), "AND id=".$rows['par_id']);
 		$par_name = isset($par_name[0]['title']) ? $par_name[0]['title'] : '';
 
+		$site_name = SysGetList('tbl_sites', array('title'), "AND id=".$rows['site_id']);
+		$site_name = isset($site_name[0]['title']) ? $site_name[0]['title'] : '';
+
 		echo "<tr name='trow'>";
 		
-		echo "<td align='center' width='10'><a href='".ROOTHOST.COMS."/delete/".$ids."' onclick='return confirm('Bạn có chắc muốn xóa ?')'><i class='fa fa-trash cred' aria-hidden='true'></i></a></td>";
+		echo "<td align='center' width='10'><a href='".ROOTHOST.COMS."/delete/".$ids."' onclick='return confirm(\"Bạn có chắc muốn xóa?\")'><i class='fa fa-trash cred' aria-hidden='true'></i></a></td>";
 
 		echo "<td>".$str_space.$title."</td>";
 		echo "<td>".$par_name."</td>";
-		echo "<td>".$rows['meta_title']."</td>";
-		echo "<td>".$rows['meta_desc']."</td>";
+		echo "<td>".$site_name."</td>";
+		echo "<td>".Substring($rows['intro'], 0, 10)."</td>";
 
 		echo "<td align='center'>";
 		echo "<a href='".ROOTHOST.COMS."/active/".$ids."'>";
@@ -49,14 +52,41 @@ function listTable($strwhere="",$parid=0,$level=0,$rowcount, $search=0){
 		listTable($strwhere,$ids,$nextlevel,$rowcount);
 	}
 }
+function getListComboboxSites($parid=0, $level=0, $childs=array()){
+	$sql="SELECT * FROM tbl_sites WHERE `par_id`='$parid' AND `isactive`='1' ";
+	$objdata=new CLS_MYSQL();
+	$objdata->Query($sql);
+	$char="";
+	if($level!=0){
+		for($i=0;$i<$level;$i++)
+			$char.="|-----";
+	}
+	if($objdata->Num_rows()<=0) return;
+	while($rows=$objdata->Fetch_Assoc()){
+		$id=$rows['id'];
+		$parid=$rows['par_id'];
+		$title=$rows['title'];
+		if(in_array($id, $childs)){
+			echo "<option value='$id' disabled='true' class='disabled'>$char $title</option>";
+		}else{
+			echo "<option value='$id'>$char $title</option>";
+		}
+		$nextlevel=$level+1;
+		getListComboboxSites($id,$nextlevel, $childs);
+	}
+}
 if($isAdmin==1){
 	$strWhere="";
 	$get_q = isset($_GET['q']) ? antiData($_GET['q']) : '';
+	$get_site = isset($_GET['s']) ? antiData($_GET['s']) : '';
 
 	/*Gán strWhere*/
 	if($get_q!=''){
 		$flg_search = 1;
 		$strWhere.=" AND title LIKE '%".$get_q."%'";
+	}
+	if($get_site!=''){
+		$strWhere.=" AND site_id=".$get_site;
 	}
 
 	/*Begin pagging*/
@@ -101,10 +131,24 @@ if($isAdmin==1){
 					<div class='row'>
 						<div class='col-sm-3'>
 							<div class='form-group'>
-								<input type='text' id='txt_title' name='q' class='form-control' placeholder="Tiêu đề..." />
+								<input type='text' id='txt_title' name='q' class='form-control' placeholder="Tên chuyên mục..." />
 							</div>
 						</div>
-						<div class="col-sm-7"></div>
+						<div class='col-sm-3'>
+							<div class='form-group'>
+								<select class="form-control" name="s" id="cbo_site">
+									<option value="">-- Chọn trang --</option>
+									<?php getListComboboxSites(0,0); ?>
+								</select>
+								<script type="text/javascript">
+									$(document).ready(function(){
+										cbo_Selected('cbo_site', <?php echo $get_site; ?>);
+									});
+								</script>
+							</div>
+						</div>
+						<div class="col-sm-1"><input type="submit" name="" class="btn btn-primary" value="Tìm kiếm"></div>
+						<div class="col-sm-3"></div>
 						<div class="col-sm-2">
 							<a href="<?php echo ROOTHOST.COMS;?>/add" class="btn btn-primary float-sm-right">Thêm mới</a>
 						</div>
@@ -117,12 +161,12 @@ if($isAdmin==1){
 						<thead>                  
 							<tr>
 								<th>Xóa</th>
-								<th>Tiêu đề</th>
+								<th>Tên chuyên mục</th>
 								<th>Chuyên mục cha</th>
-								<th>Meta title</th>
-								<th>Meta description</th>
-								<th style="text-align: center;">Hiển thị</th>
-								<th style="text-align: center;">Chi tiết</th>
+								<th>Trang</th>
+								<th>Mô tả</th>
+								<th style="text-align: center;" width="80px">Hiển thị</th>
+								<th style="text-align: center;" width="80px">Sửa</th>
 							</tr>
 						</thead>
 						<tbody>

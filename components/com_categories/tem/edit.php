@@ -101,13 +101,34 @@ $site = $sites[0];
 				<form name="frm_action" id="frm_action" action="" method="post" enctype="multipart/form-data">
 					<div class="mess"></div>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-8">
+							<div class="form-group">
+								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
+								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title'];?>" placeholder="Tiêu đề chuyên mục">
+							</div>
+
+							<div class="form-group">
+								<label>Mô tả</label>
+								<textarea class="form-control" name="txt_intro" placeholder="Mô tả về chuyên mục..." rows="2"><?php echo $row['intro'];?></textarea>
+							</div>
+
+							<div class="form-group">
+								<label>Meta title</label>
+								<textarea class="form-control" name="meta_title" placeholder="Meta title..." rows="2"><?php echo $row['meta_title'];?></textarea>
+							</div>
+
+							<div class="form-group">
+								<label>Meta description</label>
+								<textarea class="form-control" name="meta_desc" placeholder="Meta description..." rows="3"><?php echo $row['meta_desc'];?></textarea>
+							</div>
+						</div>
+
+						<div class="col-md-4">
 							<div class="form-group">
 								<label>Trang</label><font color="red">*</font>
 								<input type="text" name="txt_site" value="<?php echo $site['title'];?>" readonly class="form-control">
 							</div>
-						</div>
-						<div class="col-md-6">
+
 							<div class="form-group">
 								<label>Chuyên mục cha</label>
 								<select class="form-control" name="cbo_par" id="cbo_par">
@@ -120,46 +141,36 @@ $site = $sites[0];
 									});
 								</script>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title'];?>" placeholder="Tiêu đề chuyên mục">
-							</div>
-						</div>
-					</div>
 
-					<div class='form-group'>
-						<label>Ảnh </label><small> (Dung lượng < 10MB)</small>
-						<div class="widget_thumb80">
-							<?php if($row['image'] != ''){ ?>
-								<div class="wrap_thumb80">
-									<img src="<?php echo ROOTHOST.$row['image'];?>" class="thumb80">
+							<div class='form-group'>
+								<div class="widget-fileupload fileupload fileupload-new" data-provides="fileupload">
+									<label>Ảnh đại diện</label><small> (Dung lượng < 10MB)</small>
+									<div class="widget-avatar mb-2">
+										<div class="fileupload-new thumbnail">
+											<?php
+											if(strlen($row['image'])>0){
+												echo '<img src="'.ROOTHOST.$row['image'].'" id="img_image_preview">';
+											}else{
+												echo '<img src="'.ROOTHOST.'global/img/no-photo.jpg" id="img_image_preview">';
+											}
+											?>
+										</div>
+										<div class="fileupload-preview fileupload-exists thumbnail" style="line-height: 20px;"></div>
+										<input type="hidden" name="txt_thumb2" value="<?php echo $row['image'];?>">
+									</div>
+									<div class="control">
+										<span class="btn btn-file">
+											<span class="fileupload-new">Tải lên</span>
+											<span class="fileupload-exists">Thay đổi</span>
+											<input type="file" id="file_image" name="txt_thumb" accept="image/jpg, image/jpeg">
+										</span>
+										<a href="javascript:void(0)" class="btn fileupload-exists" data-dismiss="fileupload" onclick="cancel_fileupload()">Hủy</a>
+									</div>
 								</div>
-							<?php } ?>
-							
-							<div id="response_img">
-								<input type="hidden" name="txt_thumb2" value="<?php echo $row['image'];?>">
-								<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
 							</div>
 						</div>
 					</div>
 
-					<div class="form-group">
-						<label>Mô tả</label>
-						<textarea class="form-control" name="txt_intro" placeholder="Mô tả về chuyên mục..." rows="2"><?php echo $row['intro'];?></textarea>
-					</div>
-
-					<div class="form-group">
-						<label>Meta title</label>
-						<textarea class="form-control" name="meta_title" placeholder="Meta title..." rows="2"><?php echo $row['meta_title'];?></textarea>
-					</div>
-
-					<div class="form-group">
-						<label>Meta description</label>
-						<textarea class="form-control" name="meta_desc" placeholder="Meta description..." rows="3"><?php echo $row['meta_desc'];?></textarea>
-					</div>
-					
 					<div class="text-center toolbar">
 						<input type="submit" name="cmdsave_tab1" id="cmdsave_tab1" class="save btn btn-success" value="Lưu thông tin" class="btn btn-primary">
 					</div>
@@ -176,6 +187,34 @@ $site = $sites[0];
 			return validForm();
 		})
 	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				var img = document.createElement("img");
+				img.src = e.target.result;
+				// Hidden fileupload new
+				$('.fileupload').removeClass('fileupload-new');
+				$('.fileupload').addClass('fileupload-exists');
+				$('.fileupload-preview').html(img);
+			}
+
+			reader.readAsDataURL(input.files[0]); // convert to base64 string
+		}
+	}
+
+	$("#file_image").on('change', function(){
+		readURL(this);
+	});
+
+	function cancel_fileupload(){
+		$('.fileupload').removeClass('fileupload-exists');
+		$('.fileupload').addClass('fileupload-new');
+		$('.fileupload-preview').empty();
+		$("#file_image").val('');
+	}
 
 	function validForm(){
 		var flag = true;

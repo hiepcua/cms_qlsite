@@ -56,7 +56,7 @@ if($isAdmin==1){
 						<div class='col-sm-3'>
 							<div class='form-group'>
 								<select class="form-control" name="s" id="cbo_status">
-									<option value="">-- Status --</option>
+									<option value="">-- Trạng thái --</option>
 									<option value="1">Chưa kích hoạt</option>
 									<option value="2">Đã kích hoạt</option>
 									<option value="3">Hết hạn</option>
@@ -82,13 +82,11 @@ if($isAdmin==1){
 						<thead>                  
 							<tr>
 								<th style="width: 10px">Trash</th>
-								<th>Tên trang</th>
-								<th>Trang cha</th>
 								<th>Tên miền</th>
-								<th>Phone</th>
-								<th>Email</th>
+								<th>Trang cha</th>
+								<th>Key</th>
 								<th width="150px">Status</th>
-								<th width="80px">Chi tiết</th>
+								<th width="80px" class="text-center">Sửa</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -119,11 +117,17 @@ if($isAdmin==1){
 									?>
 									<tr>
 										<td align="center"><a href="<?php echo ROOTHOST.COMS.'/trash/'.$r['id'];?>" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fa fa-trash cred"></i></a></td>
-										<td><?php echo $r['title'];?></td>
-										<td><?php echo $par_name;?></td>
 										<td><?php echo $r['domain'];?></td>
-										<td><?php echo $r['phone'];?></td>
-										<td><?php echo $r['email'];?></td>
+										<td><?php echo $par_name;?></td>
+										<td>
+											<input type="text" id="key_site_<?php echo $r['id'];?>" class="key_site" value="<?php echo $r['key'];?>" disabled="disabled">
+											<div class="tooltip">
+												<button class="btn-copytext" data-id="<?php echo $r['id'];?>" onmouseout="outFunc()">
+													<span class="tooltiptext">Copy to clipboard</span>
+													Copy
+												</button>
+											</div>
+										</td>
 										<td><?php echo $ic_status;?></td>
 										<td align="center"><a href="<?php echo ROOTHOST.COMS.'/view/'.$r['id'];?>"><i class="fas fa-edit cblue"></i></a></td>
 									</tr>
@@ -152,11 +156,17 @@ if($isAdmin==1){
 											?>
 											<tr>
 												<td align="center"><a href="<?php echo ROOTHOST.COMS.'/trash/'.$v['id'];?>" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fa fa-trash cred"></i></a></td>
-												<td><?php echo $char.$v['title'];?></td>
-												<td><?php echo $par_name2;?></td>
 												<td><?php echo $v['domain'];?></td>
-												<td><?php echo $v['phone'];?></td>
-												<td><?php echo $v['email'];?></td>
+												<td><?php echo $par_name2;?></td>
+												<td>
+													<input type="text" id="key_site_<?php echo $v['id'];?>" class="key_site" value="<?php echo $v['key'];?>" disabled="disabled">
+													<div class="tooltip">
+														<button class="btn-copytext" data-id="<?php echo $v['id'];?>" onclick="myFunction(this)" onmouseout="outFunc()">
+															<span class="tooltiptext">Copy to clipboard</span>
+															Copy
+														</button>
+													</div>
+												</td>
 												<td><?php echo $ic_status2;?></td>
 												<td align="center"><a href="<?php echo ROOTHOST.COMS.'/view/'.$v['id'];?>"><i class="fas fa-edit cblue"></i></a></td>
 											</tr>
@@ -180,3 +190,31 @@ if($isAdmin==1){
 	echo "<h3 class='text-center'>You haven't permission</h3>";
 }
 ?>
+<script type="text/javascript">
+	// function myFunction(property) {
+	// 	// var id = property.getAttribute('data-id');
+
+	// 	// var copyText = document.getElementById("key_site_"+id);
+	// 	var copyText = document.getElementById("key_site_2");
+	// 	copyText.select();
+	// 	copyText.setSelectionRange(0, 99999);
+	// 	document.execCommand("copy");
+
+	// 	property.children[0].innerHTML = "Copied: " + copyText.value;
+	// }
+
+	$(document).ready(function(){
+		$('.btn-copytext').on('click', function(){
+			var id = $(this).attr('data-id');
+			var copyText = $('#key_site_'.id);
+			copyText.select();
+			copyText.setSelectionRange(0, 99999);
+			document.execCommand("copy");
+		});
+	});
+
+	function outFunc() {
+		var tooltip = $(this).find('.tooltiptext');
+		tooltip.innerHTML = "Copy to clipboard";
+	}
+</script>

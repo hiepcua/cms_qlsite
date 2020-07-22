@@ -42,6 +42,7 @@ RewriteRule ^categories/?$ 					index.php?com=categories [QSA]
 RewriteRule ^categories/add/?$ 				index.php?com=categories&viewtype=add 
 RewriteRule ^categories/edit/([0-9]+)?$ 	index.php?com=categories&viewtype=edit&id=$1 [QSA]
 RewriteRule ^categories/active/([0-9]+)?$ 	index.php?com=categories&viewtype=active&id=$1 [QSA]
+RewriteRule ^categories/delete/([0-9]+)?$ 	index.php?com=categories&viewtype=delete&id=$1 [QSA]
 
 RewriteRule ^event/?$ 					index.php?com=event [QSA]
 RewriteRule ^event/add/?$ 				index.php?com=event&viewtype=add 

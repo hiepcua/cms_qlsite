@@ -11,6 +11,9 @@ option.disabled {
 }
 .bd-0{border: 0px;}
 .font-12{font-size: 12px;}
+.cursor-pointer{
+    cursor: pointer;
+}
 #action .card{
     padding: 10px 15px;
 }
@@ -634,3 +637,119 @@ p.paging {
 }
 .parent_li>span.root:hover i,
 .parent_li>span.root:hover a.a_root{ color: #fff; }
+
+.widget-fileupload{}
+#img_image_preview{
+    max-width: 100%;
+}
+.widget-avatar{
+    padding: 3px;
+    border: 1px solid #ccc;
+}
+.fileupload .btn{
+    background-color: #e5e5e5;
+    background-image: none;
+    filter: none;
+    border: 0;
+    padding: 7px 14px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333333;
+    cursor: pointer;
+    outline: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+    -webkit-text-shadow: none;
+    -moz-text-shadow: none;
+    text-shadow: none;
+}
+.btn-file:hover{
+    color: #333333;
+    background-color: #d8d8d8 !important;
+}
+
+.fileupload .fileupload-preview{
+    background-color: #fff !important;
+    background-image: none !important;
+    filter: none !important;
+}
+.fileupload .thumbnail{
+    max-width: calc(100% - 0px);
+    display: inline-block;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+}
+.fileupload-exists {
+    padding: 0px;
+}
+.fileupload-exists .fileupload-new, .fileupload-new .fileupload-exists{
+    display: none;
+}
+.fileupload .thumbnail > img {
+    display: inline-block;
+    max-height: 100%;
+    vertical-align: middle;
+}
+.thumbnail>img {
+    display: block;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  opacity: 1;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.btn-copytext {
+    border: 1px;
+    padding: 3px 8px;
+}
+.key_site {
+    margin-right: 5px;
+    border: 0;
+    padding: 3px 10px;
+}
+.key_site:disabled {
+    background: #efefef;
+}
