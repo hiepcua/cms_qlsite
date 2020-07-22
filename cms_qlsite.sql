@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2020-07-22 02:48:15
+Date: 2020-07-22 18:04:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,11 +23,11 @@ CREATE TABLE `tbl_album` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
-  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `meta_title` varchar(255) DEFAULT NULL,
-  `meta_desc` text,
-  `isactive` tinyint(4) DEFAULT '1',
+  `meta_desc` text DEFAULT NULL,
+  `isactive` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -47,19 +47,19 @@ CREATE TABLE `tbl_categories` (
   `site_id` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `alias` varchar(255) DEFAULT NULL,
-  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `meta_title` varchar(255) DEFAULT NULL,
-  `meta_desc` text,
-  `isactive` tinyint(4) DEFAULT '1',
+  `meta_desc` text DEFAULT NULL,
+  `isactive` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_categories
 -- ----------------------------
-INSERT INTO `tbl_categories` VALUES ('1', '0', '1', 'Nhóm 1', 'nhom-1', null, '1', null, null, null, '1');
+INSERT INTO `tbl_categories` VALUES ('1', '0', '1', 'Nhóm 1', 'nhom-1', '', '1', 'medias/categories/anh-ly-cafe-buoi-sang_110730596_9dw.jpg', '', '', '1');
 INSERT INTO `tbl_categories` VALUES ('2', '0', '1', 'Nhóm 2', 'nhom-2', null, '2', null, null, null, '1');
 INSERT INTO `tbl_categories` VALUES ('3', '2', '1', 'Nhóm 3', 'nhom-3', null, '2_3', '', '', '', '1');
 INSERT INTO `tbl_categories` VALUES ('4', '3', '1', 'Nhóm 4', 'nhom-4', null, '2_3_4', '', 'Hehe', 'Haha', '1');
@@ -75,7 +75,7 @@ CREATE TABLE `tbl_configsite` (
   `tem_id` int(11) DEFAULT NULL,
   `company_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `intro` longtext COLLATE utf8_unicode_ci,
+  `intro` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tel` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
@@ -85,10 +85,10 @@ CREATE TABLE `tbl_configsite` (
   `work_time` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `website` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `banner` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `logo` text COLLATE utf8_unicode_ci,
-  `meta_keyword` longtext COLLATE utf8_unicode_ci,
-  `meta_descript` longtext COLLATE utf8_unicode_ci,
-  `lang_id` int(11) NOT NULL DEFAULT '0',
+  `logo` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_keyword` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_descript` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lang_id` int(11) NOT NULL DEFAULT 0,
   `contact` text COLLATE utf8_unicode_ci NOT NULL,
   `footer` text COLLATE utf8_unicode_ci NOT NULL,
   `nick_yahoo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -117,20 +117,20 @@ CREATE TABLE `tbl_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_id` int(11) DEFAULT NULL,
   `album_id` int(11) DEFAULT NULL,
-  `chanel_id` int(11) DEFAULT NULL,
+  `event_id` int(11) DEFAULT NULL,
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
   `alias` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
-  `sapo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `sapo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `images` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
-  `fulltext` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `fulltext` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
-  `note` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `note` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `cdate` int(11) DEFAULT NULL,
   `mdate` int(11) DEFAULT NULL,
   `pdate` int(11) DEFAULT NULL,
   `visited` int(11) DEFAULT NULL,
   `liked` int(11) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT '0',
+  `status` tinyint(4) DEFAULT 0,
   `is_trash` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
@@ -190,9 +190,9 @@ DROP TABLE IF EXISTS `tbl_content_type`;
 CREATE TABLE `tbl_content_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
-  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `order` tinyint(2) DEFAULT '0',
-  `isactive` tinyint(4) DEFAULT '1',
+  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `order` tinyint(2) DEFAULT 0,
+  `isactive` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -212,12 +212,12 @@ CREATE TABLE `tbl_events` (
   `title` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
   `cate_id` int(11) DEFAULT NULL,
-  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `meta_title` varchar(255) DEFAULT NULL,
-  `meta_desc` text,
-  `ishot` tinyint(1) DEFAULT '0',
-  `isactive` tinyint(4) DEFAULT '1',
+  `meta_desc` text DEFAULT NULL,
+  `ishot` tinyint(1) DEFAULT 0,
+  `isactive` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -253,9 +253,9 @@ CREATE TABLE `tbl_sites` (
   `youtube` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cdate` int(11) DEFAULT NULL,
   `active_date` int(11) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT '0',
-  `is_trash` tinyint(4) DEFAULT '0',
-  `isactive` tinyint(4) DEFAULT '1',
+  `status` tinyint(4) DEFAULT 0,
+  `is_trash` tinyint(4) DEFAULT 0,
+  `isactive` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -280,11 +280,11 @@ CREATE TABLE `tbl_users` (
   `email` varchar(50) DEFAULT NULL,
   `group` int(11) DEFAULT NULL,
   `gsecret` varchar(50) DEFAULT NULL,
-  `isfa2` tinyint(4) DEFAULT '0',
-  `isadmin` tinyint(4) DEFAULT '0',
+  `isfa2` tinyint(4) DEFAULT 0,
+  `isadmin` tinyint(4) DEFAULT 0,
   `cdate` int(11) DEFAULT NULL,
-  `is_trash` tinyint(4) DEFAULT '0',
-  `isactive` tinyint(4) DEFAULT '1',
+  `is_trash` tinyint(4) DEFAULT 0,
+  `isactive` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -300,12 +300,12 @@ INSERT INTO `tbl_users` VALUES ('tranviethiepdz@gmail.com', 'd93fc24a5f68f2d6621
 DROP TABLE IF EXISTS `tbl_user_group`;
 CREATE TABLE `tbl_user_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `par_id` int(11) DEFAULT '0',
+  `par_id` int(11) DEFAULT 0,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `intro` text COLLATE utf8_unicode_ci,
+  `intro` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `isadmin` int(11) DEFAULT '1',
-  `isactive` int(11) DEFAULT '1',
+  `isadmin` int(11) DEFAULT 1,
+  `isactive` int(11) DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `idx_active` (`isactive`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
@@ -325,10 +325,10 @@ CREATE TABLE `tbl_user_login` (
   `username` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `session` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cdate` int(11) DEFAULT NULL,
-  `isactive` tinyint(4) DEFAULT '1',
+  `isactive` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `idx` (`isactive`,`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of tbl_user_login
@@ -353,4 +353,6 @@ INSERT INTO `tbl_user_login` VALUES ('17', 'tranviethiepdz@gmail.com', '15953021
 INSERT INTO `tbl_user_login` VALUES ('18', 'tranviethiepdz@gmail.com', '1595316663', '1595316663', '0');
 INSERT INTO `tbl_user_login` VALUES ('19', 'tranviethiepdz@gmail.com', '1595323548', '1595323548', '0');
 INSERT INTO `tbl_user_login` VALUES ('20', 'tranviethiepdz@gmail.com', '1595330958', '1595330958', '0');
-INSERT INTO `tbl_user_login` VALUES ('21', 'tranviethiepdz@gmail.com', '1595351588', '1595351588', '1');
+INSERT INTO `tbl_user_login` VALUES ('21', 'tranviethiepdz@gmail.com', '1595351588', '1595351588', '0');
+INSERT INTO `tbl_user_login` VALUES ('22', 'tranviethiepdz@gmail.com', '1595385629', '1595385629', '0');
+INSERT INTO `tbl_user_login` VALUES ('23', 'tranviethiepdz@gmail.com', '1595401244', '1595401244', '1');
