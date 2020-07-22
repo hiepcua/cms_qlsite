@@ -188,7 +188,7 @@ if(count($audio_sourses) > 0){
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST;?>">Bảng điều khiển</a></li>
-					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST;?>vod">Danh sách bài viết</a></li>
+					<li class="breadcrumb-item"><a href="<?php echo ROOTHOST.COMS;?>">Danh sách bài viết</a></li>
 					<li class="breadcrumb-item active"><?php echo $__page_title; ?></li>
 				</ol>
 			</div><!-- /.col -->

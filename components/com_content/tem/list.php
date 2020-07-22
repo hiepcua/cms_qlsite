@@ -99,6 +99,9 @@ if($isAdmin==1){
 							</div>
 						</div>
 						<div class="col-sm-1"><input type="submit" name="" class="btn btn-primary" value="Tìm kiếm"></div>
+						<div class="col-sm-2">
+							<a href="<?php echo ROOTHOST.COMS;?>/add" class="btn btn-primary float-sm-right">Thêm mới</a>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -110,8 +113,6 @@ if($isAdmin==1){
 								<th style="width: 10px">#</th>
 								<th>Tiêu đề</th>
 								<th>Nhóm</th>
-								<th>Album</th>
-								<th>Kênh</th>
 								<th>Type</th>
 								<th>Ngày tạo</th>
 								<th>Status</th>
@@ -131,10 +132,6 @@ if($isAdmin==1){
 									$cate = count($cates)>0 ? $cates[0] : [];
 									$cate_title = isset($cate['title']) ? $cate['title'] : '<i>N/A</i>';
 
-									$channels = SysGetList('tbl_channels', array('title'), ' AND id='.$r['chanel_id']);
-									$chanel = count($channels)>0 ? $channels[0] : [];
-									$chanel_title = isset($chanel['title']) ? $chanel['title'] : '<i>N/A</i>';
-
 									switch ($r['type']) {
 										case 1:
 										$type = 'Video';
@@ -152,10 +149,8 @@ if($isAdmin==1){
 									?>
 									<tr>
 										<td><?php echo $stt;?></td>
-										<td><?php echo $r['title'];?></td>
+										<td><?php echo Substring($r['title'], 0, 15);?></td>
 										<td><?php echo $cate_title;?></td>
-										<td><?php echo $r['album_id'];?></td>
-										<td><?php echo $chanel_title;?></td>
 										<td><?php echo $type;?></td>
 										<td><?php echo date('d-m-Y H:i A', $r['cdate']);?></td>
 										<td><?php echo $r['status'];?></td>
