@@ -30,7 +30,7 @@ if($isAdmin==1){
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Danh sách trang</h1><button onclick="myFunction1()">copy</button>
+					<h1 class="m-0 text-dark">Danh sách trang</h1>
 				</div><!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
@@ -136,7 +136,7 @@ if($isAdmin==1){
 										<td><?php echo $r['domain'];?></td>
 										<td><?php echo $par_name;?></td>
 										<td>
-											<input type="text" id="key_site_<?php echo $r['id'];?>" class="key_site" value="<?php echo $r['key'];?>" disabled="disabled">
+											<input type="text" id="key_site_<?php echo $r['id'];?>" class="key_site" value="<?php echo $r['key'];?>">
 											<div class="tooltip">
 												<button class="btn-copytext" onmouseout="outFunc()" onclick="copyText(<?php echo $r['id'];?>)">
 													<span class="tooltiptext" id="tooltiptext_<?php echo $r['id']?>">Copy to clipboard</span>
@@ -175,7 +175,7 @@ if($isAdmin==1){
 												<td><?php echo $char.$v['domain'];?></td>
 												<td><?php echo $par_name2;?></td>
 												<td>
-													<input type="text" id="key_site_<?php echo $v['id'];?>" class="key_site" value="<?php echo $v['key'];?>" disabled="disabled">
+													<input type="text" id="key_site_<?php echo $v['id'];?>" class="key_site" value="<?php echo $v['key'];?>">
 													<div class="tooltip">
 														<button class="btn-copytext" onmouseout="outFunc()" onclick="copyText(<?php echo $v['id'];?>)">
 															<span class="tooltiptext" id="tooltiptext_<?php echo $v['id']?>">Copy to clipboard</span>
@@ -207,14 +207,6 @@ if($isAdmin==1){
 }
 ?>
 <script type="text/javascript">
-	function myFunction1(id, ) {
-		var copyText = document.getElementById("txt_title");
-		copyText.select();
-		copyText.setSelectionRange(0, 99999)
-		document.execCommand("copy");
-		alert("Copied the text: " + copyText.value);
-	}
-
 	function copyText(id){
 		var copyText = document.getElementById("key_site_"+id);
 		copyText.select();

@@ -753,3 +753,8 @@ p.paging {
 .key_site:disabled {
     background: #efefef;
 }
+.key_site:focus {
+    border: 1px solid #ccc;
+    outline: 0;
+    border-radius: 3px;
+}
