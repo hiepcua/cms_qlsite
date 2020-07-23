@@ -70,7 +70,7 @@ if($isAdmin==1){
 						<div class='col-sm-3'>
 							<div class='form-group'>
 								<select class="form-control" name="cate" id="cbo_cate">
-									<option value="">-- Chọn nhóm --</option>
+									<option value="">-- Chuyên mục --</option>
 									<?php getListComboboxCategories(0,0); ?>
 								</select>
 								<script type="text/javascript">
@@ -80,7 +80,7 @@ if($isAdmin==1){
 								</script>
 							</div>
 						</div>
-						<div class='col-sm-3'>
+						<div class='col-sm-2'>
 							<div class='form-group'>
 								<select class="form-control" name="s" id="cbo_status">
 									<option value="">-- Trạng thái --</option>
@@ -99,7 +99,7 @@ if($isAdmin==1){
 							</div>
 						</div>
 						<div class="col-sm-1"><input type="submit" name="" class="btn btn-primary" value="Tìm kiếm"></div>
-						<div class="col-sm-2">
+						<div class="col-sm-3">
 							<a href="<?php echo ROOTHOST.COMS;?>/add" class="btn btn-primary float-sm-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm mới</a>
 						</div>
 					</div>

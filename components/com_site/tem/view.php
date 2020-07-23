@@ -67,7 +67,7 @@ if(count($res_children) >0){
 
 $_status = $row['status'];
 /*
-0 : Lưu nháp,
+0 : Cập nhật,
 1 : Gửi biên tập,
 2 : Bị trả lại,
 3 : Chờ xuất bản,
@@ -86,7 +86,7 @@ $fulltext = '';
 switch ($_status) {
 	case 1:
 	$__action = array(
-		array("id" => 1, "name" => "Lưu nháp", "class" => "red"),
+		array("id" => 1, "name" => "Cập nhật", "class" => "red"),
 		array("id" => 2, "name" => "Kích hoạt", "class" => "blue")
 	);
 	$__page_title = "Trang chưa kích hoạt";
@@ -117,7 +117,7 @@ switch ($_status) {
 	
 	default:
 	$__action = array(
-		array("id" => 1, "name" => "Lưu nháp", "class" => "red"),
+		array("id" => 1, "name" => "Cập nhật", "class" => "red"),
 		array("id" => 2, "name" => "Kích hoạt", "class" => "blue")
 	);
 	$__page_title = "Cập nhật thông tin trang";

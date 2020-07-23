@@ -98,8 +98,9 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 							</div>
 
 							<div class="form-group">
-								<label>Tên miền</label>
+								<div><label>Tên miền </label><span id="checkDomainExist" style="display: none; padding-left:15px;"></span></div>
 								<input type="text" id="txt_domain" name="txt_domain" class="form-control" value="" placeholder="Tên miền website">
+								<input type="hidden" id="chk_domain" name="chk_domain" value="0">
 							</div>
 
 							<div class="form-group">
@@ -242,6 +243,21 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 		readURL(this);
 	});
 
+	$("#txt_domain").on('change', function(){
+		var domain = $(this).val();
+		var _url = "<?php echo ROOTHOST;?>ajaxs/site/checkDomainExist.php";
+		$.post(_url, {'domain': domain}, function(res){
+			if(parseInt(res)==1){
+				$('#checkDomainExist').html('<span style="color: red">Domain đã tồn tại.</span>');
+				$('#chk_domain').val('1');
+			}else{
+				$('#checkDomainExist').html('<span style="color: #3cc051">Ok!</span>');
+				$('#chk_domain').val('0');
+			}
+			$('#checkDomainExist').css('display','inline-block');
+		});
+	});
+
 	function cancel_fileupload(){
 		$('.fileupload').removeClass('fileupload-exists');
 		$('.fileupload').addClass('fileupload-new');
@@ -252,9 +268,10 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 	function validForm(){
 		var flag = true;
 		var title = $('#txt_name').val();
-		// var cate = parseInt($('#cbo_par').val());
+		var domain = $('#txt_domain').val();
+		var chk_domain = $('#chk_domain').val();
 
-		if(title==''){
+		if(title=='' || chk_domain==1 || domain==''){
 			alert('Các mục đánh dấu * không được để trống');
 			flag = false;
 		}
