@@ -93,16 +93,16 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 					<div class="row">
 						<div class="col-md-8">
 							<div class="form-group">
-								<label>Tên trang<font color="red"><font color="red">*</font></font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tên trang">
-							</div>
-
-							<div class="form-group">
 								<div><label>Tên miền </label><span id="checkDomainExist" style="display: none; padding-left:15px;"></span></div>
 								<input type="text" id="txt_domain" name="txt_domain" class="form-control" value="" placeholder="Tên miền website">
 								<input type="hidden" id="chk_domain" name="chk_domain" value="0">
 							</div>
 
+							<div class="form-group">
+								<label>Tên trang<font color="red"><font color="red">*</font></font></label>
+								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tên trang">
+							</div>
+							
 							<div class="form-group">
 								<label>Email</label>
 								<input type="text" id="txt_email" name="txt_email" class="form-control" value="">
@@ -243,6 +243,13 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 		readURL(this);
 	});
 
+	function cancel_fileupload(){
+		$('.fileupload').removeClass('fileupload-exists');
+		$('.fileupload').addClass('fileupload-new');
+		$('.fileupload-preview').empty();
+		$("#file_image").val('');
+	}
+
 	$("#txt_domain").on('change', function(){
 		var domain = $(this).val();
 		var _url = "<?php echo ROOTHOST;?>ajaxs/site/checkDomainExist.php";
@@ -257,13 +264,6 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 			$('#checkDomainExist').css('display','inline-block');
 		});
 	});
-
-	function cancel_fileupload(){
-		$('.fileupload').removeClass('fileupload-exists');
-		$('.fileupload').addClass('fileupload-new');
-		$('.fileupload-preview').empty();
-		$("#file_image").val('');
-	}
 
 	function validForm(){
 		var flag = true;

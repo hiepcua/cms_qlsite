@@ -11,9 +11,15 @@ if(isLogin()){
 	$thisUser = getInfo('username');
 	$isAdmin = getInfo('isadmin');
 	$domain = antiData($_POST['domain']);
+	$site_id = antiData($_POST['site_id']) ? antiData($_POST['site_id']) : 0;
 
 	if($domain!=='' && $isAdmin==1){
-		$number = SysCount('tbl_sites', "AND domain='".$domain."'");
+		if($site_id == 0){
+			$number = SysCount('tbl_sites', "AND domain='".$domain."'");
+		}else{
+			$number = SysCount('tbl_sites', "AND domain='".$domain."' AND id <>".$site_id);
+		}
+		
 		if($number > 0){
 			die("1");
 		}else{

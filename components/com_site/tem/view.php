@@ -180,13 +180,14 @@ switch ($_status) {
 					<div class="row">
 						<div class="col-md-8">
 							<div class="form-group">
-								<label>Tên trang<font color="red"><font color="red">*</font></font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title'];?>" placeholder="Tên trang">
+								<div><label>Tên miền </label><span id="checkDomainExist" style="display: none; padding-left:15px;"></span></div>
+								<input type="text" id="txt_domain" name="txt_domain" class="form-control" value="<?php echo $row['domain'];?>" placeholder="Tên miền website">
+								<input type="hidden" id="chk_domain" name="chk_domain" value="0">
 							</div>
 
 							<div class="form-group">
-								<label>Tên miền</label>
-								<input type="text" id="txt_domain" name="txt_domain" class="form-control" value="<?php echo $row['domain'];?>" placeholder="Tên miền website">
+								<label>Tên trang<font color="red"><font color="red">*</font></font></label>
+								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title'];?>" placeholder="Tên trang">
 							</div>
 
 							<div class="form-group">
@@ -371,14 +372,28 @@ switch ($_status) {
 		$("#file_image").val('');
 	}
 
+	$("#txt_domain").on('change', function(){
+		var domain = $(this).val();
+		var _url = "<?php echo ROOTHOST;?>ajaxs/site/checkDomainExist.php";
+		$.post(_url, {'domain': domain, 'site_id': '<?php echo $row["id"];?>'}, function(res){
+			if(parseInt(res)==1){
+				$('#checkDomainExist').html('<span style="color: red">Domain đã tồn tại.</span>');
+				$('#chk_domain').val('1');
+			}else{
+				$('#checkDomainExist').html('<span style="color: #3cc051">Ok!</span>');
+				$('#chk_domain').val('0');
+			}
+			$('#checkDomainExist').css('display','inline-block');
+		});
+	});
+
 	function validForm(){
 		var flag = true;
 		var title = $('#txt_name').val();
-		var cate = parseInt($('#cbo_cate').val());
-		var album = parseInt($('#cbo_album').val());
-		var chanel = parseInt($('#cbo_chanel').val());
+		var domain = $('#txt_domain').val();
+		var chk_domain = $('#chk_domain').val();
 
-		if(title=='' || cate==0 || album==0 || chanel==0){
+		if(title=='' || chk_domain==1 || domain==''){
 			alert('Các mục đánh dấu * không được để trống');
 			flag = false;
 		}

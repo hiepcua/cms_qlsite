@@ -4,7 +4,7 @@ define('OBJ_PAGE','SITE_LIST');
 $user=getInfo('username');
 $isAdmin=getInfo('isadmin');
 if($isAdmin==1){
-	$strWhere=""; $flg_search = 0;
+	$strWhere="AND is_trash=0 "; $flg_search = 0;
 	$get_s = isset($_GET['s']) ? antiData($_GET['s']) : '';
 	$get_q = isset($_GET['q']) ? antiData($_GET['q']) : '';
 	$get_par = isset($_GET['par']) ? antiData($_GET['par']) : '';
