@@ -35,7 +35,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 	$arr['fulltext'] = $Fulltext;
 	$arr['cat_id'] = $Cate;
 	$arr['album_id'] = $Album;
-	$arr['chanel_id'] = $Event;
+	$arr['event_id'] = $Event;
 	$arr['type'] = $Type;
 	$arr['images'] = $file;
 	$arr['status'] = $Status;
@@ -118,13 +118,6 @@ $__action = $_per_tbt;
 							<div  class="form-group">
 								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
 								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tiêu đề bài viết">
-							</div>
-
-							<div class='form-group'>
-								<label>Ảnh đại diện </label><small> (Dung lượng < 10MB)</small>
-								<div id="response_img">
-									<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
-								</div>
 							</div>
 
 							<div class="row mb-3" id="type_video">
@@ -259,6 +252,26 @@ $__action = $_per_tbt;
 									<option value="2">Audio</option>
 								</select>
 							</div>
+
+							<div class='form-group'>
+								<div class="widget-fileupload fileupload fileupload-new" data-provides="fileupload">
+									<label>Ảnh đại diện</label><small> (Dung lượng < 10MB)</small>
+									<div class="widget-avatar mb-2">
+										<div class="fileupload-new thumbnail">
+											<img src="<?php echo ROOTHOST;?>global/img/no-photo.jpg" id="img_image_preview">
+										</div>
+										<div class="fileupload-preview fileupload-exists thumbnail" style="line-height: 20px;"></div>
+									</div>
+									<div class="control">
+										<span class="btn btn-file">
+											<span class="fileupload-new">Tải lên</span>
+											<span class="fileupload-exists">Thay đổi</span>
+											<input type="file" id="file_image" name="txt_thumb" accept="image/jpg, image/jpeg">
+										</span>
+										<a href="javascript:void(0)" class="btn fileupload-exists" data-dismiss="fileupload" onclick="cancel_fileupload()">Hủy</a>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					
@@ -336,6 +349,34 @@ $__action = $_per_tbt;
 			$('#frm_action').submit();
 		});
 	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				var img = document.createElement("img");
+				img.src = e.target.result;
+				// Hidden fileupload new
+				$('.fileupload').removeClass('fileupload-new');
+				$('.fileupload').addClass('fileupload-exists');
+				$('.fileupload-preview').html(img);
+			}
+
+			reader.readAsDataURL(input.files[0]); // convert to base64 string
+		}
+	}
+
+	$("#file_image").on('change', function(){
+		readURL(this);
+	});
+
+	function cancel_fileupload(){
+		$('.fileupload').removeClass('fileupload-exists');
+		$('.fileupload').addClass('fileupload-new');
+		$('.fileupload-preview').empty();
+		$("#file_image").val('');
+	}
 
 	function selectVodType(){
 		var e = document.getElementById("cbo_type");

@@ -172,6 +172,15 @@ function randomNumber() {
 	}
 	return implode($pass); //turn the array into a string
 }
+function getThumb($urlThumb, $class='', $alt=''){
+	$urlThumb = str_replace(' ', '%20', $urlThumb);
+    if($urlThumb !=''){
+        return "<img src=".ROOTHOST.$urlThumb." class='".$class."' alt='".$alt."'>";
+    }
+    else{
+        return "<img src=".IMAGE_DEFAULT." class='".$class."'>";
+    }
+}
 //-----------------------CSDL------------------------------
 function SysCount($table,$where){
 	$sql="SELECT COUNT(*) as num FROM $table WHERE 1=1 $where";

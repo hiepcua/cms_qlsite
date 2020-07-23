@@ -30,7 +30,7 @@ if($isAdmin==1){
 	}
 
 	$total_rows=SysCount('tbl_content',$strWhere);
-	$max_rows = 20;
+	$max_rows = 15;
 
 	if($_SESSION['CUR_PAGE_'.OBJ_PAGE] > ceil($total_rows/$max_rows)){
 		$_SESSION['CUR_PAGE_'.OBJ_PAGE] = ceil($total_rows/$max_rows);
@@ -83,7 +83,7 @@ if($isAdmin==1){
 						<div class='col-sm-3'>
 							<div class='form-group'>
 								<select class="form-control" name="s" id="cbo_status">
-									<option value="">-- Status --</option>
+									<option value="">-- Trạng thái --</option>
 									<option value="0">Đang biên tập</option>
 									<option value="1">Chờ duyệt</option>
 									<option value="2">Trả về</option>
@@ -112,11 +112,8 @@ if($isAdmin==1){
 							<tr>
 								<th style="width: 10px">#</th>
 								<th>Tiêu đề</th>
-								<th>Nhóm</th>
-								<th>Type</th>
 								<th>Ngày tạo</th>
-								<th>Status</th>
-								<th>Chi tiết</th>
+								<th width="80px">Chi tiết</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -146,15 +143,26 @@ if($isAdmin==1){
 										$type = 'Text';
 										break;
 									}
+									$thumbnail = getThumb($r['images'], 'thumbnail', '');
 									?>
 									<tr>
-										<td><?php echo $stt;?></td>
-										<td><?php echo Substring($r['title'], 0, 15);?></td>
-										<td><?php echo $cate_title;?></td>
-										<td><?php echo $type;?></td>
-										<td><?php echo date('d-m-Y H:i A', $r['cdate']);?></td>
-										<td><?php echo $r['status'];?></td>
-										<td><a href="<?php echo ROOTHOST.COMS.'/edit/'.$r['id'];?>"><i class="fas fa-edit cblue"></i></a></td>
+										<td><?php echo $stt + $star;?></td>
+										<td>
+											<div class="widget-td-title">
+												<div class="widget-thumbnail"><?php echo $thumbnail;?></div>
+												<div class="widget-title">
+													<?php echo Substring($r['title'], 0, 20);?>
+													<div class="widget-list-info">
+														<ul class="list-unstyle">
+															<li><a href="" target="_blank"><?php echo $cate_title;?></a></li>
+															<li><a href="" target="_blank"><?php echo $type;?></a></li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td><span class="td-public-time"><?php echo date('H:i | d-m-Y', $r['cdate']);?><span></td>
+										<td class="text-center"><a href="<?php echo ROOTHOST.COMS.'/edit/'.$r['id'];?>"><i class="fas fa-edit cblue"></i></a></td>
 									</tr>
 								<?php }
 							}else{

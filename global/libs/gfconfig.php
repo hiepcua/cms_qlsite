@@ -16,6 +16,7 @@ define('BASEVIRTUAL0','/home/admin/web/ecohub.asia/public_html/uploads/');
 define('MEDIA_HOST',ROOTHOST.'uploads/media/');
 define('IMAGE_HOST',ROOTHOST.'uploads/media/');
 define('AVATAR_DEFAULT',ROOTHOST.'global/img/avatars/male.png');
+define('IMAGE_DEFAULT',ROOTHOST.'global/img/no-photo.jpg');
 
 define('PIT_API_KEY','6b73412dd2037b6d2ae3b2881b5073bc');
 define('APP_ID','1663061363962371');

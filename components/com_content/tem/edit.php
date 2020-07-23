@@ -25,7 +25,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name']!=='') {
 	}
 
 	if(isset($_FILES['txt_thumb']) && $_FILES['txt_thumb']['size'] > 0){
-		$save_path 	= "medias/vods/videos/";
+		$save_path 	= "medias/contents/";
 		$obj_upload->setPath($save_path);
 		$file = $save_path.$obj_upload->UploadFile("txt_thumb", $save_path);
 	}else{
@@ -232,21 +232,6 @@ if(count($audio_sourses) > 0){
 								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title']; ?>" placeholder="Tiêu đề bài viết">
 							</div>
 
-							<div class='form-group'>
-								<label>Ảnh đại diện </label><small> (Dung lượng < 10MB)</small>
-								<div class="widget_thumb80">
-									<?php if($row['images'] != ''){ ?>
-										<div class="wrap_thumb80">
-											<img src="<?php echo ROOTHOST.$row['images'];?>" class="thumb80">
-										</div>
-									<?php } ?>
-									<div id="response_img">
-										<input type="hidden" name="txt_thumb2" value="<?php echo $row['images'];?>">
-										<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
-									</div>
-								</div>
-							</div>
-
 							<div class="row mb-3" id="type_video" style="<?php if($_type==1) echo 'display: flex;';?>">
 								<div class="col-md-12"><label>Video sources </label><small> (Allow type: video/mp4)</small></div>
 								<div class="col-md-6">
@@ -405,6 +390,34 @@ if(count($audio_sourses) > 0){
 									});
 								</script>
 							</div>
+
+							<div class='form-group'>
+								<div class="widget-fileupload fileupload fileupload-new" data-provides="fileupload">
+									<label>Ảnh đại diện</label><small> (Dung lượng < 10MB)</small>
+									<div class="widget-avatar mb-2">
+										<div class="fileupload-new thumbnail">
+											<?php
+											if(strlen($row['images'])>0){
+												echo '<img src="'.ROOTHOST.$row['images'].'" id="img_image_preview">';
+											}else{
+												echo '<img src="'.ROOTHOST.'global/img/no-photo.jpg" id="img_image_preview">';
+											}
+											?>
+										</div>
+										<div class="fileupload-preview fileupload-exists thumbnail" style="line-height: 20px;"></div>
+										<input type="hidden" name="txt_thumb2" value="<?php echo $row['images'];?>">
+									</div>
+									<div class="control">
+										<span class="btn btn-file">
+											<span class="fileupload-new">Tải lên</span>
+											<span class="fileupload-exists">Thay đổi</span>
+											<input type="file" id="file_image" name="txt_thumb" accept="image/jpg, image/jpeg">
+										</span>
+										<a href="javascript:void(0)" class="btn fileupload-exists" data-dismiss="fileupload" onclick="cancel_fileupload()">Hủy</a>
+									</div>
+								</div>
+							</div>
+						</div>
 						</div>
 					</div>
 					
@@ -474,6 +487,34 @@ if(count($audio_sourses) > 0){
 			$('#frm_action').submit();
 		});
 	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				var img = document.createElement("img");
+				img.src = e.target.result;
+				// Hidden fileupload new
+				$('.fileupload').removeClass('fileupload-new');
+				$('.fileupload').addClass('fileupload-exists');
+				$('.fileupload-preview').html(img);
+			}
+
+			reader.readAsDataURL(input.files[0]); // convert to base64 string
+		}
+	}
+
+	$("#file_image").on('change', function(){
+		readURL(this);
+	});
+
+	function cancel_fileupload(){
+		$('.fileupload').removeClass('fileupload-exists');
+		$('.fileupload').addClass('fileupload-new');
+		$('.fileupload-preview').empty();
+		$("#file_image").val('');
+	}
 
 	function selectVodType(){
 		var e = document.getElementById("cbo_type");
