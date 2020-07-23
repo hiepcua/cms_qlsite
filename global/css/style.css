@@ -796,8 +796,16 @@ p.paging {
     padding-top: 8px;
 }
 .td-public-time{
+    display: inline-block;
     font-size: 0.85em;
     background-color: #eee;
     padding: 5px 6px;
     border-radius: 3px;
+}
+.td-actions{}
+.td-actions .action{
+    padding-top: 2px;
+    display: inline-block;
+    width: 30px;
+    border: 1px solid;
 }

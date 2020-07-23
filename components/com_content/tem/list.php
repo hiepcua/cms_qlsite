@@ -100,7 +100,7 @@ if($isAdmin==1){
 						</div>
 						<div class="col-sm-1"><input type="submit" name="" class="btn btn-primary" value="Tìm kiếm"></div>
 						<div class="col-sm-2">
-							<a href="<?php echo ROOTHOST.COMS;?>/add" class="btn btn-primary float-sm-right">Thêm mới</a>
+							<a href="<?php echo ROOTHOST.COMS;?>/add" class="btn btn-primary float-sm-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm mới</a>
 						</div>
 					</div>
 				</form>
@@ -113,7 +113,7 @@ if($isAdmin==1){
 								<th style="width: 10px">#</th>
 								<th>Tiêu đề</th>
 								<th>Ngày tạo</th>
-								<th width="80px">Chi tiết</th>
+								<th colspan="2" width="120px">Hành động</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -147,6 +147,7 @@ if($isAdmin==1){
 									?>
 									<tr>
 										<td><?php echo $stt + $star;?></td>
+
 										<td>
 											<div class="widget-td-title">
 												<div class="widget-thumbnail"><?php echo $thumbnail;?></div>
@@ -161,8 +162,13 @@ if($isAdmin==1){
 												</div>
 											</div>
 										</td>
-										<td><span class="td-public-time"><?php echo date('H:i | d-m-Y', $r['cdate']);?><span></td>
-										<td class="text-center"><a href="<?php echo ROOTHOST.COMS.'/edit/'.$r['id'];?>"><i class="fas fa-edit cblue"></i></a></td>
+										<td><span class="td-public-time mt-3"><?php echo date('H:i | d-m-Y', $r['cdate']);?><span>
+										</td>
+										<td class="text-center td-actions">
+											<a class="action mt-3" href='<?php echo ROOTHOST.COMS."/delete/".$r['id'];?>' onclick='return confirm("Bạn có chắc muốn xóa?")'><i class='fa fa-trash cred' aria-hidden='true'></i></a>
+
+											<a class="action mt-3" href="<?php echo ROOTHOST.COMS.'/edit/'.$r['id'];?>"><i class="fas fa-edit cblue"></i></a>
+										</td>
 									</tr>
 								<?php }
 							}else{

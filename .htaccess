@@ -27,6 +27,7 @@ RewriteRule ^content/public/?$ 				index.php?com=content&viewtype=public [QSA]
 RewriteRule ^content/deleted/?$ 			index.php?com=content&viewtype=deleted [QSA]
 RewriteRule ^content/takedown/?$ 			index.php?com=content&viewtype=takedown [QSA]
 RewriteRule ^content/return/?$ 				index.php?com=content&viewtype=return [QSA]
+RewriteRule ^content/delete/([0-9]+)?$ 		index.php?com=content&viewtype=delete&id=$1 [QSA]
 
 RewriteRule ^user/?$ 							index.php?com=user [QSA]
 RewriteRule ^profile/?$ 						index.php?com=user&viewtype=profile

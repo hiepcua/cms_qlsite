@@ -59,7 +59,7 @@ if($isAdmin==1){
 						</div>
 						<div class="col-sm-7"></div>
 						<div class="col-sm-2">
-							<a href="<?php echo ROOTHOST.COMS;?>/add" class="btn btn-primary float-sm-right">Thêm mới</a>
+							<a href="<?php echo ROOTHOST.COMS;?>/add" class="btn btn-primary float-sm-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm mới</a>
 						</div>
 					</div>
 				</form>
