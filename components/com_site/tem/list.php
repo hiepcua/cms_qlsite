@@ -4,10 +4,24 @@ define('OBJ_PAGE','SITE_LIST');
 $user=getInfo('username');
 $isAdmin=getInfo('isadmin');
 if($isAdmin==1){
-	$strWhere="";
+	$strWhere=""; $flg_search = 0;
 	$get_s = isset($_GET['s']) ? antiData($_GET['s']) : '';
 	$get_q = isset($_GET['q']) ? antiData($_GET['q']) : '';
 	$get_par = isset($_GET['par']) ? antiData($_GET['par']) : '';
+
+	/*Gán strWhere*/
+	if($get_q!=''){
+		$flg_search = 1;
+		$strWhere.=" AND title LIKE '%".$get_q."%' OR domain LIKE '%".$get_q."%'";
+	}
+	if($get_par!=''){
+		$flg_search = 1;
+		$strWhere.=" AND path LIKE '".$get_par."_%'";
+	}
+	if($get_s!=''){
+		$flg_search = 1;
+		$strWhere.=" AND status=".$get_s;
+	}
 
 	$total_rows=SysCount('tbl_sites',$strWhere);
 	?>
@@ -16,7 +30,7 @@ if($isAdmin==1){
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Danh sách trang</h1>
+					<h1 class="m-0 text-dark">Danh sách trang</h1><button onclick="myFunction1()">copy</button>
 				</div><!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
@@ -37,13 +51,13 @@ if($isAdmin==1){
 					<div class='row'>
 						<div class='col-sm-3'>
 							<div class='form-group'>
-								<input type='text' id='txt_title' name='q' value="<?php echo $get_q;?>" class='form-control' placeholder="Tên trang ..." />
+								<input type='text' id='txt_title' name='q' value="<?php echo $get_q;?>" class='form-control' placeholder="Tên trang hoặc tên miền..." />
 							</div>
 						</div>
 						<div class='col-sm-3'>
 							<div class='form-group'>
 								<select class="form-control" name="par" id="cbo_par">
-									<option value="">-- Chọn trang cha --</option>
+									<option value="">-- Chọn tên miền cha --</option>
 									<?php getListComboboxSites(0,0); ?>
 								</select>
 								<script type="text/javascript">
@@ -83,7 +97,7 @@ if($isAdmin==1){
 							<tr>
 								<th style="width: 10px">Trash</th>
 								<th>Tên miền</th>
-								<th>Trang cha</th>
+								<th>Tên miền cha</th>
 								<th>Key</th>
 								<th width="150px">Status</th>
 								<th width="80px" class="text-center">Sửa</th>
@@ -93,7 +107,9 @@ if($isAdmin==1){
 							<?php
 							if($total_rows>0){
 								$__array = array();
-								$strWhere.=" AND par_id=0 ORDER BY cdate DESC";
+								if($flg_search == 0) $strWhere.=" AND par_id=0 ORDER BY cdate DESC";
+								else $strWhere.=" ORDER BY cdate DESC";
+
 								$obj = SysGetList('tbl_sites',array(), $strWhere, true);
 								$num = count($obj);
 
@@ -112,8 +128,8 @@ if($isAdmin==1){
 										$ic_status='<button class="btn btn-disable cred bd-0 font-12">Hết hạn</button>';
 									}
 
-									$par_name = SysGetList('tbl_sites', array('title'), "AND id=".$r['par_id']);
-									$par_name = isset($par_name[0]['title']) ? $par_name[0]['title'] : '';
+									$par_name = SysGetList('tbl_sites', array('domain'), "AND id=".$r['par_id']);
+									$par_name = isset($par_name[0]['domain']) ? $par_name[0]['domain'] : '';
 									?>
 									<tr>
 										<td align="center"><a href="<?php echo ROOTHOST.COMS.'/trash/'.$r['id'];?>" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fa fa-trash cred"></i></a></td>
@@ -122,8 +138,8 @@ if($isAdmin==1){
 										<td>
 											<input type="text" id="key_site_<?php echo $r['id'];?>" class="key_site" value="<?php echo $r['key'];?>" disabled="disabled">
 											<div class="tooltip">
-												<button class="btn-copytext" data-id="<?php echo $r['id'];?>" onmouseout="outFunc()">
-													<span class="tooltiptext">Copy to clipboard</span>
+												<button class="btn-copytext" onmouseout="outFunc()" onclick="copyText(<?php echo $r['id'];?>)">
+													<span class="tooltiptext" id="tooltiptext_<?php echo $r['id']?>">Copy to clipboard</span>
 													Copy
 												</button>
 											</div>
@@ -142,8 +158,8 @@ if($isAdmin==1){
 												$ic_status2='<button class="btn btn-disable cred bd-0 font-12">Hết hạn</button>';
 											}
 
-											$par_name2 = SysGetList('tbl_sites', array('title'), "AND id=".$v['par_id']);
-											$par_name2 = isset($par_name2[0]['title']) ? $par_name2[0]['title'] : '';
+											$par_name2 = SysGetList('tbl_sites', array('domain'), "AND id=".$v['par_id']);
+											$par_name2 = isset($par_name2[0]['domain']) ? $par_name2[0]['domain'] : '';
 
 											$char="";
 											$level = explode('_', $v['path']);
@@ -156,13 +172,13 @@ if($isAdmin==1){
 											?>
 											<tr>
 												<td align="center"><a href="<?php echo ROOTHOST.COMS.'/trash/'.$v['id'];?>" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fa fa-trash cred"></i></a></td>
-												<td><?php echo $v['domain'];?></td>
+												<td><?php echo $char.$v['domain'];?></td>
 												<td><?php echo $par_name2;?></td>
 												<td>
 													<input type="text" id="key_site_<?php echo $v['id'];?>" class="key_site" value="<?php echo $v['key'];?>" disabled="disabled">
 													<div class="tooltip">
-														<button class="btn-copytext" data-id="<?php echo $v['id'];?>" onclick="myFunction(this)" onmouseout="outFunc()">
-															<span class="tooltiptext">Copy to clipboard</span>
+														<button class="btn-copytext" onmouseout="outFunc()" onclick="copyText(<?php echo $v['id'];?>)">
+															<span class="tooltiptext" id="tooltiptext_<?php echo $v['id']?>">Copy to clipboard</span>
 															Copy
 														</button>
 													</div>
@@ -191,27 +207,23 @@ if($isAdmin==1){
 }
 ?>
 <script type="text/javascript">
-	// function myFunction(property) {
-	// 	// var id = property.getAttribute('data-id');
+	function myFunction1(id, ) {
+		var copyText = document.getElementById("txt_title");
+		copyText.select();
+		copyText.setSelectionRange(0, 99999)
+		document.execCommand("copy");
+		alert("Copied the text: " + copyText.value);
+	}
 
-	// 	// var copyText = document.getElementById("key_site_"+id);
-	// 	var copyText = document.getElementById("key_site_2");
-	// 	copyText.select();
-	// 	copyText.setSelectionRange(0, 99999);
-	// 	document.execCommand("copy");
+	function copyText(id){
+		var copyText = document.getElementById("key_site_"+id);
+		copyText.select();
+		copyText.setSelectionRange(0, 99999);
+		document.execCommand("copy");
 
-	// 	property.children[0].innerHTML = "Copied: " + copyText.value;
-	// }
-
-	$(document).ready(function(){
-		$('.btn-copytext').on('click', function(){
-			var id = $(this).attr('data-id');
-			var copyText = $('#key_site_'.id);
-			copyText.select();
-			copyText.setSelectionRange(0, 99999);
-			document.execCommand("copy");
-		});
-	});
+		var tooltip = document.getElementById("tooltiptext_"+id);
+		tooltip.innerHTML = "Copied: " + copyText.value;
+	}
 
 	function outFunc() {
 		var tooltip = $(this).find('.tooltiptext');

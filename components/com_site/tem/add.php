@@ -91,82 +91,87 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 					</div><hr>
 
 					<div class="row">
-						<div class="col-md-6 col-sm-6">
-							<div  class="form-group">
+						<div class="col-md-8">
+							<div class="form-group">
 								<label>Tên trang<font color="red"><font color="red">*</font></font></label>
 								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tên trang">
 							</div>
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<label>Trang cha</label>
-							<select class="form-control" name="cbo_par" id="cbo_par">
-								<option value="0">-- Chọn một --</option>
-								<?php getListComboboxSites(0,0);?>
-							</select>
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<div  class="form-group">
+
+							<div class="form-group">
 								<label>Tên miền</label>
 								<input type="text" id="txt_domain" name="txt_domain" class="form-control" value="" placeholder="Tên miền website">
 							</div>
-						</div>
-					
-						<div class="col-md-6 col-sm-6">
-							<div  class="form-group">
+
+							<div class="form-group">
 								<label>Email</label>
 								<input type="text" id="txt_email" name="txt_email" class="form-control" value="">
 							</div>
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<div  class="form-group">
+
+							<div class="form-group">
 								<label>Số điện thoại</label>
 								<input type="text" id="txt_phone" name="txt_phone" class="form-control" value="">
 							</div>
-						</div>
-						<div class="col-md-12 col-sm-12">
+
 							<div class="form-group">
 								<label>Địa chỉ</label>
 								<textarea class="form-control" id="txt_address" name="txt_address" placeholder="Địa chỉ..." rows="2"></textarea>
 							</div>
-						</div>
-					</div>
 
-					<div class='form-group'>
-						<label>Ảnh đại diện </label><small> (Dung lượng < 10MB)</small>
-						<div id="response_img">
-							<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
-						</div>
-					</div>
+							<div class="form-group">
+								<label>Meta title</label>
+								<textarea class="form-control" id="meta_title" name="meta_title" placeholder="Meta title..." rows="1"></textarea>
+							</div>
 
-					<div class="row">
-						<div class="col-md-6 col-sm-6">
-							<div  class="form-group">
+							<div class="form-group">
+								<label>Meta desciption</label>
+								<textarea class="form-control" id="meta_desc" name="meta_desc" placeholder="Meta desciption..." rows="2"></textarea>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Trang cha</label>
+								<select class="form-control" name="cbo_par" id="cbo_par">
+									<option value="0">-- Chọn một --</option>
+									<?php getListComboboxSites(0,0);?>
+								</select>
+							</div>
+
+							<div class='form-group'>
+								<div class="widget-fileupload fileupload fileupload-new" data-provides="fileupload">
+									<label>Ảnh đại diện</label><small> (Dung lượng < 10MB)</small>
+									<div class="widget-avatar mb-2">
+										<div class="fileupload-new thumbnail">
+											<img src="<?php echo ROOTHOST;?>global/img/no-photo.jpg" id="img_image_preview">
+										</div>
+										<div class="fileupload-preview fileupload-exists thumbnail" style="line-height: 20px;"></div>
+									</div>
+									<div class="control">
+										<span class="btn btn-file">
+											<span class="fileupload-new">Tải lên</span>
+											<span class="fileupload-exists">Thay đổi</span>
+											<input type="file" id="file_image" name="txt_thumb" accept="image/jpg, image/jpeg">
+										</span>
+										<a href="javascript:void(0)" class="btn fileupload-exists" data-dismiss="fileupload" onclick="cancel_fileupload()">Hủy</a>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
 								<label>Facebook</label>
 								<input type="text" id="txt_facebook" name="txt_facebook" class="form-control" value="">
 							</div>
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<div  class="form-group">
+
+							<div class="form-group">
 								<label>Youtube</label>
 								<input type="text" id="txt_youtube" name="txt_youtube" class="form-control" value="">
 							</div>
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<div  class="form-group">
+
+							<div class="form-group">
 								<label>Skype</label>
 								<input type="text" id="txt_skype" name="txt_skype" class="form-control" value="">
 							</div>
 						</div>
-					</div>
-
-					<div class="form-group">
-						<label>Meta title</label>
-						<textarea class="form-control" id="meta_title" name="meta_title" placeholder="Meta title..." rows="1"></textarea>
-					</div>
-
-					<div class="form-group">
-						<label>Meta desciption</label>
-						<textarea class="form-control" id="meta_desc" name="meta_desc" placeholder="Meta desciption..." rows="2"></textarea>
 					</div>
 
 					<div class="form-group" id="type_text">
@@ -215,6 +220,34 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 			$('#frm_action').submit();
 		});
 	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				var img = document.createElement("img");
+				img.src = e.target.result;
+				// Hidden fileupload new
+				$('.fileupload').removeClass('fileupload-new');
+				$('.fileupload').addClass('fileupload-exists');
+				$('.fileupload-preview').html(img);
+			}
+
+			reader.readAsDataURL(input.files[0]); // convert to base64 string
+		}
+	}
+
+	$("#file_image").on('change', function(){
+		readURL(this);
+	});
+
+	function cancel_fileupload(){
+		$('.fileupload').removeClass('fileupload-exists');
+		$('.fileupload').addClass('fileupload-new');
+		$('.fileupload-preview').empty();
+		$("#file_image").val('');
+	}
 
 	function validForm(){
 		var flag = true;

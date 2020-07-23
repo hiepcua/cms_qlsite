@@ -16,7 +16,7 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 	while($rows=$objdata->Fetch_Assoc()){
 		$id=$rows['id'];
 		$parid=$rows['par_id'];
-		$title=$rows['title'];
+		$title=$rows['domain'];
 		if(in_array($id, $childs)){
 			echo "<option value='$id' disabled='true' class='disabled'>$char $title</option>";
 		}else{
