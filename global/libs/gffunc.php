@@ -30,15 +30,32 @@ function paging($total_rows,$max_rows,$cur_page){
 	$paging.='</ul></p></form>';
 	echo $paging;
 }
-function activeMenu($val,$type='com'){
+function activeMenu($_com='', $_view='', $type='com'){
 	$com=isset($_GET['com'])?antiData($_GET['com']):'home';
 	$vie=isset($_GET['viewtype'])?antiData($_GET['viewtype']):'';
-	if($type=='com' && $com==$val) echo 'active';
-	if($type=='viewtype' && $vie==$val) echo 'active';
+
+	if($type=='com' && $com==$_com) echo 'active';
+	if($type=='viewtype' && $com==$_com && $vie==$_view) echo 'active';
 }
 function activeVodMenuByStatus($val){
 	$status=isset($_GET['status'])?antiData($_GET['status']):'-1';
 	if($status==$val) echo ' active';
+}
+function activeMenus($array, $type='com'){
+	if(count($array)>0){
+		$com=isset($_GET['com'])?antiData($_GET['com']):'home';
+		$vie=isset($_GET['viewtype'])?antiData($_GET['viewtype']):'';
+
+		if($type=='com' && in_array($com, $array)) echo 'active';
+		if($type=='viewtype' && in_array($com, $array)) echo 'active';
+	}
+}
+function menuOpen($array, $type='com'){
+	$com=isset($_GET['com'])?antiData($_GET['com']):'home';
+	$vie=isset($_GET['viewtype'])?antiData($_GET['viewtype']):'';
+
+	if($type=='com' && in_array($com, $array)) echo ' menu-open';
+	if($type=='viewtype' && in_array($com, $array)) echo ' menu-open';
 }
 function isMobile(){
 	if(preg_match("/(iPad)/i", $_SERVER["HTTP_USER_AGENT"])) return false;

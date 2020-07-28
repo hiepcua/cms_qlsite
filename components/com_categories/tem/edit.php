@@ -101,7 +101,7 @@ $site = $sites[0];
 				<form name="frm_action" id="frm_action" action="" method="post" enctype="multipart/form-data">
 					<div class="mess"></div>
 					<div class="row">
-						<div class="col-md-8">
+						<div class="col-md-8 col-lg-9">
 							<div class="form-group">
 								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
 								<input type="text" id="txt_name" name="txt_name" class="form-control" value="<?php echo $row['title'];?>" placeholder="Tiêu đề chuyên mục">
@@ -123,7 +123,7 @@ $site = $sites[0];
 							</div>
 						</div>
 
-						<div class="col-md-4">
+						<div class="col-md-4 col-lg-3">
 							<div class="form-group">
 								<label>Trang</label><font color="red">*</font>
 								<input type="text" name="txt_site" value="<?php echo $site['title'];?>" readonly class="form-control">

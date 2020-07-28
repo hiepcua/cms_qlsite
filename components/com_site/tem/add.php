@@ -91,7 +91,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 					</div><hr>
 
 					<div class="row">
-						<div class="col-md-8">
+						<div class="col-md-8 col-lg-9">
 							<div class="form-group">
 								<div><label>Tên miền </label><span id="checkDomainExist" style="display: none; padding-left:15px;"></span></div>
 								<input type="text" id="txt_domain" name="txt_domain" class="form-control" value="" placeholder="Tên miền website">
@@ -129,7 +129,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 							</div>
 						</div>
 
-						<div class="col-md-4">
+						<div class="col-md-4 col-lg-3">
 							<div class="form-group">
 								<label>Trang cha</label>
 								<select class="form-control" name="cbo_par" id="cbo_par">
