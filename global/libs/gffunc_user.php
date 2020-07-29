@@ -63,6 +63,8 @@ function LogIn($user,$pass){
 function LogOut($user){
 	if(isset($_SESSION['OTT_USER_LOGIN'])){
 		unset($_SESSION['OTT_USER_LOGIN']);
+		unset($_SESSION['G_PERMISSION_USER']);
+		
 		$sql="UPDATE tbl_user_login SET `isactive`=0 WHERE username='$user'";
 		$obj=new CLS_MYSQL;
 		$obj->Exec($sql);

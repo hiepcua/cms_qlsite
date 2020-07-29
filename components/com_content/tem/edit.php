@@ -3,8 +3,19 @@ $msg 		= new \Plasticbrain\FlashMessages\FlashMessages();
 if(!isset($_SESSION['flash'.'com_'.COMS])) $_SESSION['flash'.'com_'.COMS] = 2;
 require_once('libs/cls.upload.php');
 $obj_upload = new CLS_UPLOAD();
-$file='';
+$file=$strWhere='';
 $GetID = isset($_GET['id']) ? (int)$_GET["id"] : 0;
+
+/*Check user permission*/
+$user 		= getInfo('username');
+$isAdmin 	= getInfo('isadmin');
+if(!in_array('1002', $_SESSION['G_PERMISSION_USER'])){
+	echo "<p class='text-center' style='padding-top:10px'>Bạn không có quyền truy cập chức năng này!.</p>";
+	return;
+}
+if($isAdmin) $strWhere.=' AND id='. $GetID;
+else $strWhere.=' AND `author`="'.$user.'" AND id='. $GetID;
+/*End check user permission*/
 
 if(isset($_POST['txt_name']) && $_POST['txt_name']!=='') {
 	$Title 			= isset($_POST['txt_name']) ? addslashes($_POST['txt_name']) : '';
@@ -51,7 +62,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name']!=='') {
 	else $_SESSION['flash'.'com_'.COMS] = 0;
 }
 
-$res_Vods = SysGetList('tbl_content', array(), ' AND id='. $GetID);
+$res_Vods = SysGetList('tbl_content', array(), $strWhere);
 if(count($res_Vods) <= 0){
 	echo 'Không có dữ liệu.'; 
 	return;
@@ -67,14 +78,97 @@ $_type = $row['type'];
 4 : Xuất bản,
 5 : Gỡ xuống,
 */
-$__permis_1 = array(0, 1, 2);
-$__permis_2 = array(0, 1, 2, 3);
-$__permis_3 = array(0, 1, 2, 3, 4, 5);
-$__permissions = $__permis_3;
+// 1 	:	Thêm mới bài viết
+// 2 	:	Cập nhật bài viết (Sửa bài viết)
+// 3 	:	Xóa bài viết
+// 4 	:	Phê duyệt
+// 5 	:	Xuất bản
+// 6 	:	Gỡ bài
+// 7 	:	Trả bài cho phóng viên
+// 8 	:	Trả bài cho biên tập viên
+$__permis_ctv = $_PERMISSIONS_CONTENT['CTV'];
+$__permis_pv = $_PERMISSIONS_CONTENT['PV'];
+$__permis_btv = $_PERMISSIONS_CONTENT['BTV'];
+$__permis_tk = $_PERMISSIONS_CONTENT['TK'];
+$__permis_pbt = $_PERMISSIONS_CONTENT['PBT'];
+$__permis_tbt = $_PERMISSIONS_CONTENT['TBT'];
+$__permis_admin = $_PERMISSIONS_CONTENT['ADMIN'];
+$__permissions = $__permis_admin;
 
 $__action = array();
 $__page_title = ''; 
 $fulltext = ''; 
+switch ($_status) {
+	case 0:
+	$__action = array(
+		array("id" => "1", "name" => "Thêm mới", "class" => "red"),
+		array("id" => "2", "name" => "Cập nhật", "class" => "blue"),
+		array("id" => "3", "name" => "Xóa bài viết", "class" => "blue"),
+		array("id" => "4", "name" => "Phê duyệt", "class" => "blue"),
+		array("id" => "5", "name" => "Xuất bản", "class" => "blue"),
+		array("id" => "6", "name" => "Gỡ bài", "class" => "blue"),
+		array("id" => "7", "name" => "Trả cho PV", "class" => "blue"),
+		array("id" => "8", "name" => "Trả cho BTV", "class" => "blue"),
+	);
+	$__page_title = "Bài đang biên tập";
+	break;
+	
+	case 1:
+	$__action = array(
+		array("id" => "2", "name" => "Cập nhật", "class" => "red"),
+		array("id" => "3", "name" => "Duyệt tin", "class" => "blue"),
+		array("id" => "4", "name" => "Xuất bản", "class" => "blue"),
+		array("id" => 2, "name" => "Trả lại cho phóng viên", "class" => "blue")
+	);
+	$__page_title = "Bài chờ duyệt";
+	break;
+	
+	case 2:
+	$__action = array(
+		array("id" => 2, "name" => "Cập nhật", "class" => "red"),
+		array("id" => "3", "name" => "Nhận lại tin này", "class" => "blue"),
+	);
+	$__page_title = "Bài viết bị trả về";
+	break;
+	
+	case 3:
+	$__action = array(
+		array("id" => "3", "name" => "Cập nhật", "class" => "red"),
+		array("id" => "4", "name" => "Xuất bản", "class" => "blue"),
+		array("id" => 2, "name" => "Trả lại cho phóng viên", "class" => "blue"),
+		array("id" => "2", "name" => "Trả lại cho BTV", "class" => "blue")
+	);
+	$__page_title = "Bài chờ xuất bản";
+	break;
+	
+	case 4:
+	$__action = array(
+		array("id" => "4", "name" => "Cập nhật", "class" => "red"),
+		array("id" => "5", "name" => "Gỡ tin", "class" => "blue")
+	);
+	$__page_title = "Bài đã xuất bản";
+	break;
+
+	case 5:
+	$__action = array(
+		array("id" => "5", "name" => "Cập nhật", "class" => "red"),
+		array("id" => "4", "name" => "Xuất bản lại", "class" => "blue"),
+		array("id" => 2, "name" => "Trả lại cho phóng viên", "class" => "blue")
+	);
+	$__page_title = "Bài bị trả về";
+	break;
+	
+	default:
+	$__action = array(
+		array("id" => "1", "name" => "Lưu nháp", "class" => "red"),
+		array("id" => "2", "name" => "Gửi biên tập", "class" => "blue"),
+		array("id" => "3", "name" => "Chờ xuất bản", "class" => "blue"),
+		array("id" => "4", "name" => "Xuất bản", "class" => "blue")
+	);
+	$__page_title = "Sửa bài viết";
+	break;
+}
+
 $video_sourses = $audio_sourses = array();
 switch ($_type) {
 	case 1:
@@ -90,73 +184,6 @@ switch ($_type) {
 		$video_sourses = json_decode($row['fulltext']);
 		break;
 }
-switch ($_status) {
-	case 0:
-	$__action = array(
-		array("id" => 0, "name" => "Lưu nháp", "class" => "red"),
-		array("id" => 1, "name" => "Gửi biên tập", "class" => "blue"),
-		array("id" => 3, "name" => "Chờ xuất bản", "class" => "blue"),
-		array("id" => 4, "name" => "Xuất bản", "class" => "blue")
-	);
-	$__page_title = "Bài đang biên tập";
-	break;
-	
-	case 1:
-	$__action = array(
-		array("id" => 1, "name" => "Cập nhật", "class" => "red"),
-		array("id" => 3, "name" => "Duyệt tin", "class" => "blue"),
-		array("id" => 4, "name" => "Xuất bản", "class" => "blue"),
-		array("id" => 2, "name" => "Trả lại cho phóng viên", "class" => "blue")
-	);
-	$__page_title = "Bài chờ duyệt";
-	break;
-	
-	case 2:
-	$__action = array(
-		array("id" => 2, "name" => "Cập nhật", "class" => "red"),
-		array("id" => 3, "name" => "Nhận lại tin này", "class" => "blue"),
-	);
-	$__page_title = "Bài viết bị trả về";
-	break;
-	
-	case 3:
-	$__action = array(
-		array("id" => 3, "name" => "Cập nhật", "class" => "red"),
-		array("id" => 4, "name" => "Xuất bản", "class" => "blue"),
-		array("id" => 2, "name" => "Trả lại cho phóng viên", "class" => "blue"),
-		array("id" => 1, "name" => "Trả lại cho BTV", "class" => "blue")
-	);
-	$__page_title = "Bài chờ xuất bản";
-	break;
-	
-	case 4:
-	$__action = array(
-		array("id" => 4, "name" => "Cập nhật", "class" => "red"),
-		array("id" => 5, "name" => "Gỡ tin", "class" => "blue")
-	);
-	$__page_title = "Bài đã xuất bản";
-	break;
-
-	case 5:
-	$__action = array(
-		array("id" => 5, "name" => "Cập nhật", "class" => "red"),
-		array("id" => 4, "name" => "Xuất bản lại", "class" => "blue"),
-		array("id" => 2, "name" => "Trả lại cho phóng viên", "class" => "blue")
-	);
-	$__page_title = "Bài bị trả về";
-	break;
-	
-	default:
-	$__action = array(
-		array("id" => 0, "name" => "Lưu nháp", "class" => "red"),
-		array("id" => 1, "name" => "Gửi biên tập", "class" => "blue"),
-		array("id" => 3, "name" => "Chờ xuất bản", "class" => "blue"),
-		array("id" => 4, "name" => "Xuất bản", "class" => "blue")
-	);
-	$__page_title = "Sửa bài viết";
-	break;
-}
-
 $audio_sourses_1 = $audio_sourses_2 = '';
 $video_sourses_1 = $video_sourses_2 = $video_sourses_3 = $video_sourses_4 = $video_sourses_5 = $video_sourses_6 = $video_sourses_7 = '';
 if(count($video_sourses) > 0){

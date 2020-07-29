@@ -5,12 +5,18 @@ require_once('libs/cls.upload.php');
 $obj_upload = new CLS_UPLOAD();
 $file='';
 
+// Check user permission
+if(!in_array('1001', $_SESSION['G_PERMISSION_USER'])){
+	echo "<p class='text-center' style='padding-top:10px'>Bạn không có quyền truy cập chức năng này!.</p>";
+	return;
+}
+
 if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 	$Title 			= isset($_POST['txt_name']) ? addslashes($_POST['txt_name']) : '';
 	$Sapo 			= isset($_POST['txt_sapo']) ? addslashes($_POST['txt_sapo']) : '';
 	$Cate 			= isset($_POST['cbo_cate']) ? (int)$_POST['cbo_cate'] : 0;
 	$Album 			= isset($_POST['cbo_album']) ? (int)$_POST['cbo_album'] : 0;
-	$Event 		= isset($_POST['cbo_events']) ? (int)$_POST['cbo_events'] : 0;
+	$Event 			= isset($_POST['cbo_events']) ? (int)$_POST['cbo_events'] : 0;
 	$Type 			= isset($_POST['cbo_type']) ? (int)$_POST['cbo_type'] : 0;
 	$Status 		= isset($_POST['txt_status']) ? (int)$_POST['txt_status'] : 0;
 
@@ -39,6 +45,7 @@ if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 	$arr['type'] = $Type;
 	$arr['images'] = $file;
 	$arr['status'] = $Status;
+	$arr['author'] = getInfo('username');
 	$arr['cdate'] = time();
 
 	$result = SysAdd('tbl_content', $arr);

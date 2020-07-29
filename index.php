@@ -60,7 +60,9 @@ $bodyClass=isLogin()?'sidebar-mini layout-fixed':'login-page'
     <?php
     if(!isLogin()){
         include_once('modules/login.php');
-    }else{?>
+    }else{
+        include_once('modules/get-permission-user.php');
+        ?>
         <div class="wrapper">
             <!-- Navbar -->
             <?php include_once('modules/main-nav.php');?>

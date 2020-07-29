@@ -64,4 +64,21 @@ define('COM_CONTACT','');
 $_FILE_TYPE=array('docx','excel','pdf');
 $_MEDIA_TYPE=array('mp4','mp3');
 $_IMAGE_TYPE=array('jpeg','jpg','gif','png');
+// 1 	:	Thêm mới bài viết
+// 2 	:	Cập nhật bài viết (Sửa bài viết)
+// 3 	:	Xóa bài viết
+// 4 	:	Phê duyệt
+// 5 	:	Xuất bản
+// 6 	:	Gỡ bài
+// 7 	:	Trả bài cho phóng viên
+// 8 	:	Trả bài cho biên tập viên
+$_PERMISSIONS_CONTENT = array(
+	"CTV" 	=> array('1001', '1002', '1003'),
+	"PV" 	=> array('1001', '1002', '1003'),
+	"BTV"	=> array('1001', '1002', '1003', '1004', '1007'),
+	"TK" 	=> array('1004', '1005', '1007', '1008'),
+	"PBT" 	=> array('1005', '1006', '1007', '1008'),
+	"TBT" 	=> array('1005', '1006', '1007', '1008'),
+	"ADMIN" => array('1001', '1002', '1003', '1004', '1005', '1006', '1007', '1008'),
+);
 ?>
