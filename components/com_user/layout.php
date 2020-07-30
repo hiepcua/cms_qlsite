@@ -14,18 +14,3 @@ if(is_file(COM_PATH.'com_'.COMS.'/tem/'.$viewtype.'.php')){
 }
 unset($viewtype); unset($obj);
 ?>
-<script type="text/javascript">
-	$(document).ready(function(){
-		// Hidden left sidebar
-		$('#body').addClass('sidebar-collapse');
-
-		// Active group member
-		$('#widget_tree .item').each(function(){
-			var GetID = '<?php echo $GetID;?>';
-			var id = $(this).attr('data-id');
-			if(id === GetID){
-				$(this).addClass('act');
-			}
-		})
-	})
-</script>

@@ -816,3 +816,30 @@ p.paging {
     width: 30px;
     border: 1px solid;
 }
+
+#wg-permission{}
+#wg-permission .item{}
+#wg-permission .header{
+    color: #fff;
+    font-size: 1.2em;
+    padding: 4px 8px;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+}
+#wg-permission .check-all{
+float: right;
+    cursor: pointer;
+    font-weight: 300;
+}
+#wg-permission .check-all:hover{}
+#wg-permission ul{
+    padding: 10px 15px;
+    border: 1px solid #007bff;
+}
+#wg-permission ul li{}
+#wg-permission ul label{
+    font-weight: 400;
+}
+#wg-permission input{
+    margin-right: 5px;
+}
