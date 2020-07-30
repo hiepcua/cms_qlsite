@@ -15,6 +15,7 @@ if(is_file(COM_PATH.'com_'.$COM.'/tem/'.$viewtype.'.php')){ ?>
 				<header class="header">
 					<span class="widget-icon"> <i class="fa fa-tree"></i> </span>
 					<h2>Danh mục nhóm người dùng</h2>
+					<a href="<?php echo ROOTHOST.'groupuser/add';?>" class="btn btn-success c-white f-right mr-2"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm mới</a>
 				</header>
 				<div class="tree smart-form">
 					<ul role="group">

@@ -36,9 +36,9 @@ if($isAdmin==1){
 					<div class="mess" style="color: red;"></div>
 					<div class="row">
 						<div class="col-md-6 form-group">
-							<label class="label">Nhóm<small class="cred">(*)</small></label>
+							<label class="label">Nhóm cha<small class="cred">(*)</small></label>
 							<select id="cbo_par" name="cbo_par" class="form-control">
-								<option value="0">-- Select one --</option>
+								<option value="0">-- Chọn một --</option>
 								<?php getListCombobox(0,0, $arr_childs); ?>
 							</select>
 							<script type="text/javascript">
@@ -48,7 +48,7 @@ if($isAdmin==1){
 							</script>
 						</div>
 						<div class="col-md-6 form-group">
-							<label class="label">Tên danh mục<small class="cred">(*)</small></label>
+							<label class="label">Tên nhóm<small class="cred">(*)</small></label>
 							<input type="text" name="txt_name" value="<?php echo $row['name'];?>" id="txt_name" class="form-control">
 						</div>
 					</div>

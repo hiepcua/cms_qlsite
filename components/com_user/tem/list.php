@@ -34,9 +34,10 @@ function printChilds($array, $id){
 <div class="row">
 	<div class="col-sm-12 col-md-3 col-lg-3 sortable-grid ui-sortable">
 		<div class="widget-tree">
-			<header class="header">
+			<header class="header wrapper">
 				<span class="widget-icon"> <i class="fa fa-tree"></i> </span>
 				<h2><a href="<?php echo ROOTHOST.COMS;?>" style="color:#fff;">Nhóm người dùng</a></h2>
+				<a href="<?php echo ROOTHOST.'groupuser/add';?>" class="btn btn-success c-white f-right mr-2"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm mới</a>
 			</header>
 			<div id="widget_tree" class="tree smart-form">
 				<ul role="group">

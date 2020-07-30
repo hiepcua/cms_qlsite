@@ -7,7 +7,7 @@ if($isAdmin==1){
 	<!-- Content Header (Page header) -->
 	<div class="widget-tree" style="padding-left: 7px;">
 		<header class="header">
-			<h2><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp&nbspThêm mới nhóm thành viên</h2>
+			<h2><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp&nbspThêm mới nhóm người dùng</h2>
 		</header>
 	</div>
 
@@ -20,20 +20,20 @@ if($isAdmin==1){
 					<div class="mess" style="color: red;"></div>
 					<div class="row">
 						<div class="col-md-6 form-group">
-							<label class="label">Group<small class="cred">(*)</small></label>
+							<label class="label">Nhóm cha<small class="cred">(*)</small></label>
 							<select id="cbo_par" name="cbo_par" class="form-control">
-								<option value="0">-- Select one --</option>
+								<option value="0">-- Chọn một --</option>
 								<?php getListCombobox(0,0); ?>
 							</select>
 						</div>
 						<div class="col-md-6 form-group">
-							<label class="label">Group name<small class="cred">(*)</small></label>
+							<label class="label">Tên nhóm<small class="cred">(*)</small></label>
 							<input type="text" name="txt_name" id="txt_name" class="form-control">
 						</div>
 					</div>
 					<div class="rows">
 						<div class="col-md-12 form-group">
-							<label class="label">Description</label>
+							<label class="label">Mô tả</label>
 							<textarea class="form-control" rows="3" id="txt_desc" name="txt_desc"></textarea>
 						</div>
 					</div>

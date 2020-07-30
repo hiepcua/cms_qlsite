@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2020-07-29 21:47:28
+Date: 2020-07-30 08:00:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -294,7 +294,7 @@ CREATE TABLE `tbl_users` (
 -- Records of tbl_users
 -- ----------------------------
 INSERT INTO `tbl_users` VALUES ('nxtuyen.pro@gmail.com', 'a25342213446980b5f750b37daed053ce347ec766265b78aa81d90c8217e5e39|cdf4a007e2b02a0c49fc9b7ccfbb8a10c644f635e1765dcf2a7ab794ddc7edac', 'Nguyễn Xuân Tuyền', '0936831277', 'nxtuyen.pro@gmail.com', '1', null, '1', '1', '1586660652', '0', '1');
-INSERT INTO `tbl_users` VALUES ('tranviethiepdz@gmail.com', 'd93fc24a5f68f2d6621e2d3aff26b5600f38f1b6876ff04f0070b38a54b2d2f8|cdf4a007e2b02a0c49fc9b7ccfbb8a10c644f635e1765dcf2a7ab794ddc7edac', 'Trần Hiệp', '096.954.990', 'tranviethiepdz@gmail.com', '2', null, '0', '0', '1591860947', '0', '1');
+INSERT INTO `tbl_users` VALUES ('tranviethiepdz@gmail.com', 'd93fc24a5f68f2d6621e2d3aff26b5600f38f1b6876ff04f0070b38a54b2d2f8|cdf4a007e2b02a0c49fc9b7ccfbb8a10c644f635e1765dcf2a7ab794ddc7edac', 'Trần Hiệp', '096.954.990', 'tranviethiepdz@gmail.com', '2', null, '0', '1', '1591860947', '0', '1');
 
 -- ----------------------------
 -- Table structure for tbl_user_group
@@ -330,7 +330,7 @@ CREATE TABLE `tbl_user_login` (
   `isactive` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `idx` (`isactive`,`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of tbl_user_login
@@ -347,4 +347,6 @@ INSERT INTO `tbl_user_login` VALUES ('34', 'tranviethiepdz@gmail.com', '15960110
 INSERT INTO `tbl_user_login` VALUES ('35', 'tranviethiepdz@gmail.com', '1596015317', '1596015317', '0');
 INSERT INTO `tbl_user_login` VALUES ('36', 'tranviethiepdz@gmail.com', '1596015652', '1596015652', '0');
 INSERT INTO `tbl_user_login` VALUES ('37', 'tranviethiepdz@gmail.com', '1596021955', '1596021955', '0');
-INSERT INTO `tbl_user_login` VALUES ('38', 'tranviethiepdz@gmail.com', '1596031012', '1596031012', '1');
+INSERT INTO `tbl_user_login` VALUES ('38', 'tranviethiepdz@gmail.com', '1596031012', '1596031012', '0');
+INSERT INTO `tbl_user_login` VALUES ('39', 'tranviethiepdz@gmail.com', '1596069357', '1596069357', '0');
+INSERT INTO `tbl_user_login` VALUES ('40', 'tranviethiepdz@gmail.com', '1596069466', '1596069466', '1');

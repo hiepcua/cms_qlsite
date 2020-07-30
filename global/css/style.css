@@ -48,10 +48,13 @@ option.disabled {
 .nav-tabs {
     margin-bottom: 5px;
 }
+.f-left{float: left;}
+.f-right{float: right;}
 .cred{color: red;}
 .cgreen{color: #0A0;}
 .cblue{color: #007bff;}
 .cgray{color: gray;}
+.c-white{color: #fff;}
 a.checked {color:#222;} 
 .bgcolor{background:#e9eaed;}
 .color{color:#FC3E2C;}
@@ -495,6 +498,10 @@ p.paging {
     letter-spacing: 0;
     margin-bottom: 0;
     line-height: 30px;
+}
+.widget-tree .header .btn{
+    padding: 3px 8px;
+    font-size: 1em;
 }
 .tree{
     margin: 0;
