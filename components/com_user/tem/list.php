@@ -171,7 +171,8 @@ function printChilds($array, $id){
 										<th class='text-center'>Admin</th>
 										<th class='text-right'>
 											<?php if($isAdmin=='1'){?>
-												<button class='btn btn-primary' id='btn_add_member'><i class="fas fa-user-plus"></i></button>
+												<!-- <button class='btn btn-primary' id='btn_add_member'><i class="fas fa-user-plus"></i></button> -->
+												<a href="<?php echo ROOTHOST.COMS;?>/add" class="btn btn-sm btn-primary c-white"><i class="fas fa-user-plus"></i> Thêm mới</a>
 											<?php }?>
 										</th>
 									</tr>

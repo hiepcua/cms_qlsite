@@ -90,7 +90,7 @@ function getListComboboxGroup($parid=0, $level=0){
 		<?php
 		if (isset($_SESSION['flash'.'com_'.COMS])) {
 			if($_SESSION['flash'.'com_'.COMS] == 1){
-				$msg->success('Cập nhật thành công.');
+				$msg->success('Thêm mới thành công.');
 				echo $msg->display();
 			}else if($_SESSION['flash'.'com_'.COMS] == 0){
 				$msg->error('Có lỗi trong quá trình thêm mới.');
@@ -111,44 +111,29 @@ function getListComboboxGroup($parid=0, $level=0){
 								<?php getListComboboxGroup(0,0); ?>
 							</select>
 						</div>
+						
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Nhóm cha</label>
-								<select class="form-control" name="cbo_par" id="cbo_par">
-									<option value="0">-- Chọn một --</option>
-								</select>
+								<label>Tên<font color="red">*</font></label>
+								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tên người dùng">
 							</div>
 						</div>
+
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Tiêu đề<font color="red"><font color="red">*</font></font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tiêu đề chuyên mục">
+								<label><i class="fas fa-envelope"></i> Email</label>
+								<input type="text" id="txt_email" name="txt_email" class="form-control" value="">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label><i class="fas fa-mobile-alt"></i> Số điện thoại</label>
+								<input type="text" id="txt_phone" name="txt_phone" class="form-control" value="">
 							</div>
 						</div>
 					
-						<div class="col-md-6">
-							<div class='form-group'>
-								<label>Ảnh</label><small> (Dung lượng < 10MB)</small>
-								<div id="response_img">
-									<input type="file" name="txt_thumb" accept="image/jpg, image/jpeg">
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label>Mô tả</label>
-						<textarea class="form-control" name="txt_intro" placeholder="Mô tả về chuyên mục..." rows="2"></textarea>
-					</div>
-
-					<div class="form-group">
-						<label>Meta title</label>
-						<textarea class="form-control" name="meta_title" placeholder="Meta title..." rows="2"></textarea>
-					</div>
-
-					<div class="form-group">
-						<label>Meta description</label>
-						<textarea class="form-control" name="meta_desc" placeholder="Meta description..." rows="3"></textarea>
+						
 					</div>
 					
 					<div class="text-center toolbar">
