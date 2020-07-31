@@ -13,11 +13,14 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	$Par_id 		= isset($_POST['cbo_par']) ? (int)$_POST['cbo_par'] : 0;
 	$Site_id 		= isset($_POST['cbo_site']) ? (int)$_POST['cbo_site'] : 0;
 
-	if(isset($_FILES['txt_thumb']) && $_FILES['txt_thumb']['size'] > 0){
-		$save_path 	= "medias/categories/";
-		$obj_upload->setPath($save_path);
-		$file = $save_path.$obj_upload->UploadFile("txt_thumb", $save_path);
-	}
+	$per_vb = isset($_POST['chk_cates_vb']) ? $_POST['chk_cates_vb'] : [];
+	$per_bt = isset($_POST['chk_cates_bt']) ? $_POST['chk_cates_bt'] : [];
+	$per_xb = isset($_POST['chk_cates_xb']) ? $_POST['chk_cates_xb'] : [];
+	$per_gb = isset($_POST['chk_cates_gb']) ? $_POST['chk_cates_gb'] : [];
+
+	$arr_permission['1101'] = $per_vb;
+	$arr_permission['1102'] = $per_vb;
+	$arr_permission['1103'] = $per_vb;
 
 	$arr=array();
 	$arr['title'] = $Title;
@@ -25,9 +28,6 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	$arr['site_id'] = $Site_id;
 	$arr['alias'] = un_unicode($Title);
 	$arr['intro'] = $Intro;
-	$arr['meta_title'] = $Meta_title;
-	$arr['meta_desc'] = $Meta_desc;
-	$arr['image'] = $file;
 
 	$result = SysAdd('tbl_categories', $arr);
 	if($result){
@@ -173,44 +173,44 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 					<label>Quyền bài viết</label>
 					<div class="row" id="wg-permission">
 						<div class="col-sm-3 col-md-3 col-xs-6 item">
-							<div class="header">Quyền viết bài <label class="check-all"><input type="checkbox" id="vb-check-all" name="chk_cates[]" value="">All</label></div>
+							<div class="header">Quyền viết bài <label class="check-all"><input type="checkbox" id="vb-check-all" value="">All</label></div>
 							<ul class="list-unstyle vb-check-all">
 								<?php
 								foreach ($res_categories as $k => $v) {
-									echo '<li><label><input type="checkbox" name="chk_cates[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
+									echo '<li><label><input type="checkbox" name="chk_cates_vb[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
 								}
 								?>
 							</ul>
 						</div>
 
 						<div class="col-sm-3 col-md-3 col-xs-6 item">
-							<div class="header">Quyền biên tập <label class="check-all"><input type="checkbox" id="bt-check-all" name="chk_cates[]" value="">All</label></div>
+							<div class="header">Quyền biên tập <label class="check-all"><input type="checkbox" id="bt-check-all" value="">All</label></div>
 							<ul class="list-unstyle bt-check-all">
 								<?php
 								foreach ($res_categories as $k => $v) {
-									echo '<li><label><input type="checkbox" name="chk_cates[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
+									echo '<li><label><input type="checkbox" name="chk_cates_bt[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
 								}
 								?>
 							</ul>
 						</div>
 
 						<div class="col-sm-3 col-md-3 col-xs-6 item">
-							<div class="header">Quyền xuất bản <label class="check-all"><input type="checkbox" id="xb-check-all" name="chk_cates[]" value="">All</label></div>
+							<div class="header">Quyền xuất bản <label class="check-all"><input type="checkbox" id="xb-check-all" value="">All</label></div>
 							<ul class="list-unstyle xb-check-all">
 								<?php
 								foreach ($res_categories as $k => $v) {
-									echo '<li><label><input type="checkbox" name="chk_cates[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
+									echo '<li><label><input type="checkbox" name="chk_cates_xb[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
 								}
 								?>
 							</ul>
 						</div>
 
 						<div class="col-sm-3 col-md-3 col-xs-6 item">
-							<div class="header">Quyền gỡ bài <label class="check-all"><input type="checkbox" id="gb-check-all" name="chk_cates[]" value="">All</label></div>
+							<div class="header">Quyền gỡ bài <label class="check-all"><input type="checkbox" id="gb-check-all" value="">All</label></div>
 							<ul class="list-unstyle gb-check-all">
 								<?php
 								foreach ($res_categories as $k => $v) {
-									echo '<li><label><input type="checkbox" name="chk_cates[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
+									echo '<li><label><input type="checkbox" name="chk_cates_gb[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
 								}
 								?>
 							</ul>
