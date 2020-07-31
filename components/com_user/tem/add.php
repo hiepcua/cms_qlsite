@@ -46,26 +46,6 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	}
 }
 
-function getListComboboxGroup($parid=0, $level=0){
-	$sql="SELECT * FROM tbl_user_group WHERE `par_id`='$parid' AND `isactive`='1' ";
-	$objdata=new CLS_MYSQL();
-	$objdata->Query($sql);
-	$char="";
-	if($level!=0){
-		for($i=0;$i<$level;$i++)
-			$char.="|-----";
-	}
-	if($objdata->Num_rows()<=0) return;
-	while($rows=$objdata->Fetch_Assoc()){
-		$id=$rows['id'];
-		$parid=$rows['par_id'];
-		$title=$rows['name'];
-		echo "<option value='$id'>$char $title</option>";
-		$nextlevel=$level+1;
-		getListComboboxGroup($id,$nextlevel);
-	}
-}
-
 function getListComboboxSites($parid=0, $level=0, $childs=array()){
 	$sql="SELECT * FROM tbl_sites WHERE `par_id`='$parid' AND `isactive`='1' ";
 	$objdata=new CLS_MYSQL();
@@ -150,7 +130,11 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 								<label>Nhóm người dùng</label>
 								<select class='form-control' id='cbo_group'>
 									<option value="0">-- Chọn một --</option>
-									<?php getListComboboxGroup(0,0); ?>
+									<?php
+									foreach ($_GROUP_USER as $key => $value) {
+										echo '<option value="'.$key.'">'.$value.'</option>';
+									}
+									?>
 								</select>
 							</div>
 
@@ -216,7 +200,7 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 							</ul>
 						</div>
 					</div>
-
+					<br>
 					<!-- <table class="table table-bordered text-center" id="tbl_permission">
 						<tr>
 							<th>#</th>
