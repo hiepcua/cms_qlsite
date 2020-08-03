@@ -72,9 +72,6 @@ $_IMAGE_TYPE=array('jpeg','jpg','gif','png');
 // 6 	:	Gỡ bài
 // 7 	:	Trả bài cho phóng viên
 // 8 	:	Trả bài cho biên tập viên
-$_PERMISSIONS_CONTENT = array(
-	
-);
 
 $_GROUP_USER = array(
 	"CTV" 	=> 'Cộng tác viên',
@@ -85,4 +82,11 @@ $_GROUP_USER = array(
 	"TBT" 	=> 'Tổng biên tập',
 	"ADMIN" => 'Admin',
 );
+
+$_CONTENT_TYPE = array(
+	"3" 	=> 'Tin thường',
+	"2" 	=> 'Video',
+	"1"		=> 'Audio',
+);
+define('CONTENT_TYPE', $_CONTENT_TYPE);
 ?>

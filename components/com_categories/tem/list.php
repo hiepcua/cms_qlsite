@@ -27,8 +27,8 @@ function listTable($strwhere="",$parid=0,$level=0,$rowcount, $search=0){
 		$par_name = SysGetList('tbl_categories', array('title'), "AND id=".$rows['par_id']);
 		$par_name = isset($par_name[0]['title']) ? $par_name[0]['title'] : '';
 
-		$site_name = SysGetList('tbl_sites', array('title'), "AND id=".$rows['site_id']);
-		$site_name = isset($site_name[0]['title']) ? $site_name[0]['title'] : '';
+		$site_name = SysGetList('tbl_sites', array('domain'), "AND id=".$rows['site_id']);
+		$site_name = isset($site_name[0]['domain']) ? $site_name[0]['domain'] : '';
 
 		echo "<tr name='trow'>";
 		

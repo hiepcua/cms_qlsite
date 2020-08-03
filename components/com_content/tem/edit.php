@@ -9,10 +9,10 @@ $GetID = isset($_GET['id']) ? (int)$_GET["id"] : 0;
 /*Check user permission*/
 $user 		= getInfo('username');
 $isAdmin 	= getInfo('isadmin');
-if(!in_array('1002', $_SESSION['G_PERMISSION_USER'])){
-	echo "<p class='text-center' style='padding-top:10px'>Bạn không có quyền truy cập chức năng này!.</p>";
-	return;
-}
+// if(!in_array('1002', $_SESSION['G_PERMISSION_USER'])){
+// 	echo "<p class='text-center' style='padding-top:10px'>Bạn không có quyền truy cập chức năng này!.</p>";
+// 	return;
+// }
 if($isAdmin) $strWhere.=' AND id='. $GetID;
 else $strWhere.=' AND `author`="'.$user.'" AND id='. $GetID;
 /*End check user permission*/
@@ -86,14 +86,7 @@ $_type = $row['type'];
 // 6 	:	Gỡ bài
 // 7 	:	Trả bài cho phóng viên
 // 8 	:	Trả bài cho biên tập viên
-$__permis_ctv = $_PERMISSIONS_CONTENT['CTV'];
-$__permis_pv = $_PERMISSIONS_CONTENT['PV'];
-$__permis_btv = $_PERMISSIONS_CONTENT['BTV'];
-$__permis_tk = $_PERMISSIONS_CONTENT['TK'];
-$__permis_pbt = $_PERMISSIONS_CONTENT['PBT'];
-$__permis_tbt = $_PERMISSIONS_CONTENT['TBT'];
-$__permis_admin = $_PERMISSIONS_CONTENT['ADMIN'];
-$__permissions = $__permis_admin;
+$__permissions = array('1101', '1102', '1103', '1104', '1105', '1106', '1107', '1108');
 
 $__action = array();
 $__page_title = ''; 
@@ -407,9 +400,9 @@ if(count($audio_sourses) > 0){
 							<div class="form-group">
 								<label>Loại bài</label>
 								<select class="form-control" name="cbo_type" id="cbo_type" onchange="selectVodType()">
-									<option value="1">Video</option>
-									<option value="2">Audio</option>
-									<option value="3">Text</option>
+									<?php foreach (CONTENT_TYPE as $key => $value) {
+										echo '<option value="'.$key.'">'.$value.'</option>';
+									}?>
 								</select>
 								<script type="text/javascript">
 									$(document).ready(function(){

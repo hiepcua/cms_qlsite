@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2020-07-31 14:12:48
+Date: 2020-08-03 10:08:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,11 +23,11 @@ CREATE TABLE `tbl_album` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
-  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `image` varchar(255) DEFAULT NULL,
   `meta_title` varchar(255) DEFAULT NULL,
-  `meta_desc` text DEFAULT NULL,
-  `isactive` tinyint(4) DEFAULT 1,
+  `meta_desc` text,
+  `isactive` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -47,12 +47,12 @@ CREATE TABLE `tbl_categories` (
   `site_id` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `alias` varchar(255) DEFAULT NULL,
-  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `path` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `meta_title` varchar(255) DEFAULT NULL,
-  `meta_desc` text DEFAULT NULL,
-  `isactive` tinyint(4) DEFAULT 1,
+  `meta_desc` text,
+  `isactive` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -75,7 +75,7 @@ CREATE TABLE `tbl_configsite` (
   `tem_id` int(11) DEFAULT NULL,
   `company_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `intro` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `intro` longtext COLLATE utf8_unicode_ci,
   `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tel` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
@@ -85,10 +85,10 @@ CREATE TABLE `tbl_configsite` (
   `work_time` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `website` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `banner` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `logo` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `meta_keyword` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `meta_descript` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `lang_id` int(11) NOT NULL DEFAULT 0,
+  `logo` text COLLATE utf8_unicode_ci,
+  `meta_keyword` longtext COLLATE utf8_unicode_ci,
+  `meta_descript` longtext COLLATE utf8_unicode_ci,
+  `lang_id` int(11) NOT NULL DEFAULT '0',
   `contact` text COLLATE utf8_unicode_ci NOT NULL,
   `footer` text COLLATE utf8_unicode_ci NOT NULL,
   `nick_yahoo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -120,18 +120,18 @@ CREATE TABLE `tbl_content` (
   `event_id` int(11) DEFAULT NULL,
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
   `alias` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
-  `sapo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sapo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `images` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
-  `fulltext` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fulltext` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
-  `note` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `note` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `author` varchar(255) DEFAULT NULL,
   `cdate` int(11) DEFAULT NULL,
   `mdate` int(11) DEFAULT NULL,
   `pdate` int(11) DEFAULT NULL,
   `visited` int(11) DEFAULT NULL,
   `liked` int(11) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT 0,
+  `status` tinyint(4) DEFAULT '0',
   `is_trash` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
@@ -191,9 +191,9 @@ DROP TABLE IF EXISTS `tbl_content_type`;
 CREATE TABLE `tbl_content_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
-  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `order` tinyint(2) DEFAULT 0,
-  `isactive` tinyint(4) DEFAULT 1,
+  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `order` tinyint(2) DEFAULT '0',
+  `isactive` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -213,12 +213,12 @@ CREATE TABLE `tbl_events` (
   `title` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
   `cate_id` int(11) DEFAULT NULL,
-  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `intro` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `image` varchar(255) DEFAULT NULL,
   `meta_title` varchar(255) DEFAULT NULL,
-  `meta_desc` text DEFAULT NULL,
-  `ishot` tinyint(1) DEFAULT 0,
-  `isactive` tinyint(4) DEFAULT 1,
+  `meta_desc` text,
+  `ishot` tinyint(1) DEFAULT '0',
+  `isactive` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -254,9 +254,9 @@ CREATE TABLE `tbl_sites` (
   `youtube` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cdate` int(11) DEFAULT NULL,
   `active_date` int(11) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT 0,
-  `is_trash` tinyint(4) DEFAULT 0,
-  `isactive` tinyint(4) DEFAULT 1,
+  `status` tinyint(4) DEFAULT '0',
+  `is_trash` tinyint(4) DEFAULT '0',
+  `isactive` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -283,13 +283,13 @@ CREATE TABLE `tbl_users` (
   `group` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
   `site_id` varchar(255) DEFAULT '',
   `gsecret` varchar(50) DEFAULT NULL,
-  `isfa2` tinyint(4) DEFAULT 0,
-  `isadmin` tinyint(4) DEFAULT 0,
+  `isfa2` tinyint(4) DEFAULT '0',
+  `isadmin` tinyint(4) DEFAULT '0',
   `pseudonym` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
   `permission` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
   `cdate` int(11) DEFAULT NULL,
-  `is_trash` tinyint(4) DEFAULT 0,
-  `isactive` tinyint(4) DEFAULT 1,
+  `is_trash` tinyint(4) DEFAULT '0',
+  `isactive` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -308,16 +308,18 @@ CREATE TABLE `tbl_user_login` (
   `username` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `session` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cdate` int(11) DEFAULT NULL,
-  `isactive` tinyint(4) DEFAULT 1,
+  `isactive` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `idx` (`isactive`,`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of tbl_user_login
 -- ----------------------------
-INSERT INTO `tbl_user_login` VALUES ('41', 'tranviethiepdz@gmail.com', '1596076694', '1596076694', '0');
-INSERT INTO `tbl_user_login` VALUES ('42', 'tranviethiepdz@gmail.com', '1596104539', '1596104539', '0');
-INSERT INTO `tbl_user_login` VALUES ('43', 'tranviethiepdz@gmail.com', '1596168828', '1596168828', '0');
-INSERT INTO `tbl_user_login` VALUES ('44', 'tranviethiepdz@gmail.com', '1596169830', '1596169830', '0');
-INSERT INTO `tbl_user_login` VALUES ('45', 'tranviethiepdz@gmail.com', '1596178249', '1596178249', '1');
+INSERT INTO `tbl_user_login` VALUES ('46', 'tranviethiepdz@gmail.com', '1596183959', '1596183959', '0');
+INSERT INTO `tbl_user_login` VALUES ('47', 'tranviethiepdz@gmail.com', '1596188012', '1596188012', '0');
+INSERT INTO `tbl_user_login` VALUES ('48', 'tranviethiepdz@gmail.com', '1596205554', '1596205554', '0');
+INSERT INTO `tbl_user_login` VALUES ('49', 'tranviethiepdz@gmail.com', '1596354631', '1596354631', '0');
+INSERT INTO `tbl_user_login` VALUES ('50', 'tranviethiepdz@gmail.com', '1596366331', '1596366331', '0');
+INSERT INTO `tbl_user_login` VALUES ('51', 'tranviethiepdz@gmail.com', '1596393366', '1596393366', '0');
+INSERT INTO `tbl_user_login` VALUES ('52', 'tranviethiepdz@gmail.com', '1596417272', '1596417272', '1');

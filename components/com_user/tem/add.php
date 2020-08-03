@@ -70,6 +70,7 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 	}
 }
 ?>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 <!-- Content Header (Page header) -->
 <div class="content-header">
 	<div class="container-fluid">
@@ -87,236 +88,122 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 		</div><!-- /.row -->
 	</div><!-- /.container-fluid -->
 </div>
+
 <!-- /.content-header -->
-<!-- Main content -->
-<section class="content">
+<section id="widget_steps">
 	<div class="container-fluid">
-		<?php
-		if (isset($_SESSION['flash'.'com_'.COMS])) {
-			if($_SESSION['flash'.'com_'.COMS] == 1){
-				$msg->success('Thêm mới thành công.');
-				echo $msg->display();
-			}else if($_SESSION['flash'.'com_'.COMS] == 0){
-				$msg->error('Có lỗi trong quá trình thêm mới.');
-				echo $msg->display();
-			}
-			unset($_SESSION['flash'.'com_'.COMS]);
-		}
-		?>
-		<div id='action'>
-			<div class="card">
-				<form name="frm_action" id="frm_action" action="" method="post" enctype="multipart/form-data">
-					<div class="mess"></div>
-					<div class="row">
-						<div class="col-md-8 col-sm-9">
-							<div class="form-group">
-								<label>Tên<font color="red">*</font></label>
-								<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tên người dùng">
+		<!-- MultiStep Form -->
+		<div class="container-fluid" id="grad1">
+			<div class="row justify-content-center mt-0">
+				<div class="text-center col-xs-12 col-sm-12 col-md-12">
+					<div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+						<h2><strong>Thêm mới người dùng</strong></h2>
+						<p>Các thông tin được gắn dấu * là các thông tin yêu cầu bắt buộc.</p>
+						<div class="row">
+							<div class="col-md-12 mx-0">
+								<form id="msform">
+									<!-- progressbar -->
+									<ul id="progressbar">
+										<li class="active" id="account"><strong>Tài khoản</strong></li>
+										<li id="personal"><strong>Website/Nhóm</strong></li>
+										<li id="payment"><strong>Quyền</strong></li>
+										<li id="confirm"><strong>Kết quả</strong></li>
+									</ul> <!-- fieldsets -->
+
+									<fieldset>
+										<div class="form-card">
+											<h2 class="fs-title">Thông tin tài khoản</h2>
+											<div class="row">
+												<div class="col-md-6 col-sm-6">
+													<div class="form-group">
+														<label>Tên đăng nhập<font color="red">*</font></label>
+														<input type="text" id="txt_name" name="txt_name" class="form-control" value="" placeholder="Tên đăng nhập" required="">
+													</div>
+												</div>
+
+												<div class="col-md-6 col-sm-6">
+													<div class="form-group">
+														<label><i class="fas fa-envelope"></i> Email</label>
+														<input type="text" id="txt_email" name="txt_email" class="form-control" value="">
+													</div>
+												</div>
+
+												<div class="col-md-6 col-sm-6">
+													<div class="form-group">
+														<label><i class="fas fa-mobile-alt"></i> Số điện thoại</label>
+														<input type="text" id="txt_phone" name="txt_phone" class="form-control" value="">
+													</div>
+												</div>
+
+												<div class="col-md-6 col-sm-6">
+													<div class="form-group">
+														<label>Bút danh</label>
+														<input type="text" id="txt_pseudonym" name="txt_pseudonym" class="form-control" value="">
+													</div>
+												</div>
+											</div>
+										</div> 
+										<input type="button" id="btn_next_step1" name="next" class="next action-button" value="Tiếp theo" />
+									</fieldset>
+
+									<fieldset>
+										<div class="form-card">
+											<div class="form-group">
+												<label>Nhóm người dùng</label>
+												<select class='form-control' id='cbo_group'>
+													<option value="0">-- Chọn một --</option>
+													<?php
+													foreach ($_GROUP_USER as $key => $value) {
+														echo '<option value="'.$key.'">'.$value.'</option>';
+													}
+													?>
+												</select>
+											</div>
+
+											<div class="form-group">
+												<label>Trang</label>
+												<select class="form-control" name="cbo_sites[]" id="cbo_sites" multiple="multiple">
+													<option value="0">-- Chọn một --</option>
+													<?php getListComboboxSites(0,0);?>
+												</select>
+											</div>
+										</div> 
+										<input type="button" name="previous" class="previous action-button-previous" value="Previous" /> 
+										<input type="button" id="btn_next_step2" name="next" class="next action-button" value="Next Step" />
+									</fieldset>
+
+									<fieldset>
+										<div class="form-card">
+											<div id="list-permissions"></div>
+										</div> 
+										<input type="button" name="previous" class="previous action-button-previous" value="Previous" /> 
+										<input type="button" name="make_payment" class="next action-button" value="Confirm" />
+									</fieldset>
+
+									<fieldset>
+										<div class="form-card">
+											<h2 class="fs-title text-center">Success !</h2> <br><br>
+											<div class="row justify-content-center">
+												<div class="col-3"> <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image"> </div>
+											</div> <br><br>
+											<div class="row justify-content-center">
+												<div class="col-7 text-center">
+													<h5>You Have Successfully Signed Up</h5>
+												</div>
+											</div>
+										</div>
+									</fieldset>
+								</form>
 							</div>
-
-							<div class="form-group">
-								<label><i class="fas fa-envelope"></i> Email</label>
-								<input type="text" id="txt_email" name="txt_email" class="form-control" value="">
-							</div>
-
-							<div class="form-group">
-								<label><i class="fas fa-mobile-alt"></i> Số điện thoại</label>
-								<input type="text" id="txt_phone" name="txt_phone" class="form-control" value="">
-							</div>
-						</div>
-
-						<div class="col-md-4 col-sm-3">
-							<div class="form-group">
-								<label>Nhóm người dùng</label>
-								<select class='form-control' id='cbo_group'>
-									<option value="0">-- Chọn một --</option>
-									<?php
-									foreach ($_GROUP_USER as $key => $value) {
-										echo '<option value="'.$key.'">'.$value.'</option>';
-									}
-									?>
-								</select>
-							</div>
-
-							<div class="form-group">
-								<label>Trang</label>
-								<select class="form-control" name="cbo_par" id="cbo_par">
-									<option value="0">-- Chọn một --</option>
-									<?php getListComboboxSites(0,0);?>
-								</select>
-							</div>
-
-							<div class="form-group">
-								<label>Bút danh</label>
-								<input type="text" id="txt_pseudonym" name="txt_pseudonym" class="form-control" value="">
-							</div>
-						</div>
-					</div>
-					<?php $res_categories = SysGetList('tbl_categories', array('id', 'title'), "AND isactive=1");?>
-					<h4>Quyền người dùng</h4><hr/>
-					<label>Quyền bài viết</label>
-					<div class="row" id="wg-permission">
-						<div class="col-sm-3 col-md-3 col-xs-6 item">
-							<div class="header">Quyền viết bài <label class="check-all"><input type="checkbox" id="vb-check-all" value="">All</label></div>
-							<ul class="list-unstyle vb-check-all">
-								<?php
-								foreach ($res_categories as $k => $v) {
-									echo '<li><label><input type="checkbox" name="chk_cates_vb[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
-								}
-								?>
-							</ul>
-						</div>
-
-						<div class="col-sm-3 col-md-3 col-xs-6 item">
-							<div class="header">Quyền biên tập <label class="check-all"><input type="checkbox" id="bt-check-all" value="">All</label></div>
-							<ul class="list-unstyle bt-check-all">
-								<?php
-								foreach ($res_categories as $k => $v) {
-									echo '<li><label><input type="checkbox" name="chk_cates_bt[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
-								}
-								?>
-							</ul>
-						</div>
-
-						<div class="col-sm-3 col-md-3 col-xs-6 item">
-							<div class="header">Quyền xuất bản <label class="check-all"><input type="checkbox" id="xb-check-all" value="">All</label></div>
-							<ul class="list-unstyle xb-check-all">
-								<?php
-								foreach ($res_categories as $k => $v) {
-									echo '<li><label><input type="checkbox" name="chk_cates_xb[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
-								}
-								?>
-							</ul>
-						</div>
-
-						<div class="col-sm-3 col-md-3 col-xs-6 item">
-							<div class="header">Quyền gỡ bài <label class="check-all"><input type="checkbox" id="gb-check-all" value="">All</label></div>
-							<ul class="list-unstyle gb-check-all">
-								<?php
-								foreach ($res_categories as $k => $v) {
-									echo '<li><label><input type="checkbox" name="chk_cates_gb[]" value="'.$v['id'].'"> '.$v['title'].'</label></li>';
-								}
-								?>
-							</ul>
 						</div>
 					</div>
-					<br>
-					<!-- <table class="table table-bordered text-center" id="tbl_permission">
-						<tr>
-							<th>#</th>
-							<th>All</th>
-							<th>Thêm mới</th>
-							<th>Cập nhật</th>
-							<th>Phê duyệt</th>
-							<th>Xuất bản</th>
-							<th>Trả BTV</th>
-							<th>Trả PV</th>
-							<th>Gỡ bài</th>
-							<th>Xóa</th>
-						</tr>
-						<tr class="ctv_chk_all">
-							<td>CTV</td>
-							<td><input type="checkbox" name="" id="ctv_chk_all"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1001"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1002"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1003"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1004"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1005"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1006"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1007"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1008"></td>
-						</tr>
-						<tr class="pv_chk_all">
-							<td>PV</td>
-							<td><input type="checkbox" name="" id="pv_chk_all"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1001"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1002"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1003"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1004"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1005"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1006"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1007"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1008"></td>
-						</tr>
-						<tr class="btv_chk_all">
-							<td>BTV</td>
-							<td><input type="checkbox" name="" id="btv_chk_all"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1001"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1002"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1003"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1004"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1005"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1006"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1007"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1008"></td>
-						</tr>
-						<tr class="tk_chk_all">
-							<td>TK</td>
-							<td><input type="checkbox" name="" id="tk_chk_all"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1001"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1002"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1003"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1004"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1005"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1006"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1007"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1008"></td>
-						</tr>
-						<tr class="pbt_chk_all">
-							<td>PBT</td>
-							<td><input type="checkbox" name="" id="pbt_chk_all"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1001"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1002"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1003"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1004"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1005"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1006"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1007"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1008"></td>
-						</tr>
-						<tr class="tbt_chk_all">
-							<td>TBT</td>
-							<td><input type="checkbox" name="" id="tbt_chk_all"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1001"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1002"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1003"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1004"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1005"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1006"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1007"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1008"></td>
-						</tr>
-						<tr class="admin_chk_all">
-							<td>Admin</td>
-							<td><input type="checkbox" name="" id="admin_chk_all"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1001"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1002"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1003"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1004"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1005"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1006"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1007"></td>
-							<td><input type="checkbox" name="chk_permission[]" value="1008"></td>
-						</tr>
-					</table> -->
-					
-					<div class="text-center toolbar">
-						<input type="submit" name="cmdsave_tab1" id="cmdsave_tab1" class="save btn btn-success" value="Lưu thông tin" class="btn btn-primary">
-					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>
 </section>
-<!-- /.row -->
-<!-- /.content-header -->
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#frm_action').submit(function(){
-			return validForm();
-		});
-	});
 
+<script type="text/javascript">
 	function validForm(){
 		var flag = true;
 		var title = $('#txt_name').val();
@@ -328,12 +215,129 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 		return flag;
 	}
 
-	$("#vb-check-all, #bt-check-all, #xb-check-all, #gb-check-all").on('click', function(){
-		var id = this.id;
-		if(this.checked == true){
-			$('.'+id).find('input').attr('checked','checked');
-		}else{
-			$('.'+id).find('input').removeAttr('checked');
-		}
+	
+
+	$(document).ready(function(){
+		$('#frm_action').submit(function(){
+			return validForm();
+		});
+
+		$('#cbo_sites').select2();
+
+		// $(".vb-check-all, .bt-check-all, .xb-check-all, .gb-check-all").on('click', function(){
+		// 	debugger;
+		// 	var id = this.id;
+		// 	if(this.checked == true){
+		// 		$('.'+id).find('input').attr('checked','checked');
+		// 	}else{
+		// 		$('.'+id).find('input').removeAttr('checked');
+		// 	}
+		// });
+
+
+
+		var current_fs, next_fs, previous_fs; //fieldsets
+		var opacity;
+
+		$('#btn_next_step1').on('click', function(){
+			var username = $('#txt_name').val();
+			if(username.length == 0 || username.length <= 5){
+				alert('Các mục đánh dấu * không được để trống');
+				return false;
+			}else{
+				current_fs = $(this).parent();
+				next_fs = $(this).parent().next();
+
+				//Add Class Active
+				$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+				//show the next fieldset
+				next_fs.show();
+				//hide the current fieldset with style
+				current_fs.animate({opacity: 0}, {
+					step: function(now) {
+						// for making fielset appear animation
+						opacity = 1 - now;
+
+						current_fs.css({
+							'display': 'none',
+							'position': 'relative'
+						});
+						next_fs.css({'opacity': opacity});
+					},
+					duration: 600
+				});
+			}
+		});
+
+		$('#btn_next_step2').on('click', function(){
+			var sites = $('#cbo_sites').val();
+			if(sites.length <= 0){
+				alert('Bạn chưa chọn site nào.');
+				return false;
+			}else{
+				$.get('<?php echo ROOTHOST;?>ajaxs/user/get_permission_by_site.php', {'sites': sites.toString()}, function(res){
+					$('#list-permissions').html(res);
+				});
+				
+
+				// Next step
+				current_fs = $(this).parent();
+				next_fs = $(this).parent().next();
+
+				//Add Class Active
+				$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+				//show the next fieldset
+				next_fs.show();
+				//hide the current fieldset with style
+				current_fs.animate({opacity: 0}, {
+					step: function(now) {
+						// for making fielset appear animation
+						opacity = 1 - now;
+
+						current_fs.css({
+							'display': 'none',
+							'position': 'relative'
+						});
+						next_fs.css({'opacity': opacity});
+					},
+					duration: 600
+				});
+			}
+		});
+
+		$(".previous").click(function(){
+			current_fs = $(this).parent();
+			previous_fs = $(this).parent().prev();
+
+			//Remove class active
+			$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+			//show the previous fieldset
+			previous_fs.show();
+
+			//hide the current fieldset with style
+			current_fs.animate({opacity: 0}, {
+				step: function(now) {
+					// for making fielset appear animation
+					opacity = 1 - now;
+
+					current_fs.css({
+						'display': 'none',
+						'position': 'relative'
+					});
+
+					previous_fs.css({
+						'opacity': opacity
+					});
+				},
+				duration: 600
+			});
+		});
+
+		$(".submit").click(function(){
+			return false;
+		});
 	});
 </script>
