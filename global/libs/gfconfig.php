@@ -74,14 +74,16 @@ $_IMAGE_TYPE=array('jpeg','jpg','gif','png');
 // 8 	:	Trả bài cho biên tập viên
 
 $_GROUP_USER = array(
-	"CTV" 	=> 'Cộng tác viên',
-	"PV" 	=> 'Phóng viên',
-	"BTV"	=> 'Biên tập viên',
-	"TK" 	=> 'Thư ký',
-	"PBT" 	=> 'Phó biên tập',
-	"TBT" 	=> 'Tổng biên tập',
-	"ADMIN" => 'Admin',
+	"1" 	=> 'Cộng tác viên',
+	"2" 	=> 'Phóng viên',
+	"3"		=> 'Biên tập viên',
+	"4" 	=> 'Thư ký',
+	"5" 	=> 'Phó biên tập',
+	"6" 	=> 'Tổng biên tập',
+	"7" 	=> 'Admin',
 );
+define('GROUP_USER', $_GROUP_USER);
+
 
 $_CONTENT_TYPE = array(
 	"3" 	=> 'Tin thường',
@@ -89,4 +91,5 @@ $_CONTENT_TYPE = array(
 	"1"		=> 'Audio',
 );
 define('CONTENT_TYPE', $_CONTENT_TYPE);
+
 ?>

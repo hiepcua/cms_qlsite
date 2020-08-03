@@ -1,65 +1,21 @@
 <?php
 define('OBJ_PAGE','GETLISTMEMBER');
 $GetID = isset($_GET['id']) ? (int)antiData($_GET['id']) : 0;
-
-function findChild($array, $id){
-	$flag = 0;
-	foreach ($array as $key => $value) {
-		if($value['par_id'] == $id){
-			$flag = 1;
-			return $flag;
-		}
-	}
-	return $flag;
-};
-
-function printChilds($array, $id){
-	$str_childs='';
-	foreach ($array as $key => $value) {
-		if($value['par_id'] == $id){
-			if(findChild($array, $value['id']) == 1){
-				$str_childs.='<li class="item_tree parent_li"><span class="item_tree item" data-id="'.$value['id'].'"><a href="'.ROOTHOST.'user/getlist_user/'.$value['id'].'">'.$value['name'].'</a></span>';
-				$str_childs.='<ul class="active">';
-				$str_childs.= printChilds($array, $value['id']);
-				$str_childs.='</ul>';
-			}else{
-				$str_childs.='<li class="item_tree"><span class="item_tree item" data-id="'.$value['id'].'"><a href="'.ROOTHOST.'user/getlist_user/'.$value['id'].'">'.$value['name'].'</a></span>';
-			}
-
-			$str_childs.='</li>';
-		}
-	}
-	return $str_childs;
-}
 ?>
 <div class="row">
 	<div class="col-sm-12 col-md-3 col-lg-3 sortable-grid ui-sortable">
 		<div class="widget-tree">
 			<header class="header">
 				<span class="widget-icon"> <i class="fa fa-tree"></i> </span>
-				<h2><a href="<?php echo ROOTHOST.COMS;?>" style="color:#fff;">Nhóm người dùng</a></h2>
-				<a href="<?php echo ROOTHOST.'groupuser/add';?>" class="btn btn-success c-white f-right mr-2"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm mới</a>
+				<h2><a href="#" style="color:#fff;">Nhóm người dùng</a></h2>
 			</header>
 			<div id="widget_tree" class="tree smart-form">
 				<ul role="group">
 					<?php
-					$arr_gusers = SysGetList('tbl_user_group', array(), '');
-					$num_arr_gusers = count($arr_gusers);
-					$str_tree='';
-					for ($i=0; $i < $num_arr_gusers; $i++) { 
-						if($arr_gusers[$i]['par_id'] == 0){
-							$childs = false;
-							$tmp_id = $arr_gusers[$i]['id'];
-							echo '<li class="parent_li">
-							<span class="root item" data-id="'.$tmp_id.'"><i class="fa fa-sitemap"></i><a href="'.ROOTHOST.'user/getlist_user/'.$tmp_id.'" class="a_root">'.$arr_gusers[$i]['name'].'</a></span>';
-
-							if(findChild($arr_gusers, $tmp_id) == 1){
-								echo '<ul class="active">';
-								echo printChilds($arr_gusers, $tmp_id);
-								echo '</ul>';
-							}
-							echo '</li>';
-						}
+					foreach (GROUP_USER as $key => $value) {
+						echo '<li class="item_tree">
+							<span class="item_tree item" data-id="'.$key.'"><a href="'.ROOTHOST.'user/getlist_user/'.$key.'">'.$value.'</a></span>
+							</li>';
 					}
 					?>
 				</ul>
@@ -72,9 +28,7 @@ function printChilds($array, $id){
 		$isAdmin=getInfo('isadmin');
 		
 		if($isAdmin==1 && $GetID!==0){
-			$gusers = SysGetList('tbl_user_group', array(), " AND id=".$GetID);
-			$guser = $gusers[0];
-
+			$guser = GROUP_USER[$GetID];
 			$strWhere=" AND `group` = $GetID";
 			$status = isset($_GET['s']) ? antiData($_GET['s']) : '';
 			$q = isset($_GET['q']) ? antiData($_GET['q']) : '';
@@ -108,7 +62,7 @@ function printChilds($array, $id){
 			<!-- Content Header (Page header) -->
 			<div class="widget-tree" style="padding-left: 7px;">
 				<header class="header">
-					<h2>Danh sách người dùng thuộc nhóm <q><?php echo $guser['name'];?></q></h2>
+					<h2>Danh sách người dùng thuộc nhóm <q><?php echo $guser;?></q></h2>
 				</header>
 			</div>
 
@@ -175,7 +129,8 @@ function printChilds($array, $id){
 										<th class='text-center'>Admin</th>
 										<th class='text-right'>
 											<?php if($isAdmin=='1'){?>
-												<button class='btn btn-primary' id='btn_add_member'><i class="fas fa-user-plus"></i></button>
+												<!-- <button class='btn btn-primary' id='btn_add_member'><i class="fas fa-user-plus"></i></button> -->
+												<a href="<?php echo ROOTHOST.COMS;?>/add" class="btn btn-sm btn-primary c-white"><i class="fas fa-user-plus"></i> Thêm mới</a>
 											<?php }?>
 										</th>
 									</tr>
