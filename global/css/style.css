@@ -844,6 +844,12 @@ float: right;
     margin-right: 5px;
 }
 
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    background-color: #007bff;
+    border: 1px solid #007bff;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{color: #fff;}
+
 /* Widget steps */
 #grad1 {}
 
@@ -866,6 +872,7 @@ float: right;
 }
 
 #msform fieldset {
+    display: none;
     background: white;
     border: 0 none;
     border-radius: 0.5rem;
@@ -876,8 +883,13 @@ float: right;
     position: relative
 }
 
-#msform fieldset:not(:first-of-type) {
+/*#msform fieldset:not(:first-of-type) {
     display: none
+}*/
+
+#msform fieldset.active{
+    display: block;
+    opacity: 1;
 }
 
 #msform fieldset .form-card {
@@ -912,7 +924,7 @@ float: right;
     border: 0 none;
     border-radius: 0px;
     cursor: pointer;
-    padding: 10px 5px;
+    padding: 10px 15px;
     margin: 10px 5px
 }
 

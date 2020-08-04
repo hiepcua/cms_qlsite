@@ -12,21 +12,23 @@ if(isset($_POST['cmdsave_tab1']) && $_POST['txt_name']!='') {
 	$Email 			= isset($_POST['txt_email']) ? addslashes($_POST['txt_email']) : '';
 	$Phone 			= isset($_POST['txt_phone']) ? addslashes($_POST['txt_phone']) : '';
 	$Butdanh 		= isset($_POST['txt_pseudonym']) ? addslashes($_POST['txt_pseudonym']) : $Username;
-	$Site_id 		= isset($_POST['cbo_sites']) ? $_POST['cbo_sites'] : [];
+	$Site_id 		= isset($_POST['cbo_sites']) ? json_encode($_POST['cbo_sites']) : [];
 
 	$arr=array();
 	$arr['username'] 	= $Username;
 	$arr['group'] 		= $Group;
 	$arr['email'] 		= $Email;
 	$arr['phone'] 		= $Phone;
+	$arr['site_id'] 	= $Site_id;
 	$arr['fullname'] 	= $Fullname;
+	$arr['pseudonym'] 	= $Butdanh;
 	$arr['cdate'] 		= time();
 	$pass="123456";
 	$arr['password']=hash('sha256',$arr['username']).'|'.hash('sha256',md5($pass));
 
 	$result = SysAdd('tbl_users', $arr);
 	if($result){
-		$_SESSION['flash'.'com_'.COMS] = 1;
+		echo "<script language=\"javascript\">window.location.href='".ROOTHOST.COMS.'/edit/'.$result."?tab=payment'</script>";
 	}else{
 		$_SESSION['flash'.'com_'.COMS] = 0;
 	}
@@ -70,10 +72,10 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 						<?php
 						if (isset($_SESSION['flash'.'com_'.COMS])) {
 							if($_SESSION['flash'.'com_'.COMS] == 1){
-								$msg->success('Cập nhật thành công.');
+								$msg->success('Thêm mới thành công.');
 								echo $msg->display();
 							}else if($_SESSION['flash'.'com_'.COMS] == 0){
-								$msg->error('Có lỗi trong quá trình cập nhật.');
+								$msg->error('Có lỗi trong quá trình thêm mới.');
 								echo $msg->display();
 							}
 							unset($_SESSION['flash'.'com_'.COMS]);
@@ -104,7 +106,6 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 														<div class="form-group">
 															<label>Nhóm người dùng</label>
 															<select class='form-control' id='cbo_group' name="cbo_group">
-																<option value="0">-- Chọn một --</option>
 																<?php
 																foreach ($_GROUP_USER as $key => $value) {
 																	echo '<option value="'.$key.'">'.$value.'</option>';
@@ -157,11 +158,11 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 									</fieldset>
 
 									<fieldset>
-										<!-- <div class="form-card">
+										<div class="form-card">
 											<div id="list-permissions"></div>
 										</div> 
 										<input type="button" name="previous" class="previous action-button-previous" value="Previous" /> 
-										<input type="button" name="make_payment" class="next action-button" value="Confirm" /> -->
+										<input type="button" name="make_payment" class="next action-button" value="Confirm" />
 									</fieldset>
 								</section>
 							</div>
@@ -192,8 +193,6 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 		return flag;
 	}
 
-	
-
 	$(document).ready(function(){
 		$('#frm_action').submit(function(){
 			return validForm();
@@ -217,122 +216,5 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 				}
 			});
 		});
-		
-
-		// $(".vb-check-all, .bt-check-all, .xb-check-all, .gb-check-all").on('click', function(){
-		// 	debugger;
-		// 	var id = this.id;
-		// 	if(this.checked == true){
-		// 		$('.'+id).find('input').attr('checked','checked');
-		// 	}else{
-		// 		$('.'+id).find('input').removeAttr('checked');
-		// 	}
-		// });
-
-
-
-		// var current_fs, next_fs, previous_fs; //fieldsets
-		// var opacity;
-
-		// $('#btn_next_step1').on('click', function(){
-		// 	var username = $('#txt_name').val();
-		// 	if(username.length == 0 || username.length <= 5){
-		// 		alert('Các mục đánh dấu * không được để trống');
-		// 		return false;
-		// 	}else{
-		// 		current_fs = $(this).parent();
-		// 		next_fs = $(this).parent().next();
-
-		// 		//Add Class Active
-		// 		$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-		// 		//show the next fieldset
-		// 		next_fs.show();
-		// 		//hide the current fieldset with style
-		// 		current_fs.animate({opacity: 0}, {
-		// 			step: function(now) {
-		// 				// for making fielset appear animation
-		// 				opacity = 1 - now;
-
-		// 				current_fs.css({
-		// 					'display': 'none',
-		// 					'position': 'relative'
-		// 				});
-		// 				next_fs.css({'opacity': opacity});
-		// 			},
-		// 			duration: 600
-		// 		});
-		// 	}
-		// });
-
-		// $('#btn_next_step2').on('click', function(){
-		// 	var sites = $('#cbo_sites').val();
-		// 	if(sites.length <= 0){
-		// 		alert('Bạn chưa chọn site nào.');
-		// 		return false;
-		// 	}else{
-		// 		$.get('<?php echo ROOTHOST;?>ajaxs/user/get_permission_by_site.php', {'sites': sites.toString()}, function(res){
-		// 			$('#list-permissions').html(res);
-		// 		});
-				
-
-		// 		// Next step
-		// 		current_fs = $(this).parent();
-		// 		next_fs = $(this).parent().next();
-
-		// 		//Add Class Active
-		// 		$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-		// 		//show the next fieldset
-		// 		next_fs.show();
-		// 		//hide the current fieldset with style
-		// 		current_fs.animate({opacity: 0}, {
-		// 			step: function(now) {
-		// 				// for making fielset appear animation
-		// 				opacity = 1 - now;
-
-		// 				current_fs.css({
-		// 					'display': 'none',
-		// 					'position': 'relative'
-		// 				});
-		// 				next_fs.css({'opacity': opacity});
-		// 			},
-		// 			duration: 600
-		// 		});
-		// 	}
-		// });
-
-		// $(".previous").click(function(){
-		// 	current_fs = $(this).parent();
-		// 	previous_fs = $(this).parent().prev();
-
-		// 	//Remove class active
-		// 	$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-
-		// 	//show the previous fieldset
-		// 	previous_fs.show();
-
-		// 	//hide the current fieldset with style
-		// 	current_fs.animate({opacity: 0}, {
-		// 		step: function(now) {
-		// 			// for making fielset appear animation
-		// 			opacity = 1 - now;
-
-		// 			current_fs.css({
-		// 				'display': 'none',
-		// 				'position': 'relative'
-		// 			});
-
-		// 			previous_fs.css({
-		// 				'opacity': opacity
-		// 			});
-		// 		},
-		// 		duration: 600
-		// 	});
-		// });
-
-		// $(".submit").click(function(){
-		// 	return false;
-		// });
 	});
 </script>

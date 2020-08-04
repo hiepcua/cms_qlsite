@@ -3,7 +3,7 @@ define('OBJ_PAGE','USER');
 $GetID = isset($_GET['id']) ? (int)antiData($_GET['id']) : 0;
 ?>
 <div class="row">
-	<div class="col-sm-12 col-md-3 col-lg-3 sortable-grid ui-sortable">
+	<div class="col-sm-12 col-md-2 col-lg-2 sortable-grid ui-sortable">
 		<div class="widget-tree">
 			<header class="header wrapper">
 				<span class="widget-icon"> <i class="fa fa-tree"></i> </span>
@@ -22,7 +22,7 @@ $GetID = isset($_GET['id']) ? (int)antiData($_GET['id']) : 0;
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-12 col-md-9 col-lg-9 sortable-grid ui-sortable">
+	<div class="col-sm-12 col-md-10 col-lg-10 sortable-grid ui-sortable">
 		<?php
 		$user=getInfo('username');
 		$isAdmin=getInfo('isadmin');
@@ -125,6 +125,7 @@ $GetID = isset($_GET['id']) ? (int)antiData($_GET['id']) : 0;
 										<th>Tên đăng nhập</th>
 										<th>Tên đầy đủ</th>
 										<th>Thông tin</th>
+										<th>Mật khẩu</th>
 										<th class='text-center'>Admin</th>
 										<th class='text-right'>
 											<?php if($isAdmin=='1'){?>
@@ -155,6 +156,7 @@ $GetID = isset($_GET['id']) ? (int)antiData($_GET['id']) : 0;
 													<div class='user'><?php echo $r['email'];?></div>
 													<div class='phone'><?php echo $r['phone'];?></div>
 												</td>
+												<td class="text-center"><a href="javascript:void(0)" data-id="<?php echo $r['id'];?>" class="change_pass"><i class="fa fa-key" aria-hidden="true"></i></a></td>
 												<td class='text-center'>
 													<?php $checked=(int)$r['isadmin']!=1?"":"checked=true";?>
 													<div class="custom-control custom-checkbox">
@@ -163,7 +165,8 @@ $GetID = isset($_GET['id']) ? (int)antiData($_GET['id']) : 0;
 													</div>
 												</td>
 												<td class='text-right' style="min-width: 80px;">
-													<i class="fas fa-edit btn_edit_member" data-username="<?php echo $r['username'];?>"></i>
+													<!-- <i class="fas fa-edit btn_edit_member" data-username="<?php echo $r['username'];?>"></i> -->
+													<a href="<?php echo ROOTHOST.COMS.'/edit/'.$r['id'];?>"><i class="fas fa-edit"></i></a>
 													<i class="fas fa-trash btn_trash_member" data-username="<?php echo $r['username'];?>"></i>
 												</td>
 											</tr>
@@ -257,6 +260,18 @@ $GetID = isset($_GET['id']) ? (int)antiData($_GET['id']) : 0;
 								}
 							});
 						}
+					});
+
+					$('.change_pass').on('click', function(){
+						var id = $(this).attr('data-id');
+						var _url="<?php echo ROOTHOST;?>ajaxs/user/change_pass.php";
+						var _data={
+							'user_id': id,
+						}
+						$.post(_url, _data, function(req){
+							$('#popup_modal .modal-body').html(req);
+							$('#popup_modal').modal('show');
+						});
 					});
 				});
 			</script>

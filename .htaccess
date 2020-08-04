@@ -34,6 +34,7 @@ RewriteRule ^profile/?$ 						index.php?com=user&viewtype=profile
 RewriteRule ^changepass/?$ 						index.php?com=user&viewtype=changepass
 RewriteRule ^user/getlist_user/([0-9]+)?$ 		index.php?com=user&viewtype=getlist_user&id=$1 [QSA]
 RewriteRule ^user/add/?$ 						index.php?com=user&viewtype=add
+RewriteRule ^user/edit/([0-9]+)?$ 				index.php?com=user&viewtype=edit&id=$1 [QSA]
 
 RewriteRule ^groupuser/?$ 				index.php?com=groupuser [QSA]
 RewriteRule ^groupuser/add/?$ 			index.php?com=groupuser&viewtype=add 
