@@ -90,7 +90,7 @@ function getListComboboxSites($parid=0, $level=0, $childs=array()){
 										<li id="payment"><strong>Quyền</strong></li>
 									</ul> <!-- fieldsets -->
 
-									<fieldset>
+									<fieldset class="active">
 										<form method="post" action="">
 											<div class="form-card">
 												<div class="row">
