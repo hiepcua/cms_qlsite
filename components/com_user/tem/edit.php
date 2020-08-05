@@ -162,11 +162,11 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 												</div>
 											</div>
 										</form> 
-										<input type="button" id="btn-save-step1" class="action-button" value="Cập nhật tài khoản" />
+										<input type="button" id="btn-save-step1" class="action-button" value="Tiếp theo" />
 									</fieldset>
 
 									<fieldset class="<?php if($get_tab == 'payment') echo 'active';?>">
-										<div class="form-card">
+										<form id="frm-step-2" class="form-card" method="post">
 											<div id="list-permissions">
 												<?php
 												for($i=0; $i<count($ar_sites); $i++){
@@ -178,16 +178,13 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 													<p><i class="fa fa-caret-right" aria-hidden="true"></i> Quyền trang <strong><?php echo $r_sites[0]['domain'];?></strong></p>
 													<div class="wg-permission row">
 														<div class="col-sm-3 col-md-3 col-xs-6 item">
-															<div class="header">Quyền viết bài 
-																<label class="check-all" data-active="<?php echo $r_sites[0]['domain'];?>-vb">
-																	<input type="checkbox" class="ip-check-all" value="vietbai">All
-																</label>
-															</div>
+															<div class="header">Quyền viết bài</div>
+															<label class="check-all"><input type="checkbox" class="ip-check-all" value="" >All</label>
 															<ul class="list-unstyle <?php echo $r_sites[0]['domain'];?>-vb">
 																<?php
 																if(count($r_categories) > 0){
 																	for($j=0; $j < $num_cate; $j++){
-																		echo '<li><label><input type="checkbox" class="chk_cates_vb" name="chk_cates_vb[]" value="'.$r_categories[$j]['id'].'"> '.$r_categories[$j]['title'].'</label></li>';
+																		echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" class="chk_cates_vb" name="chk_cates_vb[]" value="'.$r_categories[$j]['id'].'"> '.$r_categories[$j]['title'].'</label></li>';
 																	}
 																}
 																?>
@@ -195,7 +192,8 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 														</div>
 
 														<div class="col-sm-3 col-md-3 col-xs-6 item">
-															<div class="header">Quyền biên tập <label class="check-all"><input type="checkbox" class="bt-check-all" value="">All</label></div>
+															<div class="header">Quyền biên tập </div>
+															<label class="check-all"><input type="checkbox" class="ip-check-all" value="">All</label>
 															<ul class="list-unstyle bt-check-all">
 																<?php
 																if(count($r_categories) > 0){
@@ -208,7 +206,8 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 														</div>
 
 														<div class="col-sm-3 col-md-3 col-xs-6 item">
-															<div class="header">Quyền xuất bản <label class="check-all"><input type="checkbox" class="xb-check-all" value="">All</label></div>
+															<div class="header">Quyền xuất bản</div>
+															<label class="check-all"><input type="checkbox" class="ip-check-all" value="">All</label>
 															<ul class="list-unstyle xb-check-all">
 																<?php
 																if(count($r_categories) > 0){
@@ -221,7 +220,8 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 														</div>
 
 														<div class="col-sm-3 col-md-3 col-xs-6 item">
-															<div class="header">Quyền gỡ bài <label class="check-all"><input type="checkbox" class="gb-check-all" value="">All</label></div>
+															<div class="header">Quyền gỡ bài</div>
+															<label class="check-all"><input type="checkbox" class="ip-check-all" value="">All</label>
 															<ul class="list-unstyle gb-check-all">
 																<?php
 																if(count($r_categories) > 0){
@@ -237,7 +237,7 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 												}
 												?>
 											</div>
-										</div> 
+										</form> 
 										<input type="button" name="previous" class="previous action-button-previous" value="Quay lại" /> 
 										<input type="button" name="make_payment" class="next action-button" value="Cập nhật quyền" />
 									</fieldset>
@@ -276,18 +276,21 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 			$('#frm-step-1').submit();
 		});
 
-
-		$('.check-all').on('click', function(){
-			var parent = $(this).parent().parent();
-			var ip = $(this).find('input').is('checked');
-			console.log(ip);
-			// if(ip.is('checked') == true){
-			// 	parent.find('.chk_cates_vb').removeAttr('checked');
-			// }else{
-			// 	parent.find('.chk_cates_vb').attr('checked','checked');
-			// }
+		$('#frm-step-1 input, #frm-step-1 select').on('change', function(){
+			$('#btn-save-step1').val('Cập nhật');
 		});
-		
+
+
+		$('.ip-check-all').on('click', function(){
+			var parent = $(this).parent().parent();
+			var ul = parent.find('ul.list-unstyle');
+
+			if($(this).is(':checked') == true){
+				ul.find('input').attr('checked', 'checked');
+			}else{
+				ul.find('input').removeAttr('checked');
+			}
+		});
 
 		// $(".vb-check-all, .bt-check-all, .xb-check-all, .gb-check-all").on('click', function(){
 		// 	debugger;
