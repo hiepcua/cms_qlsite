@@ -92,4 +92,12 @@ $_CONTENT_TYPE = array(
 );
 define('CONTENT_TYPE', $_CONTENT_TYPE);
 
+$_CONTENT_PERMISSION = array(
+	"1" 	=> 'Quyền viết bài',
+	"2" 	=> 'Quyền biên tập',
+	"3"		=> 'Quyền xuất bản',
+	"4"		=> 'Quyền gỡ bài',
+);
+define('CONTENT_PERMISSION', $_CONTENT_PERMISSION);
+
 ?>

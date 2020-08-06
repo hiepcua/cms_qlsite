@@ -315,52 +315,43 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 				let cate = inputs[i].getAttribute('data-cate');
 				let permis = inputs[i].getAttribute('data-permis');
 
-				let tmp_obj={}; let tmp_cate={}; let tmp_permis=[];
-				tmp_permis.push(permis);
-				tmp_cate[cate] = tmp_permis;
-				tmp_obj[site] = tmp_cate;
+				let tmp_obj={}; let tmp_obj2={};
+				tmp_obj["site"] = site;
+				tmp_obj["cate"] = cate;
+				tmp_obj["permis"] = permis;
 
 				obj_permis.push(tmp_obj);
 			}
 			console.log(obj_permis);
-// https://stackoverflow.com/questions/5072136/javascript-filter-for-objects
+
+			var output = [];
 			obj_permis.forEach(function(item) {
-				Object.filter = (obj_permis, predicate) => 
-				Object.keys(obj)
-				.filter( key => predicate(obj[key]) )
-				.reduce( (res, key) => (res[key] = obj[key], res), {} );
+				var existing = output.filter(function(v, i) {
+					return v.site == item.site;
+				});
+
+				if (existing.length) {
+					var existingIndex = output.indexOf(existing[0]);
+					if (typeof item.cate == 'string')
+						item.cate = [item.cate];
+
+					if (typeof item.permis == 'string')
+						item.permis = [item.permis];
+
+    				output[existingIndex].cate = merge_two_arrays(output[existingIndex].cate, item.cate);
+    				output[existingIndex].permis = merge_two_arrays(output[existingIndex].permis, item.permis);
+				} else {
+					if (typeof item.cate == 'string')
+						item.cate = [item.cate];
+
+					if (typeof item.permis == 'string')
+						item.permis = [item.permis];
+
+					output.push(item);
+				}
 			});
 
-			
-
-			// var output = [];
-			// obj_permis.forEach(function(item) {
-			// 	var existing = output.filter(function(v, i) {
-			// 		return v.site == item.site;
-			// 	});
-
-			// 	if (existing.length) {
-			// 		var existingIndex = output.indexOf(existing[0]);
-			// 		if (typeof item.cate == 'string')
-			// 			item.cate = [item.cate];
-
-			// 		if (typeof item.permis == 'string')
-			// 			item.permis = [item.permis];
-
-   //  				output[existingIndex].cate = merge_two_arrays(output[existingIndex].cate, item.cate);
-   //  				output[existingIndex].permis = merge_two_arrays(output[existingIndex].permis, item.permis);
-			// 	} else {
-			// 		if (typeof item.cate == 'string')
-			// 			item.cate = [item.cate];
-
-			// 		if (typeof item.permis == 'string')
-			// 			item.permis = [item.permis];
-
-			// 		output.push(item);
-			// 	}
-			// });
-
-			// console.dir(output);
+			console.dir(output);
 		});
 
 
