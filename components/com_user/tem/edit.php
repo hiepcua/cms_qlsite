@@ -176,7 +176,7 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 													$num_cate = count($r_categories);
 													?>
 													<p><i class="fa fa-caret-right" aria-hidden="true"></i> Quyền trang <strong><?php echo $r_sites[0]['domain'];?></strong></p>
-													<div class="wg-permission row">
+													<div class="wg-permission row" data-site="<?php echo $r_sites[0]['domain'];?>">
 														<div class="col-sm-3 col-md-3 col-xs-6 item">
 															<div class="header">Quyền viết bài</div>
 															<label class="check-all"><input type="checkbox" class="ip-check-all" value="" >All</label>
@@ -304,32 +304,52 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 			return d;
 		}
 
+		Object.filter = (obj, predicate) => 
+		Object.keys(obj)
+		.filter( key => predicate(obj[key]) )
+		.reduce( (res, key) => (res[key] = obj[key], res), {} );
+
 		$('#update_permission').on('click', function(){
-			var inputs = $('#list-permissions').find('.ul-permission').find('input');
-			var i, j;
-			var obj_permis = [];
-			var num = inputs.length;
-
-			for (i = 0; i < num; i++) {
-				let site = inputs[i].getAttribute('data-site');
-				let cate = inputs[i].getAttribute('data-cate');
-				let permis = inputs[i].getAttribute('data-permis');
-
-				let tmp_obj={}; let tmp_cate={}; let tmp_permis=[];
-				tmp_permis.push(permis);
-				tmp_cate[cate] = tmp_permis;
-				tmp_obj[site] = tmp_cate;
-
-				obj_permis.push(tmp_obj);
+			var wg_permis = $('#list-permissions').find('.wg-permission');
+			var n = wg_permis.length;
+			var m;
+			for(m=0; m<n; m++){
+				var wg_site = wg_permis[m].getAttribute('data-site');
+				debugger;
+				var inputs = wg_permis[m].querySelectorAll('.ul-permission').find('input');
 			}
-			console.log(obj_permis);
-// https://stackoverflow.com/questions/5072136/javascript-filter-for-objects
-			obj_permis.forEach(function(item) {
-				Object.filter = (obj_permis, predicate) => 
-				Object.keys(obj)
-				.filter( key => predicate(obj[key]) )
-				.reduce( (res, key) => (res[key] = obj[key], res), {} );
-			});
+
+			// var inputs = $('#list-permissions').find('.ul-permission').find('input');
+			// var i, j;
+			// var obj_permis = [];
+			// var num = inputs.length;
+
+			// for (i = 0; i < num; i++) {
+			// 	if(inputs[i].checked){
+			// 		let site = inputs[i].getAttribute('data-site');
+			// 		let cate = inputs[i].getAttribute('data-cate');
+			// 		let permis = inputs[i].getAttribute('data-permis');
+
+			// 		let tmp_obj={}; let tmp_cate={}; let tmp_permis=[];
+			// 		tmp_permis.push(permis);
+			// 		tmp_cate[cate] = tmp_permis;
+			// 		tmp_obj[site] = tmp_cate;
+
+			// 		obj_permis.push(tmp_obj);
+			// 	}
+			// }
+
+			// console.log(obj_permis);
+
+			// obj_permis.forEach(function(item) {
+			// 	var existing = Object.filter(obj_permis, function(v, i){
+			// 		return v.site == item.site;
+			// 	}); 
+
+			// 	if (existing.length) {
+			// 		var existingIndex = output.indexOf(existing[0]);
+			// 	}
+			// });
 
 			
 
