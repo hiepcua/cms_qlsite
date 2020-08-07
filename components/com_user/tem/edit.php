@@ -176,7 +176,7 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 													$num_cate = count($r_categories);
 													?>
 													<p><i class="fa fa-caret-right" aria-hidden="true"></i> Quyền trang <strong><?php echo $r_sites[0]['domain'];?></strong></p>
-													<div class="wg-permission row" data-site="<?php echo $r_sites[0]['domain'];?>">
+													<div class="wg-permission row">
 														<div class="col-sm-3 col-md-3 col-xs-6 item">
 															<div class="header">Quyền viết bài</div>
 															<label class="check-all"><input type="checkbox" class="ip-check-all" value="" >All</label>
@@ -293,94 +293,42 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 		});
 
 		function merge_two_arrays(array1, array2){
-			// var a = [1, 2, 3], b = [101, 2, 1, 10]
-			// var c = a.concat(b)
-			// var d = c.filter((item, pos) => c.indexOf(item) === pos)
-			// console.log(d) // d is [1, 2, 3, 101, 10]
-
 			var a = array1, b = array2
 			var c = a.concat(b)
 			var d = c.filter((item, pos) => c.indexOf(item) === pos)
 			return d;
 		}
 
-		Object.filter = (obj, predicate) => 
-		Object.keys(obj)
-		.filter( key => predicate(obj[key]) )
-		.reduce( (res, key) => (res[key] = obj[key], res), {} );
-
 		$('#update_permission').on('click', function(){
-			var wg_permis = $('#list-permissions').find('.wg-permission');
-			var n = wg_permis.length;
-			var m;
-			for(m=0; m<n; m++){
-				var wg_site = wg_permis[m].getAttribute('data-site');
-				debugger;
-				var inputs = wg_permis[m].querySelectorAll('.ul-permission').find('input');
+			var inputs = $('#list-permissions').find('.ul-permission').find('input');
+			var i, j;
+			var obj_permis = [];
+			var num = inputs.length;
+			var tmp_obj={};
+			for (i = 0; i < num; i++) {
+				if(inputs[i].checked){
+					let site = inputs[i].getAttribute('data-site');
+					let cate = 'C'+inputs[i].getAttribute('data-cate');
+					let permis = 'P'+inputs[i].getAttribute('data-permis');
+
+					if(tmp_obj[site]==undefined){
+						tmp_obj[site]=[];
+					}
+
+					if(tmp_obj[site][cate]==undefined){
+						tmp_obj[site][cate]=[];
+					}
+
+					tmp_obj[site][cate].push(permis);
+				}
 			}
+			console.log(tmp_obj);
+			console.log(JSON.stringify(tmp_obj));
 
-			// var inputs = $('#list-permissions').find('.ul-permission').find('input');
-			// var i, j;
-			// var obj_permis = [];
-			// var num = inputs.length;
-
-			// for (i = 0; i < num; i++) {
-			// 	if(inputs[i].checked){
-			// 		let site = inputs[i].getAttribute('data-site');
-			// 		let cate = inputs[i].getAttribute('data-cate');
-			// 		let permis = inputs[i].getAttribute('data-permis');
-
-			// 		let tmp_obj={}; let tmp_cate={}; let tmp_permis=[];
-			// 		tmp_permis.push(permis);
-			// 		tmp_cate[cate] = tmp_permis;
-			// 		tmp_obj[site] = tmp_cate;
-
-			// 		obj_permis.push(tmp_obj);
-			// 	}
-			// }
-
-			// console.log(obj_permis);
-
-			// obj_permis.forEach(function(item) {
-			// 	var existing = Object.filter(obj_permis, function(v, i){
-			// 		return v.site == item.site;
-			// 	}); 
-
-			// 	if (existing.length) {
-			// 		var existingIndex = output.indexOf(existing[0]);
-			// 	}
+			// var _url = "<?php echo ROOTHOST;?>ajaxs/user/save_permission.php";
+			// $.post(_url, {"permiss": JSON.stringify(tmp_obj)}, function(res){
+			// 	console.log(res);
 			// });
-
-			
-
-			// var output = [];
-			// obj_permis.forEach(function(item) {
-			// 	var existing = output.filter(function(v, i) {
-			// 		return v.site == item.site;
-			// 	});
-
-			// 	if (existing.length) {
-			// 		var existingIndex = output.indexOf(existing[0]);
-			// 		if (typeof item.cate == 'string')
-			// 			item.cate = [item.cate];
-
-			// 		if (typeof item.permis == 'string')
-			// 			item.permis = [item.permis];
-
-   //  				output[existingIndex].cate = merge_two_arrays(output[existingIndex].cate, item.cate);
-   //  				output[existingIndex].permis = merge_two_arrays(output[existingIndex].permis, item.permis);
-			// 	} else {
-			// 		if (typeof item.cate == 'string')
-			// 			item.cate = [item.cate];
-
-			// 		if (typeof item.permis == 'string')
-			// 			item.permis = [item.permis];
-
-			// 		output.push(item);
-			// 	}
-			// });
-
-			// console.dir(output);
 		});
 
 

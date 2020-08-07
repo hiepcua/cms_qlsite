@@ -293,11 +293,6 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 		});
 
 		function merge_two_arrays(array1, array2){
-			// var a = [1, 2, 3], b = [101, 2, 1, 10]
-			// var c = a.concat(b)
-			// var d = c.filter((item, pos) => c.indexOf(item) === pos)
-			// console.log(d) // d is [1, 2, 3, 101, 10]
-
 			var a = array1, b = array2
 			var c = a.concat(b)
 			var d = c.filter((item, pos) => c.indexOf(item) === pos)
@@ -311,16 +306,18 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 			var num = inputs.length;
 
 			for (i = 0; i < num; i++) {
-				let site = inputs[i].getAttribute('data-site');
-				let cate = inputs[i].getAttribute('data-cate');
-				let permis = inputs[i].getAttribute('data-permis');
+				if(inputs[i].checked){
+					let site = inputs[i].getAttribute('data-site');
+					let cate = inputs[i].getAttribute('data-cate');
+					let permis = inputs[i].getAttribute('data-permis');
 
-				let tmp_obj={}; let tmp_obj2={};
-				tmp_obj["site"] = site;
-				tmp_obj["cate"] = cate;
-				tmp_obj["permis"] = permis;
+					let tmp_obj={}; let tmp_obj2={};
+					tmp_obj["site"] = site;
+					tmp_obj["cate"] = cate;
+					tmp_obj["permis"] = permis;
 
-				obj_permis.push(tmp_obj);
+					obj_permis.push(tmp_obj);
+				}
 			}
 			console.log(obj_permis);
 
