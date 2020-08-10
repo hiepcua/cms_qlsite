@@ -40,10 +40,6 @@ if(count($res_Users) <= 0){
 $row = $res_Users[0];
 $ar_sites = json_decode($row['site_id']);
 $user_permission = json_decode($row['permission']);
-// foreach ($user_permission as $key => $value) {
-// 	print_r($key);
-// }
-// var_dump($user_permission->ecohub);
 $permis_keys = array_keys((array)$user_permission);
 
 function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
@@ -189,26 +185,15 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 														<div class="col-sm-3 col-md-3 col-xs-6 item">
 															<div class="header">Quyền viết bài</div>
 															<label class="check-all"><input type="checkbox" class="ip-check-all" value="" >All</label>
-															<ul class="list-unstyle ul-permission">
+															<ul class="list-unstyle ul-permission" data-site="<?php echo $r_sites[0]['domain'];?>">
 																<?php
 																if(count($r_categories) > 0){
 																	for($j=0; $j < $num_cate; $j++){
-																		if(in_array($r_sites[0]['domain'], $permis_keys)){
-																			echo "có";
-																			// foreach ($user_permission as $key => $value) {
-																			// 	$obj_cate = $value;
-																			// 	foreach ($obj_cate as $k2 => $v2) {
-																			// 		if($k2 == $r_categories[$j]['id'] && in_array(1, $v2)){
-																			// 			$active='checked="checked"';
-																			// 			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_vb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
-																			// 		}else if($k2 == $r_categories[$j]['id'] && !in_array(1, $v2)){
-																			// 			$active='';
-																			// 			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_vb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
-																			// 		}
-																			// 	}
-																			// }
+
+																		if(isset($r_categories[$j]['id'], $user_permission->{$r_sites[0]['domain']}->{'1'}) && in_array($r_categories[$j]['id'], $user_permission->{$r_sites[0]['domain']}->{'1'})){
+																			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_vb[]" value="'.$r_categories[$j]['id'].'" checked="checked"> '.$r_categories[$j]['title'].'</label></li>';
 																		}else{
-																			echo "Không";
+																			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_vb[]" value="'.$r_categories[$j]['id'].'"> '.$r_categories[$j]['title'].'</label></li>';
 																		}
 																	}
 																}
@@ -223,19 +208,10 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 																<?php
 																if(count($r_categories) > 0){
 																	for($j=0; $j < $num_cate; $j++){
-																		if(in_array($r_sites[0]['domain'], $permis_keys)){
-																			foreach ($user_permission as $key => $value) {
-																				$obj_cate = $value;
-																				foreach ($obj_cate as $k2 => $v2) {
-																					if($k2 == $r_categories[$j]['id'] && in_array(2, $v2)){
-																						$active='checked="checked"';
-																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_bt[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
-																					}else if($k2 == $r_categories[$j]['id'] && !in_array(2, $v2)){
-																						$active='';
-																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_bt[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
-																					}
-																				}
-																			}
+																		if(isset($r_categories[$j]['id'], $user_permission->{$r_sites[0]['domain']}->{'2'}) && in_array($r_categories[$j]['id'], $user_permission->{$r_sites[0]['domain']}->{'2'})){
+																			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="2" name="chk_cates_bt[]" value="'.$r_categories[$j]['id'].'" checked="checked"> '.$r_categories[$j]['title'].'</label></li>';
+																		}else{
+																			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="2" name="chk_cates_bt[]" value="'.$r_categories[$j]['id'].'"> '.$r_categories[$j]['title'].'</label></li>';
 																		}
 																	}
 																}
@@ -250,19 +226,10 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 																<?php
 																if(count($r_categories) > 0){
 																	for($j=0; $j < $num_cate; $j++){
-																		if(in_array($r_sites[0]['domain'], $permis_keys)){
-																			foreach ($user_permission as $key => $value) {
-																				$obj_cate = $value;
-																				foreach ($obj_cate as $k2 => $v2) {
-																					if($k2 == $r_categories[$j]['id'] && in_array(3, $v2)){
-																						$active='checked="checked"';
-																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_xb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
-																					}else if($k2 == $r_categories[$j]['id'] && !in_array(3, $v2)){
-																						$active='';
-																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_xb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
-																					}
-																				}
-																			}
+																		if(isset($r_categories[$j]['id'], $user_permission->{$r_sites[0]['domain']}->{'3'}) && in_array($r_categories[$j]['id'], $user_permission->{$r_sites[0]['domain']}->{'3'})){
+																			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="3" name="chk_cates_xb[]" value="'.$r_categories[$j]['id'].'" checked="checked"> '.$r_categories[$j]['title'].'</label></li>';
+																		}else{
+																			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="3" name="chk_cates_xb[]" value="'.$r_categories[$j]['id'].'"> '.$r_categories[$j]['title'].'</label></li>';
 																		}
 																	}
 																}
@@ -277,19 +244,10 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 																<?php
 																if(count($r_categories) > 0){
 																	for($j=0; $j < $num_cate; $j++){
-																		if(in_array($r_sites[0]['domain'], $permis_keys)){
-																			foreach ($user_permission as $key => $value) {
-																				$obj_cate = $value;
-																				foreach ($obj_cate as $k2 => $v2) {
-																					if($k2 == $r_categories[$j]['id'] && in_array(4, $v2)){
-																						$active='checked="checked"';
-																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_gb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
-																					}else if($k2 == $r_categories[$j]['id'] && !in_array(4, $v2)){
-																						$active='';
-																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_gb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
-																					}
-																				}
-																			}
+																		if(isset($r_categories[$j]['id'], $user_permission->{$r_sites[0]['domain']}->{'4'}) && in_array($r_categories[$j]['id'], $user_permission->{$r_sites[0]['domain']}->{'4'})){
+																			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="4" name="chk_cates_gb[]" value="'.$r_categories[$j]['id'].'" checked="checked"> '.$r_categories[$j]['title'].'</label></li>';
+																		}else{
+																			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="4" name="chk_cates_gb[]" value="'.$r_categories[$j]['id'].'"> '.$r_categories[$j]['title'].'</label></li>';
 																		}
 																	}
 																}
@@ -380,11 +338,11 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 						tmp_obj[site]={};
 					}
 
-					if(tmp_obj[site][cate]==undefined){
-						tmp_obj[site][cate]=[];
+					if(tmp_obj[site][permis]==undefined){
+						tmp_obj[site][permis]=[];
 					}
 
-					tmp_obj[site][cate].push(permis);
+					tmp_obj[site][permis].push(cate);
 				}
 			}
 
