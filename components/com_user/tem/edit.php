@@ -39,6 +39,12 @@ if(count($res_Users) <= 0){
 }
 $row = $res_Users[0];
 $ar_sites = json_decode($row['site_id']);
+$user_permission = json_decode($row['permission']);
+// foreach ($user_permission as $key => $value) {
+// 	print_r($key);
+// }
+// var_dump($user_permission->ecohub);
+$permis_keys = array_keys((array)$user_permission);
 
 function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 	$sql="SELECT * FROM tbl_sites WHERE `par_id`='$parid' AND `isactive`='1' ";
@@ -167,6 +173,9 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 
 									<fieldset class="<?php if($get_tab == 'payment') echo 'active';?>">
 										<form id="frm-step-2" class="form-card" method="post">
+											<div id="mess-frm-step-2"></div>
+
+											<input type="hidden" id="txtids" name="" value="<?php echo $row['id']; ?>">
 											<div id="list-permissions">
 												<?php
 												for($i=0; $i<count($ar_sites); $i++){
@@ -184,7 +193,23 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 																<?php
 																if(count($r_categories) > 0){
 																	for($j=0; $j < $num_cate; $j++){
-																		echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" class="chk_cates_vb" name="chk_cates_vb[]" value="'.$r_categories[$j]['id'].'"> '.$r_categories[$j]['title'].'</label></li>';
+																		if(in_array($r_sites[0]['domain'], $permis_keys)){
+																			echo "có";
+																			// foreach ($user_permission as $key => $value) {
+																			// 	$obj_cate = $value;
+																			// 	foreach ($obj_cate as $k2 => $v2) {
+																			// 		if($k2 == $r_categories[$j]['id'] && in_array(1, $v2)){
+																			// 			$active='checked="checked"';
+																			// 			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_vb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
+																			// 		}else if($k2 == $r_categories[$j]['id'] && !in_array(1, $v2)){
+																			// 			$active='';
+																			// 			echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_vb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
+																			// 		}
+																			// 	}
+																			// }
+																		}else{
+																			echo "Không";
+																		}
 																	}
 																}
 																?>
@@ -198,7 +223,20 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 																<?php
 																if(count($r_categories) > 0){
 																	for($j=0; $j < $num_cate; $j++){
-																		echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="2" name="chk_cates_bt[]" value="'.$r_categories[$j]['id'].'"> '.$r_categories[$j]['title'].'</label></li>';
+																		if(in_array($r_sites[0]['domain'], $permis_keys)){
+																			foreach ($user_permission as $key => $value) {
+																				$obj_cate = $value;
+																				foreach ($obj_cate as $k2 => $v2) {
+																					if($k2 == $r_categories[$j]['id'] && in_array(2, $v2)){
+																						$active='checked="checked"';
+																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_bt[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
+																					}else if($k2 == $r_categories[$j]['id'] && !in_array(2, $v2)){
+																						$active='';
+																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_bt[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
+																					}
+																				}
+																			}
+																		}
 																	}
 																}
 																?>
@@ -212,7 +250,20 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 																<?php
 																if(count($r_categories) > 0){
 																	for($j=0; $j < $num_cate; $j++){
-																		echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="3" name="chk_cates_xb[]" value="'.$r_categories[$j]['id'].'"> '.$r_categories[$j]['title'].'</label></li>';
+																		if(in_array($r_sites[0]['domain'], $permis_keys)){
+																			foreach ($user_permission as $key => $value) {
+																				$obj_cate = $value;
+																				foreach ($obj_cate as $k2 => $v2) {
+																					if($k2 == $r_categories[$j]['id'] && in_array(3, $v2)){
+																						$active='checked="checked"';
+																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_xb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
+																					}else if($k2 == $r_categories[$j]['id'] && !in_array(3, $v2)){
+																						$active='';
+																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_xb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
+																					}
+																				}
+																			}
+																		}
 																	}
 																}
 																?>
@@ -226,7 +277,20 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 																<?php
 																if(count($r_categories) > 0){
 																	for($j=0; $j < $num_cate; $j++){
-																		echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="4" name="chk_cates_gb[]" value="'.$r_categories[$j]['id'].'"> '.$r_categories[$j]['title'].'</label></li>';
+																		if(in_array($r_sites[0]['domain'], $permis_keys)){
+																			foreach ($user_permission as $key => $value) {
+																				$obj_cate = $value;
+																				foreach ($obj_cate as $k2 => $v2) {
+																					if($k2 == $r_categories[$j]['id'] && in_array(4, $v2)){
+																						$active='checked="checked"';
+																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_gb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
+																					}else if($k2 == $r_categories[$j]['id'] && !in_array(4, $v2)){
+																						$active='';
+																						echo '<li><label><input type="checkbox" data-site="'.$r_sites[0]['domain'].'" data-cate="'.$r_categories[$j]['id'].'" data-permis="1" name="chk_cates_gb[]" value="'.$r_categories[$j]['id'].'" '.$active.'> '.$r_categories[$j]['title'].'</label></li>';
+																					}
+																				}
+																			}
+																		}
 																	}
 																}
 																?>
@@ -300,6 +364,7 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 		}
 
 		$('#update_permission').on('click', function(){
+			var user_id = $('#txtids').val();
 			var inputs = $('#list-permissions').find('.ul-permission').find('input');
 			var i, j;
 			var obj_permis = [];
@@ -308,11 +373,11 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 			for (i = 0; i < num; i++) {
 				if(inputs[i].checked){
 					let site = inputs[i].getAttribute('data-site');
-					let cate = 'C'+inputs[i].getAttribute('data-cate');
-					let permis = 'P'+inputs[i].getAttribute('data-permis');
+					let cate = inputs[i].getAttribute('data-cate');
+					let permis = inputs[i].getAttribute('data-permis');
 
 					if(tmp_obj[site]==undefined){
-						tmp_obj[site]=[];
+						tmp_obj[site]={};
 					}
 
 					if(tmp_obj[site][cate]==undefined){
@@ -322,13 +387,21 @@ function getListComboboxSites($parid=0, $level=0, $selected_ids=array()){
 					tmp_obj[site][cate].push(permis);
 				}
 			}
-			console.log(tmp_obj);
-			console.log(JSON.stringify(tmp_obj));
 
-			// var _url = "<?php echo ROOTHOST;?>ajaxs/user/save_permission.php";
-			// $.post(_url, {"permiss": JSON.stringify(tmp_obj)}, function(res){
-			// 	console.log(res);
-			// });
+			var _url = "<?php echo ROOTHOST;?>ajaxs/user/save_permission.php";
+			$.post(_url, {"permiss": JSON.stringify(tmp_obj), "user_id": user_id}, function(res){
+				if(res == 'success'){
+					$('#mess-frm-step-2').html('<div class="alert dismissable alert-success"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Cập nhật thành công!</div>');
+					setTimeout(function(){
+						$('.alert').remove(); 
+					}, 2500);
+				}else{
+					$('#mess-frm-step-2').html('<div class="alert dismissable alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Có lỗi trong quá trình cập nhật!</div>');
+					setTimeout(function(){
+						$('.alert').remove(); 
+					}, 2500);
+				}
+			});
 		});
 
 
