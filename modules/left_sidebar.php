@@ -1,6 +1,7 @@
 <?php
 $isAdmin=getInfo('isadmin');
 $userLogin = getInfo('username');
+$permis = [1001,1002,1003,1004,1005,1006,1007,1008,1009];
 // $permis = $_SESSION['G_PERMISSION_USER']; // global permission "modules/get-permission-user.php"
 
 $n_content0 = SysCount('tbl_content', 'AND status=0 AND author="'.$userLogin.'"');

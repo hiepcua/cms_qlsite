@@ -24,10 +24,10 @@ if(isset($_POST['cmdsave_tab2'])){
 		$newPass = hash('sha256',$user).'|'.hash('sha256',md5($New_password));
 		$sql="UPDATE `tbl_users` SET `password`='".$newPass."' WHERE `username`='".$user."'";
 		$result = $objmysql->Query($sql);
-		if($result) $_SESSION['flash'.'com_'.$COM] = 1;
-        else $_SESSION['flash'.'com_'.$COM] = 0;
+		if($result) $_SESSION['flash'.'com_'.COMS] = 1;
+        else $_SESSION['flash'.'com_'.COMS] = 0;
 	}else{
-		$_SESSION['flash'.'com_'.$COM] = 0;
+		$_SESSION['flash'.'com_'.COMS] = 0;
 	}
 }
 ?>
@@ -82,15 +82,15 @@ if(isset($_POST['cmdsave_tab2'])){
 								<form id="frm_action" class="form" action="" method="post">
 									<p>
 										<?php
-										if (isset($_SESSION['flash'.'com_'.$COM])) {
-											if($_SESSION['flash'.'com_'.$COM] == 1){
+										if (isset($_SESSION['flash'.'com_'.COMS])) {
+											if($_SESSION['flash'.'com_'.COMS] == 1){
 												$msg->success('Cập nhật thành công.');
 												echo $msg->display();
-											}else if($_SESSION['flash'.'com_'.$COM] == 0){
+											}else if($_SESSION['flash'.'com_'.COMS] == 0){
 												$msg->error('Có lỗi trong quá trình cập nhật.');
 												echo $msg->display();
 											}
-											unset($_SESSION['flash'.'com_'.$COM]);
+											unset($_SESSION['flash'.'com_'.COMS]);
 										}
 										?>
 									</p>

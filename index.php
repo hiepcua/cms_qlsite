@@ -40,14 +40,13 @@ $bodyClass=isLogin()?'sidebar-mini layout-fixed':'login-page'
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- iCheck -->
-    <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
     <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-    <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/plugins/daterangepicker/daterangepicker.css">
-    <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/css/bootstrap-datetimepicker.css">
+    <!-- <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/plugins/daterangepicker/daterangepicker.css"> -->
+    <!-- <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/css/bootstrap-datetimepicker.css"> -->
     <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-    <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/plugins/summernote/summernote-bs4.css">
+    <!-- <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"> -->
     <link rel="stylesheet" href="<?php echo ROOTHOST;?>global/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -130,14 +129,13 @@ $bodyClass=isLogin()?'sidebar-mini layout-fixed':'login-page'
         </script>
         <!-- Bootstrap 4 -->
         <script src="<?php echo ROOTHOST;?>global/plugins/moment/moment.min.js"></script>
-        <script src="<?php echo ROOTHOST;?>global/js/bootstrap-datetimepicker.js"></script>
-        <script src="<?php echo ROOTHOST;?>global/js/bootstrap-timepicker.js"></script>
+        <!-- <script src="<?php echo ROOTHOST;?>global/js/bootstrap-datetimepicker.js"></script>
+        <script src="<?php echo ROOTHOST;?>global/js/bootstrap-timepicker.js"></script> -->
         <script src="<?php echo ROOTHOST;?>global/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="<?php echo ROOTHOST;?>global/plugins/select2/js/select2.full.min.js"></script>
-        <script src="<?php echo ROOTHOST;?>global/plugins/daterangepicker/daterangepicker.js"></script>
-        <script src="<?php echo ROOTHOST;?>global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+        <!-- <script src="<?php echo ROOTHOST;?>global/plugins/daterangepicker/daterangepicker.js"></script>
+        <script src="<?php echo ROOTHOST;?>global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script> -->
         <script src="<?php echo ROOTHOST;?>global/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-        <script src="<?php echo ROOTHOST;?>global/plugins/summernote/summernote-bs4.min.js"></script>
         <script src="<?php echo ROOTHOST;?>global/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <?php }?>
     <script src="<?php echo ROOTHOST;?>global/dist/js/adminlte.js"></script>

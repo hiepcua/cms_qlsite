@@ -13,8 +13,8 @@ define('DOMAIN','ott.ecohub.asia');
 define('ROOT_IMAGE','/home/admin/web/ecohub.asia/public_html/');
 define('ROOT_MEDIA','/home/admin/web/ecohub.asia/public_html/uploads/media/');
 define('BASEVIRTUAL0','/home/admin/web/ecohub.asia/public_html/uploads/');
-define('MEDIA_HOST',ROOTHOST.'uploads/media/');
-define('IMAGE_HOST',ROOTHOST.'uploads/media/');
+define('MEDIA_HOST',$_SERVER['DOCUMENT_ROOT'].'/cms_qlsite/medias/');
+define('IMAGE_HOST',ROOTHOST.'medias/');
 define('AVATAR_DEFAULT',ROOTHOST.'global/img/avatars/male.png');
 define('IMAGE_DEFAULT',ROOTHOST.'global/img/no-photo.jpg');
 

@@ -6,10 +6,10 @@ $obj_upload = new CLS_UPLOAD();
 $file='';
 
 // Check user permission
-if(!in_array('1001', $_SESSION['G_PERMISSION_USER'])){
-	echo "<p class='text-center' style='padding-top:10px'>Bạn không có quyền truy cập chức năng này!.</p>";
-	return;
-}
+// if(!in_array('1001', $_SESSION['G_PERMISSION_USER'])){
+// 	echo "<p class='text-center' style='padding-top:10px'>Bạn không có quyền truy cập chức năng này!.</p>";
+// 	return;
+// }
 
 if(isset($_POST['txt_name']) && $_POST['txt_name'] !== '') {
 	$Title 			= isset($_POST['txt_name']) ? addslashes($_POST['txt_name']) : '';
@@ -307,14 +307,56 @@ $__action = $_per_tbt;
 		});
 
 		tinymce.init({
-			selector:'#txt_fulltext',
-			height: 500,
+			selector: '#txt_fulltext',
+			height: 600,
 			plugins: [
-    'link image imagetools table spellchecker lists'
-  ],
-  contextmenu: "link image imagetools table spellchecker lists",
-  content_css: '//www.tiny.cloud/css/codepen.min.css'
-		});
+			'link image imagetools table lists autolink fullscreen media hr code'
+			],
+			image_title: true,
+			automatic_uploads: true,
+			toolbar: 'bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify |  numlist bullist | removeformat | insertfile image media link anchor codesample | outdent indent',
+			contextmenu: 'link image imagetools table spellchecker lists',
+			content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+			image_caption: true,
+			images_reuse_filename: true,
+			images_upload_credentials: true,
+			relative_urls : false,
+			remove_script_host : false,
+			convert_urls : true,
+            
+            // override default upload handler to simulate successful upload
+            images_upload_handler: function (blobInfo, success, failure) {
+            	var xhr, formData;
+
+            	xhr = new XMLHttpRequest();
+            	xhr.withCredentials = false;
+            	xhr.open('POST', '<?php echo ROOTHOST;?>ajaxs/upload.php');
+
+            	xhr.onload = function() {
+            		console.log(xhr.responseText);
+            		var json;
+
+            		if (xhr.status != 200) {
+            			failure('HTTP Error: ' + xhr.status);
+            			return;
+            		}
+
+            		json = JSON.parse(xhr.responseText);
+
+            		if (!json || typeof json.location != 'string') {
+            			failure('Invalid JSON: ' + xhr.responseText);
+            			return;
+            		}
+
+            		success(json.location);
+            	};
+
+            	formData = new FormData();
+            	formData.append('file', blobInfo.blob(), blobInfo.filename());
+            	formData.append('folder', 'contents/');
+            	xhr.send(formData);
+            },
+        });
 
 		// $('#txt_sapo').summernote({
 		// 	placeholder: 'Mô tả ...',
